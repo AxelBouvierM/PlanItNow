@@ -1,22 +1,43 @@
-#!/usr/bin/python3
-"""SingUp"""
+from crypt import methods
+import re
+from flask import Flask, render_template, request, redirect, url_for, flash
+from config import config
+from flask_mysqldb import MySQL
+from models.ModelUser import ModelUser
+from models.entities.UserCheck import User
 
-import hashlib
-import getpass
+app = Flask(__name__)
 
+db = MySQL(app)
+
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    email = input("Ingrese su email: ")
-    pwd = getpass.getpass("Ingrese su contraseña: ")
-
-    auth = pwd.encode()
-    auth_hash = hashlib.md5(auth).hexdigest()
-
-    filename = "credenciales.txt"
-    with open(filename, "r") as file:
-        email_stored, pwd_sotred = file.read().split('\n')
-    file.close()
-
-    if email == email_stored and auth_hash == pwd_sotred:
-        print("Acceso permitido")
+    if request.method == 'POST':
+        #print(request.form['username'])
+        #print(request.form['password'])
+        user = User(0, request.form['username'], request.form['password'], first_name="Carlos", last_name="Rodriguez")
+        logged_user = ModelUser.login(db, user)
+        if logged_user != None:
+            if logged_user.password:
+                return redirect(url_for('home'))
+            else:
+                flash("Invalid password!")
+                return render_template('login.html')
+        else:
+            flash("User not found!")
+            return render_template('login.html')
     else:
-        print("Acceso denegado")
+        return render_template('login.html')
+
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+
+if __name__ == '__main__':
+    app.config.from_object(config['development'])
+    app.run()

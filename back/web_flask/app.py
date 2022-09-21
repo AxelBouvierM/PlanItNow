@@ -1,23 +1,29 @@
 #!/usr/bin/python3
 """App Code"""
-
-from urllib import request
-from flask import Flask, jsonify
+from curses.ascii import alt
 import requests
-
-app = Flask(__name__)
-
-@app.route("/")
-def api():
-    dns = "https://jsonplaceholder.typicode.com/comments"
-    lista = []
-    for cont in requests.get(dns).json():
-        for key, value in cont.items():
-            if key == id and value == "494":
-                print("hola")
-                lista.append()
-    return jsonify(lista)
+import mechanicalsoup
+from bs4 import BeautifulSoup
+import csv
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+browser = mechanicalsoup.StatefulBrowser()
+url = "https://tickantel.com.uy/inicio/buscar_categoria?4&cat_id=6"
+"""response = requests.get(url)
+html = BeautifulSoup(response.content, 'html.parser')
+print(html)
+r = html.find(id="id15")
+img_html = r.find_all("div", class_="item")"""
+page = browser.open(url)
+
+print(page.soup)
+"""
+imgs = []
+for element in img_html:
+    name = element.img['alt']
+    image = element.img['src']
+    link = element.a['href'].replace(".", "")
+    print(f"Name: {name}")
+    print(f"Image: {image}")
+    print(f"Link: https://tickantel.com.uy/inicio{link}")
+"""
