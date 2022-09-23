@@ -1,0 +1,4 @@
+NODE VERSION: 18.9.0
+
+LIBRARIES:
+	-> styled-components: npm i styled-components
