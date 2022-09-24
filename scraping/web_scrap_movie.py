@@ -26,6 +26,7 @@ for movie_element in movie_elements:
     director = p_list[1].text.replace("\n","").split("Director")[1]
     genre = p_list[2].text.replace("\n","").split("Género")[1]
     actors = p_list[3].text.replace("\n","").split("Actores")[1]
+    locations = movie_element.ul.text.replace("\n","").replace("Movie", " Movie").replace("VER", " VER")[1:]
     print(f"{counter}-Title: {title}")
     print(f"Image: {image}")
     print(f"Link: https://www.movie.com.uy/{link[1:]}")
@@ -33,3 +34,5 @@ for movie_element in movie_elements:
     print(f"Genre: {genre}")
     print(f"Duration: {duration}")
     print(f"Actors: {actors}")
+    print(f"Locations: {locations}")
+    
