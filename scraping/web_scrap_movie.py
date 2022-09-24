@@ -21,12 +21,15 @@ for movie_element in movie_elements:
     title = str(movie_element.h2.a).split(">")[1].split("<")[0]
     image = movie_element.img['src']
     link = movie_element.a['href']
-    duration = ""
-    genre = ""
-    actors = ""
+    p_list = movie_element.find_all('div', class_="col-lg-6 col-md-6 col-sm-6 col-xs-6")
+    duration = p_list[0].text.replace("\n","").split("Duración")[1]
+    director = p_list[1].text.replace("\n","").split("Director")[1]
+    genre = p_list[2].text.replace("\n","").split("Género")[1]
+    actors = p_list[3].text.replace("\n","").split("Actores")[1]
     print(f"{counter}-Title: {title}")
     print(f"Image: {image}")
     print(f"Link: https://www.movie.com.uy/{link[1:]}")
+    print(f"Director: {director}")
     print(f"Genre: {genre}")
     print(f"Duration: {duration}")
     print(f"Actors: {actors}")
