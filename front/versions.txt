@@ -1,4 +1,5 @@
 NODE VERSION: 18.9.0
 
-LIBRARIES:
-	-> styled-components: npm i styled-components
+LIBRARIES (instalar desde /front):
+	-> react-icons: npm install react-icons --save
+		- ignorar vulnerabilidades
