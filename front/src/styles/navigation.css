@@ -24,7 +24,7 @@ header {
 }
 
 nav a {
-	margin: 0 0 0 1.5rem;
+	margin: 0 3rem 0 3rem;
 	color: var(--textColor);
 	text-decoration: none;
 	font-family: 'Fira Sans', sans-serif;
@@ -32,10 +32,11 @@ nav a {
 
 nav a:hover{
 	color: var(--secondaryColor);
+	transition: 0.4s ease;
 }
 
 header .nav-btn {
-	padding: 5px;
+	position: relative;
 	cursor: pointer;
 	background: transparent;
 	border: none;
@@ -44,6 +45,7 @@ header .nav-btn {
 	visibility: hidden;
 	opacity: 0;
 	font-size: 1.8rem;
+	z-index: 2;
 }
 
 @media only screen {
@@ -63,8 +65,9 @@ header .nav-btn {
 		justify-content: center;
 		gap: 2rem;
 		background-color: rgba(0, 0, 0, 0.3);;
-		transition: 1s;
+		transition: 0.8s;
 		transform: translateX(-100vw);
+		z-index: 1;
 	}
 	
 	header .responsive_nav {
@@ -78,9 +81,13 @@ header .nav-btn {
 	}
 
 	nav i {
-		margin: 0 1rem;
+		justify-content: center;
+		margin: 0 1rem 0 0;
+		font-size: 1.3rem;
 	}
-	nav a {
+
+	nav a span {
+		text-transform: uppercase;
 		font-size: 1.5rem;
 	}
 }

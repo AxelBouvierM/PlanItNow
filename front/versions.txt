@@ -3,3 +3,5 @@ NODE VERSION: 18.9.0
 LIBRARIES (instalar desde /front):
 	-> react-icons: npm install react-icons --save
 		- ignorar vulnerabilidades
+	-> hamburger-react: npm install hamburger-react
+	
