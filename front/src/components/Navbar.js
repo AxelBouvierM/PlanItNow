@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 
 import { Fade as Hamburger } from 'hamburger-react'
-import { FaBars, FaTimes } from 'react-icons/fa';
 import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiGroup2Line, RiSettings2Line, RiHistoryLine } from 'react-icons/ri';
 
 import '../styles/navigation.css';
