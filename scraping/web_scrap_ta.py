@@ -69,6 +69,7 @@ for show_element in show_elements:
     description = "No description"
     if show_description is not None:
         description = show_description.contents[1].text
+    print("==================================")
     print(f"{counter}-Title: {title}")
     counter += 1
     print(f"Image: {image}")
