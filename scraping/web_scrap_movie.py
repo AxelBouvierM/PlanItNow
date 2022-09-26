@@ -21,6 +21,7 @@ for movie_element in movie_elements:
     title = str(movie_element.h2.a).split(">")[1].split("<")[0]
     image = movie_element.img['src']
     link = movie_element.a['href']
+    link = "https://www.movie.com.uy/" + movie_element.a['href'][1:]
     p_list = movie_element.find_all('div', class_="col-lg-6 col-md-6 col-sm-6 col-xs-6")
     duration = p_list[0].text.replace("\n","").split("Duración")[1]
     director = p_list[1].text.replace("\n","").split("Director")[1]
@@ -29,7 +30,7 @@ for movie_element in movie_elements:
     locations = movie_element.ul.text.replace("\n","").replace("Movie", " Movie").replace("VER", " VER")[1:]
     print(f"{counter}-Title: {title}")
     print(f"Image: {image}")
-    print(f"Link: https://www.movie.com.uy/{link[1:]}")
+    print(f"Link: {link}")
     print(f"Director: {director}")
     print(f"Genre: {genre}")
     print(f"Duration: {duration}")
