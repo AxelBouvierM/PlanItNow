@@ -38,7 +38,7 @@ for movie_element in movie_elements:
         try:
             description = soup.find("div", class_="colapse open").contents[1].text
         except AttributeError:
-            print("Start again")
+            print("Start again") #set a variable to catch the error and run the process again until it runs completly 
             break
     print(f"{counter}-Title: {title}")
     print(f"Image: {image}")
