@@ -10,6 +10,7 @@ class User():
 
     @classmethod
     def check_password(slef, hashed_password, password):
+        print(check_password_hash(hashed_password, password))
         return check_password_hash(hashed_password, password)
 
 print(generate_password_hash("test"))
