@@ -44,17 +44,20 @@ counter = 0
 for show_element in show_elements:
     title = show_element.img['alt']
     image = show_element.img['src']
-    link = show_element.a['href']
+    link = "https://tickantel.com.uy/inicio" + show_element.a['href'][1:]
     span_list = show_element.find_all("span")
     if "del" in span_list[0]:
         since_date = span_list[1].text
         to_date = span_list[3].text
         date = since_date + ' - ' + to_date
+        location = span_list[5].text
     else:
         date = span_list[0].text
+        location = span_list[2].text
     print(f"{counter}-Title: {title}")
     counter += 1
     print(f"Image: {image}")
-    print(f"Link: https://tickantel.com.uy/inicio{link[1:]}")
+    print(f"Link: {link}")
     print(f"Date: {date}")
+    print(f"Location: {location}")
 driver.close()
