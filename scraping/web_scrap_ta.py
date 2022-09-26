@@ -4,6 +4,7 @@ from time import sleep
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from sys import argv
+import requests
 
 categoria = {"Teatro" : "https://tickantel.com.uy/inicio/buscar_categoria?2&cat_id=1", 
        "Musica" : "https://tickantel.com.uy/inicio/buscar_categoria?3&cat_id=2",
@@ -38,7 +39,7 @@ while True and count < scroll_limit:
 
 html = driver.page_source
 soup = BeautifulSoup(html, 'lxml')
-results = soup.find("section", class_="resultados") #search element by ID
+results = soup.find("section", class_="resultados") 
 show_elements = results.find_all("div", class_="item")
 counter = 0
 for show_element in show_elements:
@@ -51,13 +52,29 @@ for show_element in show_elements:
         to_date = span_list[3].text
         date = since_date + ' - ' + to_date
         location = span_list[5].text
+        if location == title:
+            location = span_list[6].text
     else:
         date = span_list[0].text
-        location = span_list[2].text
+        try:
+            location = span_list[2].text
+            if location == title:
+                location = span_list[3].text
+        except IndexError:
+            location = "No information"
+    html = requests.get(link)
+    soup = BeautifulSoup(html.content, 'html.parser')
+    show_info = soup.find("div", class_="tab-content")
+    show_description = soup.find(id="tab-informacion")
+    description = "No description"
+    if show_description is not None:
+        description = show_description.contents[1].text
     print(f"{counter}-Title: {title}")
     counter += 1
     print(f"Image: {image}")
     print(f"Link: {link}")
     print(f"Date: {date}")
     print(f"Location: {location}")
+    print(f"Description: {description}")
+    print("==================================")
 driver.close()
