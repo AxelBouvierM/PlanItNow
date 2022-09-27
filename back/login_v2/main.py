@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
+from emailValidator import validar_email
 
 app = Flask(__name__)
 
@@ -82,6 +83,8 @@ def register():
             msg = 'El nombre de usuario debe contener solo caracteres y numeros!'
         elif not username or not password or not email:
             msg = 'Por favor complete todos los datos!'
+        elif validar_email(email, debug=False) == False:
+            msg = 'Email no valido!'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
             cursor.execute('INSERT INTO users VALUES (NULL, %s, %s, %s)', (username, password, email,))
