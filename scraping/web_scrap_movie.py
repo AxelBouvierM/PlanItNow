@@ -49,4 +49,5 @@ for movie_element in movie_elements:
     print(f"Actors: {actors}")
     print(f"Locations: {locations}")
     print(f"Description: {description}")
+driver.close()
     
