@@ -8,6 +8,7 @@ results = ""
 categoria = {"Teatro" : "https://redtickets.uy/busqueda?*,6,0", 
        "Musica" : "https://redtickets.uy/busqueda?*,3,0",
        "Fiestas" : "https://redtickets.uy/busqueda?*,9,0",
+       "Futbol" : "https://redtickets.uy/busqueda?*,8,0",
        "Deportes" : "https://redtickets.uy/busqueda?*,2,0",
        "Otros" : "https://redtickets.uy/busqueda?*,7,0",
        }
@@ -35,6 +36,13 @@ while True:
               date = span_list[1].text
               location = span_list[2].text 
               description = ""
+              driver.get(link)
+              html = driver.page_source
+              soup = BeautifulSoup(html, 'lxml')
+              event_info =soup.find("div", class_="TableEventInfo")
+              description_list = event_info.find_all("div", class_="Description")
+              description = description_list[1].text
+              date = description_list[0].text
               counter += 1
               print(f"{counter}-Title: {title}")
               print(f"Image: {image}")
