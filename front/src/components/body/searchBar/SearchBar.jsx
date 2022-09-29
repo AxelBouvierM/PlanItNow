@@ -8,6 +8,8 @@ import { useDebounce } from '../../../hooks/debounceHook';
 import axios from 'axios';
 import { TvShow } from '../searchResults/tvShow';
 
+import '../../../styles/SearchBar.css';
+
 
 // "&" SELECTOR REFERENCES TO THE PREVIOUS COMPONENT
 
@@ -15,7 +17,7 @@ import { TvShow } from '../searchResults/tvShow';
 const SearchBarContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 30%;
   height: 3.8em;
   background-color: #fff;
   border-radius: 6px;
@@ -47,6 +49,7 @@ const SearchInput = styled.input`
     outline: none;
     &::placeholder {
       opacity: 0;
+      overflow: auto;
     }
   }
   // in bar text color.
@@ -70,7 +73,7 @@ const CloseIcon = styled(motion.span)`
   color: #bebebe;
   font-size: 23px;
   vertical-align: middle;
-  transition: all 200ms ease-in-out;
+  transition: all 400ms ease-in-out;
   cursor: pointer;
   &:hover {
     color: #dfdfdf;
@@ -115,15 +118,16 @@ const WarningMessage = styled.span`
 // containers properties
 const containerVariants = {
     expanded: {
-        height: "25em",
+        height: "20em",
+        width: "calc(30% + 20%)",
     },
     collapsed: {
         height: "3.8em",
     },
 };
 
-// dict that defines the searchbar transition
-const containerTransition = { type: "spring", damping: 22, stiffness: 150 };
+// dict that defines the searchbar open transition
+const containerTransition = { type: "spring", damping: 22, stiffness: 100 };
 
 export function SearchBar(props) {
     // const [a, b] = useState(...) explanation:
@@ -218,7 +222,7 @@ export function SearchBar(props) {
                     <IoSearch />
                 </SearchIcon>
                 <SearchInput
-                    placeholder="Search for events"
+                    placeholder="Search for categories"
                     onFocus={expandContainer}
                     ref={inputRef}
                     value={searchQuery}
