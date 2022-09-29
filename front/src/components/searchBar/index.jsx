@@ -9,8 +9,9 @@ import axios from 'axios';
 import { TvShow } from '../tvShow';
 
 
-// & selector references to the component
+// "&" SELECTOR REFERENCES TO THE PREVIOUS COMPONENT
 
+// before click searchbar container
 const SearchBarContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
@@ -21,6 +22,7 @@ const SearchBarContainer = styled(motion.div)`
   box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.14);
 `;
 
+// lens, input and x container
 const SearchInputContainer = styled.div`
   width: 100%;
   min-height: 4em;
@@ -30,13 +32,14 @@ const SearchInputContainer = styled.div`
   padding: 2px 15px;
 `;
 
+// input tag handler (| color)
 const SearchInput = styled.input`
   width: 100%;
   height: 100%;
   outline: none;
   border: none;
   font-size: 21px;
-  color: #12112e;
+  color: #bebebe;
   font-weight: 500;
   border-radius: 6px;
   background-color: transparent;
@@ -46,12 +49,14 @@ const SearchInput = styled.input`
       opacity: 0;
     }
   }
+  // in bar text color.
   &::placeholder {
     color: #bebebe;
     transition: all 250ms ease-in-out;
   }
 `;
 
+// lens icon
 const SearchIcon = styled.span`
   color: #bebebe;
   font-size: 27px;
@@ -60,6 +65,7 @@ const SearchIcon = styled.span`
   vertical-align: middle;
 `;
 
+// x on click button
 const CloseIcon = styled(motion.span)`
   color: #bebebe;
   font-size: 23px;
@@ -71,6 +77,7 @@ const CloseIcon = styled(motion.span)`
   }
 `;
 
+// line between searchBar & search results
 const LineSeperator = styled.span`
   display: flex;
   min-width: 100%;
@@ -78,15 +85,16 @@ const LineSeperator = styled.span`
   background-color: #d8d8d878;
 `;
 
+// search results container
 const SearchContent = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 1em;
   overflow-y: auto;
 `;
 
+// loading icon when search takes time
 const LoadingWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -95,6 +103,7 @@ const LoadingWrapper = styled.div`
   justify-content: center;
 `;
 
+// displayed container text
 const WarningMessage = styled.span`
   color: #a1a1a1;
   font-size: 14px;
@@ -103,18 +112,24 @@ const WarningMessage = styled.span`
   justify-self: center;
 `;
 
+// containers properties
 const containerVariants = {
     expanded: {
-        height: "30em",
+        height: "25em",
     },
     collapsed: {
         height: "3.8em",
     },
 };
 
+// dict that defines the searchbar transition
 const containerTransition = { type: "spring", damping: 22, stiffness: 150 };
 
 export function SearchBar(props) {
+    // const [a, b] = useState(...) explanation:
+    // a = variable name
+    // b = function to update the current variable
+    // ... = sets the variable value to ...
     const [isExpanded, setExpanded] = useState(false);
     const [parentRef, isClickedOutside] = useClickOutside();
     const inputRef = useRef();
@@ -125,36 +140,43 @@ export function SearchBar(props) {
 
     const isEmpty = !tvShows || tvShows.length === 0;
 
-    const changeHandler = (e) => {
-        e.preventDefault();
-        if (e.target.value.trim() === "") setNoTvShows(false);
+    // no results handler 
+    const changeHandler = (searchResult) => {
+        searchResult.preventDefault();
+        if (searchResult.target.value.trim() === "") setNoTvShows(false);
 
-        setSearchQuery(e.target.value);
+        setSearchQuery(searchResult.target.value);
     };
 
+    // expand container
     const expandContainer = () => {
         setExpanded(true);
     };
 
+    // shrink container
     const collapseContainer = () => {
         setExpanded(false);
         setSearchQuery("");
         setLoading(false);
         setNoTvShows(false);
         setTvShows([]);
+        // in case there are results displayed this condition cleans it up
         if (inputRef.current) inputRef.current.value = "";
     };
 
+    // collapse container when clicking outside
     useEffect(() => {
         if (isClickedOutside) collapseContainer();
     }, [isClickedOutside]);
 
+    // encodes the special characters incuded in the search such as !, spaces or &.
     const prepareSearchQuery = (query) => {
         const url = `http://api.tvmaze.com/search/shows?q=${query}`;
 
         return encodeURI(url);
     };
 
+    // search process
     const searchTvShow = async () => {
         if (!searchQuery || searchQuery.trim() === "") return;
 
@@ -163,10 +185,12 @@ export function SearchBar(props) {
 
         const URL = prepareSearchQuery(searchQuery);
 
+        // request for remote data and waits for it response.
         const response = await axios.get(URL).catch((err) => {
             console.log("Error: ", err);
         });
 
+        // no results error handler
         if (response) {
             console.log("Response: ", response.data);
             if (response.data && response.data.length === 0) setNoTvShows(true);
@@ -177,6 +201,9 @@ export function SearchBar(props) {
         setLoading(false);
     };
 
+    // looks for updates on search results every 500 seconds
+    // Hook that helps to limit how many times a component is re-rendered,
+    // it has an internal timer to execute the callback function every <2nd param> seconds
     useDebounce(searchQuery, 500, searchTvShow);
 
     return (
@@ -235,7 +262,7 @@ export function SearchBar(props) {
                             {tvShows.map(({ show }) => (
                                 <TvShow
                                     key={show.id}
-                                    thumbanilSrc={show.image && show.image.medium}
+                                    thumbnailSrc={show.image && show.image.medium}
                                     name={show.name}
                                     rating={show.rating && show.rating.average}
                                 />
