@@ -1,0 +1,6 @@
+-----------------------------------------------------------------------------------------------------
+CUANDO SE REALIZA UNA BUSQUEDA EN LA BARRA PRINCIPAL QUE CONTIENE EL EFECTO DE 
+CERRAR AL HACER CLICK FUERA DEL CONTAINER DE LA MISMA SE CREA UN LOOP DE ACTUALIZACIONES
+DEBIDO A QUE EL HOOK useEffect QUE SE ENCUENTRA EN LA LINEA 168 DE /COMPONENTS/SEARCHBAR/INDEX.JSX 
+LLAMA A LA FUNCION collapseContainer() LA CUAL TIENE UN RESULTADO QUE CAMBIA EN CADA RENDER.
+-----------------------------------------------------------------------------------------------------
