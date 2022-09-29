@@ -12,3 +12,14 @@ LIBRARIES (instalar desde /front):
 	-> styled-components: npm install styled-components --save
 	-> click-outside-hook: npm install react-click-outside-hook --save
 	-> react-spinners: npm install --save react-spinners
+	-> axios: npm install axios
+
+Package.json added lines:
+
+"babelMacros": {
+    "twin": {
+      "styled": "styled-components",
+      "config": "./tailwind.config.js",
+      "format": "auto"
+    }
+  }
