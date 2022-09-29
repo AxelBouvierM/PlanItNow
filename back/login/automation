@@ -1,3 +1,0 @@
-pip install flask-login 
-pip install flask-mysqldb
-pip install flask-WTF
