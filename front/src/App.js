@@ -1,5 +1,5 @@
 import './App.css';
-import styled from "styled-components";
+import styled from 'styled-components';
 import React from 'react';
 import { NavBar } from './components/navBar';
 import { SearchBar } from './components/searchBar';
@@ -10,7 +10,7 @@ const AppContainer = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 8em;
+  margin-top: 5rem;
 `;
 
 function App() {
