@@ -29,21 +29,33 @@ for movie_element in movie_elements:
     actors = p_list[3].text.replace("\n","").split("Actores")[1]
     locations = movie_element.ul.text.replace("\n","").replace("Movie", " Movie").replace("VER", " VER")[1:]
     description = ""
-    while description == "":
+    date_info = None
+    while description == "" and date_info is None:
         driver.get(link)
         lxml = driver.page_source
         soup = BeautifulSoup(lxml, 'lxml')
         html = str(soup.contents[0])
         soup = BeautifulSoup(html, 'lxml')
         description = soup.find("div", class_="colapse").contents[1].text
+        date_info = soup.find("div", class_="pull-right hidden-lg")
+        if date_info is not None:
+            dates = date_info.find_all("option")
+        date_list= []
+        for date in dates:
+            date_list.append(date.get('value'))  
+    description += "Genero: " + genre + "\n\n" + "Duración: " + duration + "\n\n"+ "Actores: " + actors + "\n\n" + "Director: " + director
+    since_date = date_list[0]
+    to_date = date_list[len(date_list) - 1]
+    print("==================================")
     print(f"{counter}-Title: {title}")
     print(f"Image: {image}")
     print(f"Link: {link}")
-    print(f"Director: {director}")
-    print(f"Genre: {genre}")
-    print(f"Duration: {duration}")
-    print(f"Actors: {actors}")
+    if since_date == to_date:
+        print(f"Fecha: {to_date}")
+    else:
+        print(f"Fecha: del {since_date} al {to_date}")
     print(f"Locations: {locations}")
     print(f"Description: {description}")
+    print("==================================")
 driver.close()
     
