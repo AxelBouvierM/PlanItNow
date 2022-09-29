@@ -1,8 +1,8 @@
 import './App.css';
 import styled from 'styled-components';
 import React from 'react';
-import { NavBar } from './components/navBar';
-import { SearchBar } from './components/searchBar';
+import { NavBar } from './components/header/NavBar';
+import { SearchBar } from './components/body/searchBar/SearchBar';
 
 
 const AppContainer = styled.div`
