@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { IoClose, IoSearch } from "react-icons/io5";
-import { AnimatePresence, motion } from "framer-motion";
-import { useClickOutside } from "react-click-outside-hook";
-import MoonLoader from "react-spinners/MoonLoader";
-import { useDebounce } from "../../hooks/debounceHook";
-import axios from "axios";
-import { TvShow } from "../tvShow";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { IoClose, IoSearch } from 'react-icons/io5';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useClickOutside } from 'react-click-outside-hook';
+import MoonLoader from 'react-spinners/MoonLoader';
+import { useDebounce } from '../../hooks/debounceHook';
+import axios from 'axios';
+import { TvShow } from '../tvShow';
 
 
 // & selector references to the component
