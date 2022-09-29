@@ -1,3 +1,4 @@
+NPM VERSION: 8.19.1
 NODE VERSION: 18.9.0
 
 LIBRARIES (instalar desde /front):
