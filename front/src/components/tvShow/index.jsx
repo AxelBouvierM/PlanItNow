@@ -37,12 +37,12 @@ const Rating = styled.span`
 `;
 
 export function TvShow(props) {
-	const { thumbanilSrc, name, rating } = props;
+	const { thumbnailSrc, name, rating } = props;
 
 	return (
 		<TvShowContainer>
 			<Thumbnail>
-				<img src={thumbanilSrc} />
+				<img src={thumbnailSrc} />
 			</Thumbnail>
 			<Name>{name}</Name>
 			<Rating>{rating || "N/A"}</Rating>
