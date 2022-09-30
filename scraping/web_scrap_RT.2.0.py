@@ -3,6 +3,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from sys import argv
+from time import sleep
 
 results = ""
 categoria = {"Teatro" : "https://redtickets.uy/busqueda?*,6,0", 
@@ -36,26 +37,34 @@ while True:
               date = span_list[1].text
               location = span_list[2].text 
               description = ""
-              driver.get(link)
-              html = driver.page_source
-              soup = BeautifulSoup(html, 'lxml')
-              event_info =soup.find("div", class_="TableEventInfo")
-              description_list = event_info.find_all("div", class_="Description")
-              description = description_list[1].text
-              date = description_list[0].text
-              purchase_info =soup.find("div", class_="SectionPurchase")
-              price_info = purchase_info.find_all("div", class_="id-input-container")
-              print(price_info.get('name'))
+              check_price = ""
+              iterations = 0
+              while check_price == "":
+                     driver.get(link)
+                     sleep(1)
+                     html = driver.page_source
+                     soup = BeautifulSoup(html, 'lxml')
+                     event_info =soup.find("div", class_="TableEventInfo")
+                     description_list = event_info.find_all("div", class_="Description")
+                     description = description_list[1].text
+                     date = description_list[0].text
+                     soup = BeautifulSoup(html, 'lxml')
+                     purchase_info =soup.find("div", class_="SectionPurchase")
+                     check_price = purchase_info.find(id="comboTicket").text[1:]
+                     iterations += 1
+                     price = purchase_info.find(id="comboTicket").text[1:].replace("(","").replace(") ","\n").replace("Elige tu entrada  ", "")
+                     if iterations == 5:
+                            price = "Consultar en el link del evento"
+                            break
               counter += 1
-              #print(f"{counter}-Title: {title}")
-              #print(f"Image: {image}")
-              #print(f"Link: {link}")
-              #print(f"Date: {date}")
-              #print(f"Location: {location}")
-              #print(f"Description: {description}")
+              print(f"{counter}-Title: {title}")
+              print(f"Image: {image}")
+              print(f"Link: {link}")
+              print(f"Date: {date}")
+              print(f"Location: {location}")
+              print(f"Precio: {price}")
+              print(f"Description: {description}")
               print("==================================")
-              break
        page += 1
        url = categoria[argv[1]].replace("0", str(page))
-       break
 driver.close()
