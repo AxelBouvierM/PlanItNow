@@ -17,11 +17,12 @@ import '../../../styles/SearchBar.css';
 const SearchBarContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 34em;
   height: 3.8em;
   background-color: #fff;
   border-radius: 6px;
   box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.14);
+  margin: 0 1em 0 1em;
 `;
 
 // lens, input and x container
@@ -119,7 +120,7 @@ const WarningMessage = styled.span`
 const containerVariants = {
     expanded: {
         height: "20em",
-        width: "calc(30% + 20%)",
+        width: "calc(34em + 6em)",
     },
     collapsed: {
         height: "3.8em",
