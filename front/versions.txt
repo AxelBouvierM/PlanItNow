@@ -14,6 +14,39 @@ LIBRARIES (instalar desde /front):
 	-> click-outside-hook: npm install react-click-outside-hook --save
 	-> react-spinners: npm install --save react-spinners
 	-> axios: npm install axios
+	-> react-responsive: npm install react-responsive --save
+		para arreglar search bar responsive dispositivos menores a 480px crear otro componente 
+		para usarla y utilizar mediaquery, ejemplo:
+		
+var MediaQuery = require('react-responsive');
+
+var A = React.createClass({
+  render: function(){
+    return (
+      <div>
+        <div>Device Test!</div>
+
+        <MediaQuery minDeviceWidth={1224}>
+          <div>You are a desktop or laptop</div>
+        </MediaQuery>
+        <MediaQuery maxDeviceWidth={1224}>
+          <div>You are a tablet or mobile phone</div>
+        </MediaQuery>
+
+        <MediaQuery orientation='portrait'>
+          <div>You are portrait</div>
+        </MediaQuery>
+        <MediaQuery orientation='landscape'>
+          <div>You are landscape</div>
+        </MediaQuery>
+
+        <MediaQuery minResolution='2dppx'>
+          <div>You are retina</div>
+        </MediaQuery>
+      </div>
+    );
+  }
+});
 
 Package.json added lines:
 
