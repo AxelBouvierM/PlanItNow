@@ -69,7 +69,7 @@ for category in categories:
                     since_date = span_list[0].text
                     to_date = since_date
             info_price = soup.find_all("div", class_="espectaculo-item")
-            from_price = "Sin información"
+            from_price = "Sin información visitar link del evento"
             to_price = from_price
             if info_price != []:
                 try:
@@ -89,7 +89,7 @@ for category in categories:
             if info_description is not None:
                 description = info_description.contents[1].text
             info_place = soup.find(id="lugar")
-            Location = "Sin información"
+            place = "Sin información"
             if info_place is not None:
                 place = info_place.div.text.replace("\n","")
             if since_date == to_date:
