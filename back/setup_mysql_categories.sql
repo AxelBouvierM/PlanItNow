@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `others` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `movie` (
-    `othersID` int(11) NOT NULL AUTO_INCREMENT,  
+    `movieID` int(11) NOT NULL AUTO_INCREMENT,  
     `title` varchar(255) NOT NULL,
     `image` varchar(255) NOT NULL,
     `link` varchar(255) NOT NULL,
