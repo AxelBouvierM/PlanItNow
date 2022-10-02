@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `music` (
     `link` varchar(255) NOT NULL,
     `place` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
-    `price` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`musicID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `theater` (
     `link` varchar(255) NOT NULL,
     `place` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
-    `price` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`theaterID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `sport` (
     `link` varchar(255) NOT NULL,
     `place` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
-    `price` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`sportID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `dance` (
     `link` varchar(255) NOT NULL,
     `place` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
-    `price` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`danceID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `others` (
     `link` varchar(255) NOT NULL,
     `place` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
-    `price` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`othersID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `movie` (
     `link` varchar(255) NOT NULL,
     `place` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
-    `price` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`movieID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `party` (
     `link` varchar(255) NOT NULL,
     `place` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
-    `price` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`partyID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
