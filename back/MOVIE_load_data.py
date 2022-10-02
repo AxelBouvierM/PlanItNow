@@ -19,9 +19,7 @@ while movie_elements == []:
     soup = BeautifulSoup(html, 'lxml')
     results = soup.find("div", class_="content")
     movie_elements = results.find_all("div", class_="row alternate")
-    counter = 0
     for movie_element in movie_elements:
-        counter += 1
         title = str(movie_element.h2.a).split(">")[1].split("<")[0]
         image = movie_element.img['src']
         link = "https://www.movie.com.uy/" + movie_element.a['href'][1:]
