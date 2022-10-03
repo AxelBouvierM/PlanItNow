@@ -1,33 +1,29 @@
-import React, { useState, useEffect } from 'react'
-// useState: Contains the data retrieved from the backend & renders the data on the page
-// useEffect: Fetchs the backend Api on the first render
+import './App.css';
+import styled from 'styled-components';
+import React from 'react';
+import { NavBar } from './components/header/NavBar';
+import { SearchBar } from './components/body/searchBar/SearchBar';
+
+
+const AppContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+`;
 
 function App() {
-
-  const [data, setData] = useState([{}])
-  // data: Actual data
-  // setData: Function to manipulate data variable
-
-  useEffect(() => {
-    fetch("ruta de flask")
-    .then(res => res.json())
-    .then(data => {
-      setData(data)
-      console.log(data)
-    })
-  }, [])
-  // empty array at end to run just one time
   return (
     <div>
-      {(typeof data.members === 'undefined') ? (
-        <p>Loading...</p>): (
-          data.members.map((member, i) => (
-            <p key={i}>{member}</p>
-          ))
-        )
-      }
+      <React.Fragment>
+        <NavBar/>
+      </React.Fragment>
+      <AppContainer>
+        <SearchBar />
+      </AppContainer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
