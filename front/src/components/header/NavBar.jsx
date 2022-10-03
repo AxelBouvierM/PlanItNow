@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef } from 'react';
 
 import { Fade as Hamburger } from 'hamburger-react'
@@ -13,19 +14,17 @@ export function NavBar() {
 	}
   	return (
 	<header>
-		<div className="btn-container">
-			<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>
-				<Hamburger />
-			</button>
-			<nav ref={navRef}>
-				<a href='/#'><i><RiHome2Line /></i><span>Inicio</span></a>
-				<a href='/#'><i><RiCalendar2Line /></i><span>Agenda</span></a>
-				<a href='/#'><i><RiGroup2Line /></i><span>Sala</span></a>
-				<a href='/#'><i><RiHistoryLine /></i><span>Historial</span></a>
-				<a href='/#'><i><RiAccountCircleLine /></i><span>Cuenta</span></a>
-				<a href='/#'><i><RiSettings2Line /></i><span>Configuración</span></a>
-			</nav>
-		</div>
+		<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>
+			<Hamburger />
+		</button>
+		<nav ref={navRef}>
+			<a href='/#'><i><RiHome2Line /></i><span>Inicio</span></a>
+			<a href='/#'><i><RiCalendar2Line /></i><span>Agenda</span></a>
+			<a href='/#'><i><RiGroup2Line /></i><span>Sala</span></a>
+			<a href='/#'><i><RiHistoryLine /></i><span>Historial</span></a>
+			<a href='/#'><i><RiAccountCircleLine /></i><span>Cuenta</span></a>
+			<a href='/#'><i><RiSettings2Line /></i><span>Configuración</span></a>
+		</nav>
 	</header>
   )
 }

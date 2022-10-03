@@ -14,6 +14,7 @@ LIBRARIES (instalar desde /front):
 	-> click-outside-hook: npm install react-click-outside-hook --save
 	-> react-spinners: npm install --save react-spinners
 	-> axios: npm install axios
+  -> react-blur: npm install react-blur --save
 	-> react-responsive: npm install react-responsive --save
 		para arreglar search bar responsive dispositivos menores a 480px crear otro componente 
 		para usarla y utilizar mediaquery, ejemplo:
@@ -57,3 +58,9 @@ Package.json added lines:
       "format": "auto"
     }
   }
+
+
+  IDEA: HEADER
+
+  STICKY
+  BACKDROP-FILTER: BLUR(10PX)

@@ -4,25 +4,22 @@ import React from 'react';
 import { NavBar } from './components/header/NavBar';
 import { SearchBar } from './components/body/searchBar/SearchBar';
 
-
 const AppContainer = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 5rem;
+  margin-top: 1.5rem;
 `;
 
 function App() {
   return (
-    <div>
+    <>
       <React.Fragment>
-        <NavBar/>
+        <NavBar />
       </React.Fragment>
       <AppContainer>
         <SearchBar />
       </AppContainer>
-    </div>
+    </>
   );
 }
 
