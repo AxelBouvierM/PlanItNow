@@ -1,3 +1,5 @@
+Scraping:
+
 Beautiful Soup - pip install beautifulsoup4
 Selenium - pip install selenium
 Google chrome - https://gitlab.com/gitlab-org/gitlab-development-kit/-/issues/597
@@ -5,3 +7,12 @@ Google chrome - https://gitlab.com/gitlab-org/gitlab-development-kit/-/issues/59
   sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
   sudo apt-get update
   sudo apt-get install google-chrome-stable
+  --------------------------------------------------------
+Database:
+
+pip install mysql-connector-python
+
+----------------------------------------------------------
+Google API:
+
+pip install python-google-places
