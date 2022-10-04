@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from socket import CAN_RAW
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from sys import argv
