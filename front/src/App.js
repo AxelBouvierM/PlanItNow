@@ -1,24 +1,36 @@
 import './App.css';
-import styled from 'styled-components';
 import React from 'react';
+import { Parallax, Background } from 'react-parallax'
 import { NavBar } from './components/header/NavBar';
 import { SearchBar } from './components/body/searchBar/SearchBar';
 
-const AppContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-`;
+const searchBarStyles = {
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '1.5rem',
+  zIndex: '2'
+};
+
+const navBarStyles = {
+  zIndex: '3'
+};
 
 function App() {
   return (
     <>
-      <React.Fragment>
-        <NavBar />
-      </React.Fragment>
-      <AppContainer>
+      <div style={navBarStyles}>
+        <React.Fragment>
+          <NavBar />
+        </React.Fragment>
+      </div>
+      <div style={searchBarStyles}>
         <SearchBar />
-      </AppContainer>
+      </div>
+      <Parallax strength={500}>
+        <Background className="Image1">
+          <img src='./images/montaña1.jpg' alt='montaña'/>
+        </Background>
+      </Parallax>
     </>
   );
 }
