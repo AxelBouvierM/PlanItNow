@@ -2,7 +2,6 @@
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
-from sys import argv
 from time import sleep
 import mysql.connector
 
@@ -74,4 +73,7 @@ for category in categories:
         page += 1
         url = categories[category].replace("0", str(page))
     print(f"All {category} events added to database")
+if connection.is_connected():
+    cursor.close()
+    connection.close()
 driver.close()
