@@ -13,6 +13,4 @@ Database:
 pip install mysql-connector-python
 
 ----------------------------------------------------------
-Google API:
 
-pip install python-google-places
