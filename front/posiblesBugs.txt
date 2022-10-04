@@ -9,4 +9,3 @@ EN LA PAGINA ABAJO A LA DERECHA DEL DESPLEGABLE, SOLO PASA EN RESOLUCION ESCRITO
 -----------------------------------------------------------------------------------------------------
 CUANDO SE ABRE LA BARRA DE NAVEGACION SE PUEDE SCROLLEAR LA PAGINA
 -----------------------------------------------------------------------------------------------------
-CUANDO SE ABRE LA BARRA DE NAVEGACION TE DEJA USAR LA BARRA DE BUSQUEDA
