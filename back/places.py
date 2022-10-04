@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 
 import requests
-import json
-import pprint
+from selenium import webdriver
+from bs4 import BeautifulSoup
 
 API_KEY = open('API_KEY.txt').read() #open and save the api keyinto a variable
-import requests
 
 url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query=Restaurantes%20en%20Montevideo%20Uruguay&key={API_KEY}"
 
@@ -15,13 +14,11 @@ places = results.get('results')
 
 for place in places:
       
-    # Print value corresponding to the
-    # 'name' key at the ith index of y
     photo_reference = place.get('photos')[0].get('photo_reference')
     
     title = place.get('name')
     place_location = place.get('formatted_address')
-    price_level = place.get('price_level') #Make a scale
+    price_level = place.get('price_level')
     price = "Rango de precios: " 
     if price_level == 0:
         price += "Gratis"
@@ -29,7 +26,7 @@ for place in places:
         price += "Sin precio"
     elif price_level == 2:
         price += "Moderado"
-    elif price_level == 2:
+    elif price_level == 3:
         price += "Costoso"    
     else:
         price += "Muy costoso"
@@ -43,8 +40,16 @@ for place in places:
     for day in open_days:
         description += day + "\n"
     link = results.get('website')
-    image = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_reference}&key={API_KEY}"
-
+    if link is None:
+        link = "Sin información"
+    image_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_reference}&key={API_KEY}"
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('headless')
+    driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options)
+    driver.get(image_url)
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'lxml')
+    image = soup.img['src']
     print("===============================")
     print(title)
     print(image)
