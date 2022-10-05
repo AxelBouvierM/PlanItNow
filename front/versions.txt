@@ -2,8 +2,12 @@ NPM VERSION: 8.19.1
 NODE VERSION: 18.9.0
 
 LIBRARIES (instalar desde /front):
+- ignorar vulnerabilidades
+
+  GENERALES:
 	-> react-icons: npm install react-icons --save
-		- ignorar vulnerabilidades
+  -> react-router: npm i -D react-router-dom
+		
 
 	NAVBAR:	
 	-> hamburger-react: npm install hamburger-react

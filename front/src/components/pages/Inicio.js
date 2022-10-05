@@ -1,9 +1,8 @@
-import './styles/App.css';
 import React from 'react';
 import { Parallax, Background } from 'react-parallax'
-import { NavBar } from './components/header/NavBar';
-import { SearchBar } from './components/body/searchBar/SearchBar';
-import image1 from './images/montaña1.jpg'
+import { NavBar } from '../header/NavBar';
+import { SearchBar } from '../body/searchBar/SearchBar';
+import image1 from '../../images/montaña1.jpg'
 
 
 const searchBarStyles = {
@@ -25,7 +24,7 @@ const bgStyles = {
   backgroundSize: 'cover'
 };
 
-function App() {
+function Inicio() {
   return (
     <>
       <Parallax strength={500}>
@@ -47,4 +46,4 @@ function App() {
   );
 }
 
-export default App;
+export default Inicio;
