@@ -9,3 +9,5 @@ EN LA PAGINA ABAJO A LA DERECHA DEL DESPLEGABLE, SOLO PASA EN RESOLUCION ESCRITO
 -----------------------------------------------------------------------------------------------------
 CUANDO SE ABRE LA BARRA DE NAVEGACION SE PUEDE SCROLLEAR LA PAGINA
 -----------------------------------------------------------------------------------------------------
+EL BACKGROUND OCUPA EL ANCHO TOTAL DE LA IMAGEN (AL TENER UNA IMAGEN 1080px DE ANCHO, POR MAS QUE 
+ESTE SETTEADO QUE OCUPE EL 100vh LA PAGINA GENERA OVERFLOW PARA MOSTRAR TODA LA IMAGEN)
