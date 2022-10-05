@@ -1,3 +1,6 @@
+-- Creates the event Database that contains the different categories tables and the schedule one
+-- cat setup_mysql_categories.sql | mysql -hlocalhost -uroot -p (to run the script)
+
 CREATE DATABASE IF NOT EXISTS events DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE events;
 CREATE TABLE IF NOT EXISTS `music` (
@@ -84,3 +87,26 @@ CREATE TABLE IF NOT EXISTS `party` (
     PRIMARY KEY (`partyID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `restaurant` (
+    `restaurantID` int(11) NOT NULL AUTO_INCREMENT,  
+    `title` varchar(255) NOT NULL,
+    `image` varchar(255) NOT NULL,
+    `link` varchar(255) NOT NULL,
+    `place` varchar(255) NOT NULL,
+    `date` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
+    `description` varchar(2000) NOT NULL,
+    PRIMARY KEY (`restaurantID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `brewery` (
+    `breweryID` int(11) NOT NULL AUTO_INCREMENT,  
+    `title` varchar(255) NOT NULL,
+    `image` varchar(255) NOT NULL,
+    `link` varchar(255) NOT NULL,
+    `place` varchar(255) NOT NULL,
+    `date` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
+    `description` varchar(2000) NOT NULL,
+    PRIMARY KEY (`breweryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
