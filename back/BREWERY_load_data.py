@@ -33,17 +33,22 @@ while True:
             price += "Moderado"
         elif price_level == 3:
             price += "Costoso"    
+        elif price_level == 4:
+            price += "Muy Costoso" 
         else:
-            price += "Muy costoso"
+            price += "Sin información"
         place_id = place.get('place_id')
         url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&key={API_KEY}"
         response = requests.get(url)
         results = response.json().get('result')
         phone_number = results.get('international_phone_number') #Description
-        open_days = results.get('opening_hours').get('weekday_text') #Description
+        try:
+            open_days = results.get('opening_hours').get('weekday_text') #Description
+            for day in open_days:
+                description += day + "\n"
+        except Exception:
+            open_days = "Sin información"
         description = f"Telefono: {phone_number}\n"
-        for day in open_days:
-            description += day + "\n"
         link = results.get('website')
         if link is None:
             link = "Sin información"
@@ -60,6 +65,7 @@ while True:
         record = (title, image, link, place_location, date, price, description[:-1])
         cursor.execute(insert, record)
         connection.commit()
+        print("+", end="")
     
     if next_page is None:
         break
@@ -69,7 +75,7 @@ while True:
     places = results.get('results')
     next_page = results.get('next_page_token')
 
-print("All breweries added to database")
+print("\nAll breweries added to database")
 if connection.is_connected():
     cursor.close()
     connection.close()
