@@ -33,8 +33,10 @@ while True:
             price += "Moderado"
         elif price_level == 3:
             price += "Costoso"    
+        elif price_level == 4:
+            price += "Muy Costoso" 
         else:
-            price += "Muy costoso"
+            price += "Sin información"
         place_id = place.get('place_id')
         url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&key={API_KEY}"
         response = requests.get(url)
