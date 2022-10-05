@@ -8,9 +8,6 @@ import { useDebounce } from '../../../hooks/debounceHook';
 import axios from 'axios';
 import { TvShow } from '../searchResults/tvShow';
 
-import '../../../styles/SearchBar.css';
-
-
 // "&" SELECTOR REFERENCES TO THE PREVIOUS COMPONENT
 
 // before click searchbar container
@@ -19,9 +16,12 @@ const SearchBarContainer = styled(motion.div)`
   flex-direction: column;
   width: 34em;
   height: 3.8em;
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.14);
+  background-color: transparent;
+  border-radius: 40px;
+  border: solid;
+  border-color: #fafafa;
+  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.20);
+  backdrop-filter: blur(10px);
   margin: 0 1em 0 1em;
 `;
 
@@ -32,7 +32,7 @@ const SearchInputContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  padding: 2px 15px;
+  padding: 2px 25px 10px 25px;
 `;
 
 // input tag handler (| color)
@@ -81,21 +81,15 @@ const CloseIcon = styled(motion.span)`
   }
 `;
 
-// line between searchBar & search results
-const LineSeperator = styled.span`
-  display: flex;
-  min-width: 100%;
-  min-height: 2px;
-  background-color: #d8d8d878;
-`;
-
 // search results container
 const SearchContent = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  padding: 2px 25px;
   flex-direction: column;
   overflow-y: auto;
+  //backdrop-filter: blur(10px);
 `;
 
 // loading icon when search takes time
@@ -131,7 +125,7 @@ const containerVariants = {
 const containerTransition = { type: "spring", damping: 22, stiffness: 100 };
 
 export function SearchBar(props) {
-    // const [a, b] = useState(...) explanation:
+    // const [a, b] = useState(...) destructuring explanation:
     // a = variable name
     // b = function to update the current variable
     // ... = sets the variable value to ...
@@ -223,7 +217,7 @@ export function SearchBar(props) {
                     <IoSearch />
                 </SearchIcon>
                 <SearchInput
-                    placeholder="Search for categories"
+                    placeholder="Buscar categorías"
                     onFocus={expandContainer}
                     ref={inputRef}
                     value={searchQuery}
@@ -244,7 +238,6 @@ export function SearchBar(props) {
                     )}
                 </AnimatePresence>
             </SearchInputContainer>
-            {isExpanded && <LineSeperator />}
             {isExpanded && (
                 <SearchContent>
                     {isLoading && (

@@ -7,7 +7,7 @@ const TvShowContainer = styled.div`
   width: 100%;
   min-height: 6em;
   display: flex;
-  border-bottom: 2px solid #d8d8d852;
+  border-bottom: 1px solid #d8d8d852;
   padding: 6px 8px;
   align-items: center;
 `;
@@ -27,7 +27,7 @@ const Thumbnail = styled.div`
 // result name
 const Name = styled.h3`
   font-size: 15px;
-  color: #000;
+  color: #E3E3E3;
   margin-left: 10px;
   flex: 2;
   display: flex;
