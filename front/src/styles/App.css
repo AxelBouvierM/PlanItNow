@@ -42,24 +42,37 @@ body {
     transform: rotate(360deg);
   }
 }
+.Slides {
+  width: 50%;
+  margin: 10rem auto;
+  height: 570px;
+}
 .slick-slide > div {
-  margin: 0 10px;
+  margin: 0 -50px;
 }
 .slick-list {
   margin: 0 -10px;
 }
 
 .card {
+  transform: scale(0.6);
   border: 1px solid #fff;
   background: white;
-  border-radius: 20px;
+  border-radius:30px;
   overflow: hidden;
-  height: 500px;
-  max-width: 450px;
+  height: 30rem;
+  max-width: 22rem;
   color: black;
   cursor: pointer;
   margin: 50px auto;
+  opacity: 0.5;
 }
+
+.activeCard {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
 .card-top h1 {
   font-size: 1.1rem;
   margin: 40px;
@@ -89,4 +102,29 @@ body {
 .carousel-control.left , .carousel-control.right
 {
   background-image: none !important;
+}
+
+.arrow {
+  background-color: #fff;
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow svg {
+  transition: color 300ms;
+}
+
+.arrow svg:hover {
+  color: #68edff;
+}
+
+.next {
+  right: 0%;
+  top: 50%;
+}
+
+.prev {
+  left: 0%;
+  top: 50%;
 }
