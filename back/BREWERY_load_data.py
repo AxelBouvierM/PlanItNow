@@ -19,8 +19,10 @@ places = results.get('results')
 next_page = results.get('next_page_token')
 while True:
     for place in places:
-        photo_reference = place.get('photos')[0].get('photo_reference')
-    
+        try:
+            photo_reference = place.get('photos')[0].get('photo_reference')
+        except:
+            continue
         title = place.get('name')
         place_location = place.get('formatted_address')
         price_level = place.get('price_level')
@@ -65,7 +67,6 @@ while True:
         record = (title, image, link, place_location, date, price, description[:-1])
         cursor.execute(insert, record)
         connection.commit()
-        print("+", end="")
     
     if next_page is None:
         break
@@ -75,7 +76,7 @@ while True:
     places = results.get('results')
     next_page = results.get('next_page_token')
 
-print("\nAll breweries added to database")
+print("All breweries added to database")
 if connection.is_connected():
     cursor.close()
     connection.close()
