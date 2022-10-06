@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """This will be our main project file, all our Python code will be in this file (Routes, MySQL connection, validation, etc)"""
-from crypt import methods
-from ssl import ALERT_DESCRIPTION_UNSUPPORTED_EXTENSION
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, request
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
@@ -26,7 +24,7 @@ mysql = MySQL(app)
 @app.route('/loginData', methods=['POST', 'GET'])
 def loginData():
     # msj de error
-    msg = ''
+    msg = {}
     """
     try:
         username = request.json['username']
@@ -37,22 +35,21 @@ def loginData():
     
     
     #Usuario existente para prueba sin hacer request de arriba
-    username = "Axel"
-    password = "Test"
+    username = "test"
+    password = "test"
     
 
-    if request.method == 'POST' and username is not None and password is not None:
+    if request.method == 'GET' and username is not None and password is not None:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password,))
         # Fetch one record and return result
         user = cursor.fetchone()
         if user:
-            msg = "True"
+            msg['logged'] = 'True'
             return msg
         else:
-            msg = False
+            msg['logged'] = 'False'
             return msg
-    return render_template('index.html', msg=msg)
 
 """
 @app.route('/login/', methods=['GET', 'POST'])

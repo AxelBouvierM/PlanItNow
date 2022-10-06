@@ -1,0 +1,5 @@
+pip install flask-login 
+pip install flask-mysqldb
+pip install flask-WTF
+pip install py3dns
+pip install mysql-connector-python
