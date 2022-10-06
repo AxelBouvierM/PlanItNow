@@ -9,6 +9,7 @@ import Agenda from './components/pages/Agenda'
 import Sala from './components/pages/Sala'
 import Cuenta from './components/pages/Cuenta'
 import Configuracion from './components/pages/Configuracion'
+import Login from './components/pages/Login'
 
 import './index.css';
 
@@ -22,6 +23,7 @@ export default function App() {
         <Route path='/sala' element={<Sala />} />
         <Route path='/cuenta' element={<Cuenta />} />
         <Route path='/configuracion' element={<Configuracion />} />
+        <Route path='/login' element={<Login />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
