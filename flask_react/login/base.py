@@ -33,11 +33,9 @@ def loginData():
         return "No hay donde hacer request"
     """
     
-    
-    #Usuario existente para prueba sin hacer request de arriba
+    # Usuario existente para prueba sin hacer request de arriba
     username = "test"
     password = "test"
-    
 
     if request.method == 'GET' and username is not None and password is not None:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -50,6 +48,41 @@ def loginData():
         else:
             msg['logged'] = 'False'
             return msg
+    elif request.method == 'POST':
+        # Proceso de registro
+        try:
+            email = request.json['email']
+        except Exception:
+            return "No hay data"
+        if username is not None and password is not None and email is not None:
+            # Mensaje de error en caso de falla
+            msg = {}
+            if request.method == 'POST':
+                msg['error'] = 'Por favor complete todos los datos!'
+
+            # Chequeo si existe ya existe
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+            user = cursor.fetchone()
+        
+            if user:
+                msg['error'] = 'El usuario ya existe!'
+            elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+                # At least one or more non-@ , then a @ , then at least one or more non-@ , then a dot, then at least one or more non-@"
+                msg['error'] = 'Direccion de correo invalida!'
+            elif not re.match(r'[A-Za-z0-9]+', username):
+                msg['error'] = 'El nombre de usuario debe contener solo caracteres y numeros!'
+            elif not username or not password or not email:
+                msg['error'] = 'Por favor complete todos los datos!'
+            elif validar_email(email, debug=False) == False:
+                msg['error'] = 'Email no valido!'
+            else:
+                # La cuenta no exite y los datos son validos para crear el nuevo usuario
+                cursor.execute('INSERT INTO users VALUES (NULL, %s, %s, %s)', (username, password, email,))
+                # Guardando los cambios
+                mysql.connection.commit()
+                msg['registro'] = 'True'
+    return msg
 
 """
 @app.route('/login/', methods=['GET', 'POST'])
@@ -128,4 +161,4 @@ def register():
 """
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=5000, debug=True)
+app.run(host='0.0.0.0', port=5000, debug=True)
