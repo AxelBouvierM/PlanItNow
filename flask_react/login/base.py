@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 """This will be our main project file, all our Python code will be in this file (Routes, MySQL connection, validation, etc)"""
-from flask import Flask, request
+from http import cookies
+import json
+from flask import Flask, jsonify, make_response, request
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 from emailValidator import validar_email
+import jwt
 
 app = Flask(__name__)
 
@@ -21,33 +24,50 @@ app.config['MYSQL_DB'] = 'login'
 mysql = MySQL(app)
 
 # Ruta para obtener data desde el front
-@app.route('/loginData', methods=['POST', 'GET'])
-def loginData():
+@app.route('/login/auth', methods=['POST', 'GET'])
+def loginAuth():
     # msj de error
     msg = {}
-    """
-    try:
-        username = request.json['username']
-        password = request.json['password']
-    except Exception:
-        return "No hay donde hacer request"
-    """
-    
-    # Usuario existente para prueba sin hacer request de arriba
-    username = "test"
-    password = "test"
 
-    if request.method == 'GET' and username is not None and password is not None:
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if username is not None and password is not None:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password,))
+        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
         # Fetch one record and return result
         user = cursor.fetchone()
         if user:
-            msg['logged'] = 'True'
-            return msg
+            # encripar usuraio y id jwt
+            id = user.get('id')
+            token = jwt.encode({"username": username, "UserID": id}, "AEPINMM")
+            resp = make_response(jsonify(response={"status": "ok"}))
+            resp.status_code = 200
+            resp.set_cookie("cookie", token)
+            return resp
         else:
-            msg['logged'] = 'False'
-            return msg
+            resp = make_response(jsonify("Not Found"))
+            return resp
+    
+@app.route('/login/check', methods=['POST', 'GET'])
+def loginCheck():
+    try:
+        existCookies = request.cookies.get('cookie')
+        existCookies = jwt.decode(existCookies, "AEPINMM")
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE username = %s AND id = %s', (existCookies.get('username'), existCookies.get('UserID')))
+        user = cursor.fetchone()
+
+        if user:
+            return jsonify('Logeado')
+    except Exception:
+        pass
+    return jsonify('User no logeado')
+    
+    
+    
+    
+    """
     elif request.method == 'POST':
         # Proceso de registro
         try:
@@ -82,7 +102,7 @@ def loginData():
                 # Guardando los cambios
                 mysql.connection.commit()
                 msg['registro'] = 'True'
-            return msg
+            return msg"""
 
 """
 @app.route('/login/', methods=['GET', 'POST'])
