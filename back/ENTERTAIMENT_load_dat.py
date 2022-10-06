@@ -11,20 +11,26 @@ API_KEY = open('API_KEY.txt').read() #open and save the api keyinto a variable
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password='root')
 cursor = connection.cursor() 
 
-url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query=parques%20de%20diversiones%20en%20Montevideo%20Uruguay&key={API_KEY}"
+url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query=sitios+de+entrenimiento+familiar+en+Montevideo+Uruguay&key={API_KEY}"
 
 response = requests.get(url)
 results = response.json()
 places = results.get('results')
 next_page = results.get('next_page_token')
+
 while True:
     for place in places:
+        types = place.get('types')
+        if "bar" in types or "night_club" in types or "health" in types or "museum" in types or "restaurant" in types or "cafe" in types or "stadium" in types:
+            continue
         try:
             photo_reference = place.get('photos')[0].get('photo_reference')
         except Exception:
             pass
         title = place.get('name')
         place_location = place.get('formatted_address')
+        if "Montevideo" not in place_location:
+            break
         price_level = place.get('price_level')
         price = "Rango de precios: " 
         if price_level == 0:
