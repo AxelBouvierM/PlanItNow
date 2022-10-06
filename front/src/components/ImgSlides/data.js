@@ -26,6 +26,7 @@ export const dataDigitalBestSeller = [
     {
       id: 4,
       title: 'Super Mario™ 3D World + Bowser’s Fury',
+      linkPage: "https://www.mercadolibre.com.uy/super-mario-3d-world-bowsers-fury-standard-edition-nintendo-switch-fisico/p/MLU17333954",
       price: '$59.99',
       category: 'Nintendo Switch',
       linkImg:
