@@ -82,7 +82,7 @@ def loginData():
                 # Guardando los cambios
                 mysql.connection.commit()
                 msg['registro'] = 'True'
-    return msg
+            return msg
 
 """
 @app.route('/login/', methods=['GET', 'POST'])
