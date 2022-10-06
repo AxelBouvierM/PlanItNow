@@ -15,10 +15,12 @@ categories = {
        "theater" : "https://redtickets.uy/busqueda?*,6,0",
        }
 
-for category in categories:
-    connection = mysql.connector.connect(host='localhost', database='events', user='root', password='root')
-    cursor = connection.cursor()   
+DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
 
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
+cursor = connection.cursor() 
+
+for category in categories:
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('headless')
     driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options)

@@ -7,8 +7,9 @@ import mysql.connector
 
 
 API_KEY = open('API_KEY.txt').read() #open and save the api keyinto a variable
+DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
 
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password='root')
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
 cursor = connection.cursor() 
 
 url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query=Cafes%20en%20Montevideo%20Uruguay&key={API_KEY}"

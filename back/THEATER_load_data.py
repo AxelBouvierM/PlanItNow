@@ -4,11 +4,14 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import mysql.connector
 
+
+DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
+
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
+cursor = connection.cursor() 
+
 movie_elements = []
 while movie_elements == []:
-    connection = mysql.connector.connect(host='localhost', database='events', user='root', password='root')
-    cursor = connection.cursor()
-
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('headless')
     driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options)

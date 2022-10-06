@@ -3,10 +3,11 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import mysql.connector
+DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
 
 movie_elements = []
 while movie_elements == []:
-    connection = mysql.connector.connect(host='localhost', database='events', user='root', password='root')
+    connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
     cursor = connection.cursor()
 
     chrome_options = webdriver.ChromeOptions()

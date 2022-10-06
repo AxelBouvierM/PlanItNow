@@ -7,6 +7,11 @@ import requests
 import datetime
 import mysql.connector
 
+DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
+
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
+cursor = connection.cursor() 
+
 categories = {"theater" : "https://tickantel.com.uy/inicio/buscar_categoria?2&cat_id=1", 
        "music" : "https://tickantel.com.uy/inicio/buscar_categoria?3&cat_id=2",
        "sport" : "https://tickantel.com.uy/inicio/buscar_categoria?4&cat_id=6", #The price information of it categorie does not work very well, decide if we eant to include it
@@ -14,9 +19,6 @@ categories = {"theater" : "https://tickantel.com.uy/inicio/buscar_categoria?2&ca
        "others" : "https://tickantel.com.uy/inicio/buscar_categoria?5&cat_id=7",
        }
 for category in categories:
-    connection = mysql.connector.connect(host='localhost', database='events', user='root', password='root')
-    cursor = connection.cursor()
-
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('headless')
     driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options)
