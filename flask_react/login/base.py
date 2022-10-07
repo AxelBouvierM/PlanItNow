@@ -8,6 +8,7 @@ import MySQLdb.cursors
 import re
 from emailValidator import validar_email
 import jwt
+import uuid
 
 app = Flask(__name__)
 
@@ -24,7 +25,7 @@ app.config['MYSQL_DB'] = 'login'
 mysql = MySQL(app)
 
 # Ruta para obtener data desde el front
-@app.route('/login/auth', methods=['POST', 'GET'])
+@app.route('/login/auth', methods=['POST'])
 def loginAuth():
     # msj de error
     msg = {}
@@ -39,8 +40,8 @@ def loginAuth():
         user = cursor.fetchone()
         if user:
             # encripar usuraio y id jwt
-            id = user.get('id')
-            token = jwt.encode({"username": username, "UserID": id}, "AEPINMM")
+            UserID = user.get('UserID')
+            token = jwt.encode({"username": username, "UserID": UserID}, "AEPINMM")
             resp = make_response(jsonify(response={"status": "ok"}))
             resp.status_code = 200
             resp.set_cookie("cookie", token)
@@ -49,13 +50,14 @@ def loginAuth():
             resp = make_response(jsonify("Not Found"))
             return resp
     
-@app.route('/login/check', methods=['POST', 'GET'])
+@app.route('/login/check', methods=['GET'])
 def loginCheck():
     try:
         existCookies = request.cookies.get('cookie')
         existCookies = jwt.decode(existCookies, "AEPINMM")
+        #print(existCookies)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND id = %s', (existCookies.get('username'), existCookies.get('UserID')))
+        cursor.execute('SELECT * FROM users WHERE username = %s AND UserID = %s', (existCookies.get('username'), existCookies.get('UserID')))
         user = cursor.fetchone()
 
         if user:
@@ -64,7 +66,49 @@ def loginCheck():
         pass
     return jsonify('User no logeado')
     
+@app.route('/login/register', methods=['POST'])
+def loginRegister():
     
+    email = request.json.get('email')
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if username is not None and password is not None and email is not None:
+        # Mensaje de error en caso de falla
+        msg = ''
+
+        # Chequeo si existe ya existe
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        user = cursor.fetchone()
+        
+        if user:
+            msg = 'El usuario ya existe!'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            # At least one or more non-@ , then a @ , then at least one or more non-@ , then a dot, then at least one or more non-@"
+            msg = 'Direccion de correo invalida!'
+        elif not re.match(r'[A-Za-z0-9]+', username):
+            msg = 'El nombre de usuario debe contener solo caracteres y numeros!'
+        elif not username or not password or not email:
+            msg = 'Por favor complete todos los datos!'
+        elif validar_email(email, debug=False) == False:
+            msg = 'Email no valido!'
+        else:
+            # La cuenta no exite y los datos son validos para crear el nuevo usuario
+            UserID = str(uuid.uuid4())
+            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', (UserID, username, password, email,))
+            # Guardando los cambios
+            mysql.connection.commit()
+            msg = 'Ok'
+    elif request.method == 'POST':
+        msg = "Complete todos los datos"
+    return msg
+
+@app.route('/login/logout', methods=['GET'])
+def loginLogout():
+    resp = make_response(jsonify(response={"status": "del success"}))
+    resp.delete_cookie("cookie")
+    return resp
     
     
     """
