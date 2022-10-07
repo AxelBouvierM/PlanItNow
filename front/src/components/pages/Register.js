@@ -2,26 +2,27 @@ import { useState } from 'react'
 import axios from 'axios'
 //import axios from "axios";
 
-function Login() {
+function Register() {
 	const [username, setUser] = useState('')
+	const [mail, setMail] = useState('')
 	const [password, setPass] = useState('')
-	
-	async function SendFormInput(event) {
+
+	function SendFormInput(event) {
 		event.preventDefault()
 		const headers = {
 			'Content-Type': 'application/json',
 			'Content-Encoding': 'gzip, deflate, br',
 		};
 
-		const formData = {
+		const regData = {
 			'username': username,
+			'mail': mail,
 			'password': password
 		};
 
-		axios.post('/login/auth', formData, { headers: headers })
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
+		axios.post('/register', regData, { headers: headers })
+			.then((res) => {
+				console.log(res);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -41,6 +42,15 @@ function Login() {
 					onChange={(event) => setUser(event.target.value)}
 					required>
 				</input>
+				<label htmlFor="mail" className="form-label">Mail</label>
+				<input
+					type="text"
+					className="loginInput"
+					placeholder="Mail"
+					value={mail}
+					onChange={(event) => setMail(event.target.value)}
+					required>
+				</input>
 				<label htmlFor="password" className="form-label">Contraseña</label>
 				<input
 					type="password"
@@ -50,10 +60,10 @@ function Login() {
 					onChange={(event) => setPass(event.target.value)}
 					required>
 				</input>
-				<button type="submit" className="btn btn-primary mt-2">Entrar</button>
+				<button type="submit" className="btn btn-primary mt-2">Registrarme</button>
 			</form>
 		</div>
 	);
 }
 
-export default Login;
+export default Register;

@@ -6,10 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import Home from './components/pages/Inicio'
 import ErrorPage from './components/pages/NoPage'
 import Agenda from './components/pages/Agenda'
-import Sala from './components/pages/Sala'
 import Cuenta from './components/pages/Cuenta'
 import Configuracion from './components/pages/Configuracion'
 import Login from './components/pages/Login'
+import Register from './components/pages/Register'
 
 import './index.css';
 
@@ -18,12 +18,13 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
-        <Route path='/home' element={<Home />} />
+        <Route path='/inicio' element={<Home />} />
         <Route path='/agenda' element={<Agenda />} />
-        <Route path='/sala' element={<Sala />} />
+        <Route path='/categorias' element={<Agenda />} />
         <Route path='/cuenta' element={<Cuenta />} />
         <Route path='/configuracion' element={<Configuracion />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

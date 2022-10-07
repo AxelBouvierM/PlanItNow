@@ -1,48 +1,45 @@
 import { useState } from 'react';
-import APIService from './APIService'
 
-const Form = (props) => {
+const Form = () => {
 	const [username, setUser] = useState('')
 	const [password, setPass] = useState('')
 
 	const sendInput = () => {
-		APIService.SendUserInput({ username, password })
-			.then((response) => props.insertedArticle(response))
-			.catch(error => console.log('error', error))
-	}
+		const formData = {
+			'username': username,
+			'password': password
+		};
+		ApiMethods.SendFormInput(formData);
+		event.preventDefault();
+		// clear from fields
+		setUser('');
+		setPass('');
+	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault()
-		sendInput()
-		// clears the form fields after submission.
-		setUser('')
-		setPass('')
-	}
 
 	return (
 		<div>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={sendInput}>
 
 				<label htmlFor="username" className="form-label">Usuario</label>
 				<input
 					type="text"
-					className="form-control"
+					className="loginInput"
 					placeholder="Usuario"
 					value={username}
-					onChange={(e) => setUser(e.target.value)}
-					required
-				/>
+					onChange={(event) => setUser(event.target.value)}
+					required>
+					</input>
 				<label htmlFor="password" className="form-label">Contraseña</label>
 				<input
-					className="form-control"
+					type="password"
+					className="loginInput"
 					placeholder="Contraseña"
-					rows='6'
 					value={password}
-					onChange={(e) => setPass(e.target.value)}
+					onChange={(event) => setPass(event.target.value)}
 					required>
 				</input>
-				<button className="btn btn-primary mt-2">Entrar</button>
-
+				<button type="submit" className="btn btn-primary mt-2">Entrar</button>
 			</form>
 		</div>
 	)
