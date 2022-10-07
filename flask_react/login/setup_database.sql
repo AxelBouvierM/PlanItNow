@@ -7,7 +7,7 @@ USE login;
 CREATE TABLE IF NOT EXISTS `users` (
 	`UserID` varchar(1000) NOT NULL,
   	`username` varchar(50) NOT NULL,
-  	`password` varchar(255) NOT NULL,
+  	`password` varchar(1000) NOT NULL,
   	`email` varchar(100) NOT NULL,
     PRIMARY KEY (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

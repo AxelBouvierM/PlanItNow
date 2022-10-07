@@ -9,6 +9,7 @@ import re
 from emailValidator import validar_email
 import jwt
 import uuid
+import bcrypt
 
 app = Flask(__name__)
 
@@ -35,19 +36,31 @@ def loginAuth():
 
     if username is not None and password is not None:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
-        # Fetch one record and return result
-        user = cursor.fetchone()
-        if user:
-            # encripar usuraio y id jwt
-            UserID = user.get('UserID')
-            token = jwt.encode({"username": username, "UserID": UserID}, "AEPINMM")
-            resp = make_response(jsonify(response={"status": "ok"}))
-            resp.status_code = 200
-            resp.set_cookie("cookie", token)
-            return resp
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        pwd = cursor.fetchone()
+        
+        if pwd:
+        # decoding pwd / contraseñas coinciden
+            p = password.encode('utf-8')
+            hashPWD = bcrypt.checkpw(p, pwd['password'].encode('utf-8'))
+
+            # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            # cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
+            # Fetch one record and return result
+            # user = cursor.fetchone()
+            if hashPWD is True:
+                # encripar usuraio y id jwt
+                UserID = pwd.get('UserID')
+                token = jwt.encode({"username": username, "UserID": UserID}, "AEPINMM")
+                resp = make_response(jsonify(response={"status": "ok"}))
+                resp.status_code = 200
+                resp.set_cookie("cookie", token)
+                return resp
+            else:
+                resp = make_response(jsonify("Invalid Credentials"))
+                return resp
         else:
-            resp = make_response(jsonify("Not Found"))
+            resp = make_response(jsonify("Invalid Credentials"))
             return resp
     
 @app.route('/login/check', methods=['GET'])
@@ -55,7 +68,6 @@ def loginCheck():
     try:
         existCookies = request.cookies.get('cookie')
         existCookies = jwt.decode(existCookies, "AEPINMM")
-        #print(existCookies)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s AND UserID = %s', (existCookies.get('username'), existCookies.get('UserID')))
         user = cursor.fetchone()
@@ -96,7 +108,12 @@ def loginRegister():
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
             UserID = str(uuid.uuid4())
-            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', (UserID, username, password, email,))
+
+            # encriptacion de password
+            pwd = password.encode('utf-8')
+            salt = bcrypt.gensalt()
+            hashPWD = bcrypt.hashpw(pwd, salt)
+            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', (UserID, username, hashPWD, email,))
             # Guardando los cambios
             mysql.connection.commit()
             msg = 'Ok'
