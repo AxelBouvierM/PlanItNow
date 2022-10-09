@@ -10,6 +10,7 @@ import requests
 from selenium import webdriver
 from time import sleep
 
+
 DB_KEY = open('DB_KEY.txt').read() # open and save the mysql pass into a variable
 
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
@@ -26,7 +27,7 @@ for category in categories: # traverse all the caregories
     """Start the browser"""
     chrome_options = webdriver.ChromeOptions() # Class for managing ChromeDriver specific options.
     chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows 
-    driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options) # Start the browser with the options previosly set and the chrome driver
+    driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
     driver.get(categories[category]) # get information of the link
 
     """Create some variables to emulate the scroll"""
@@ -45,7 +46,7 @@ for category in categories: # traverse all the caregories
         last_height = new_height
         scrolls += 1
 
-    html = driver.page_source # Get the source of the current page
+    html = driver.page_source # Get the source code of the current page
     soup = BeautifulSoup(html, 'lxml') # Parses the html code 
     results = soup.find('section', class_='resultados') # Get the section tag named resultados
     show_elements = results.find_all('div', class_='item') # Get all the div tags called items that represents the list of all the events 

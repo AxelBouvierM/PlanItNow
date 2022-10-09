@@ -1,80 +1,86 @@
 #!/usr/bin/python3
+"""
+Script to extract data about events from red tickets
+"""
 
-from selenium import webdriver
 from bs4 import BeautifulSoup
-from time import sleep
 import mysql.connector
+from selenium import webdriver
+from time import sleep
 
-results = ""
+
+DB_KEY = open('DB_KEY.txt').read() # open and save the mysql pass into a variable
+
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
+cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
+
+""" List of all the categories to load in the databases """
 categories = {
-       "party" : "https://redtickets.uy/busqueda?*,9,0",
-       "sport" : "https://redtickets.uy/busqueda?*,8,0",
-       "sport2" : "https://redtickets.uy/busqueda?*,2,0",
-       "others" : "https://redtickets.uy/busqueda?*,7,0",
-       "music" : "https://redtickets.uy/busqueda?*,3,0",
-       "theater" : "https://redtickets.uy/busqueda?*,6,0",
+       'party' : 'https://redtickets.uy/busqueda?*,9,0',
+       'sport' : 'https://redtickets.uy/busqueda?*,8,0',
+       'sport2' : 'https://redtickets.uy/busqueda?*,2,0',
+       'others' : 'https://redtickets.uy/busqueda?*,7,0',
+       'music' : 'https://redtickets.uy/busqueda?*,3,0',
+       'theater' : 'https://redtickets.uy/busqueda?*,6,0',
        }
-
-DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
-
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
-cursor = connection.cursor() 
-
-for category in categories:
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('headless')
-    driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options)
-    url = categories[category]
-    page = 0
-    while True: 
-        driver.get(url)
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'lxml')
-        results = soup.find_all("main", class_="cards")[0]
-        if len(results) == 1:
+for category in categories: # traverse all the caregories 
+    chrome_options = webdriver.ChromeOptions() # Class for managing ChromeDriver specific options.
+    chrome_options.add_argument('headless') # Set headles option to start Chrome in the "background" without any visual output or windows 
+    driver = webdriver.Chrome('/home/vagrant/PlanItNow/scraping/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
+    url = categories[category] 
+    page = 0 # Variable used to change the page and get more results of a category
+    while True: #Loop to change the page until we reach the last result
+        driver.get(url) #get information of the link
+        html = driver.page_source # Get the source code of the current page
+        soup = BeautifulSoup(html, 'lxml') # Parses the html code 
+        results = soup.find_all('main', class_='cards')[0] # Get the list of main tags named cards that contain events card information 
+        if len(results) == 1: #It means that this page have not event to display
             break
-        events = results.find_all("article", class_="card")
-        for event in events:
-            span_list = event.find_all("span")
+        events = results.find_all('article', class_='card') # Get a list of all the events displayed in the page
+        for event in events: # traverse each event to get further information
+            span_list = event.find_all('span')
             title = span_list[0].text
-            image = f"https://redtickets.uy/" + event.img['data-src']
-            link = f"https://redtickets.uy/" + event.a['href']
+            image = f'https://redtickets.uy/' + event.img['data-src']
+            link = f'https://redtickets.uy/' + event.a['href']
             date = span_list[1].text
             place = span_list[2].text 
             description = ""
             check_price = ""
             iterations = 0
-            while check_price == "":
+            while check_price == '':
                 driver.get(link)
-                if category == "theater":
+                if category == 'theater': # theater events displays a dynamic window where the available chairs are shown, so we have to wait some seconds in order to get the information
                     sleep(5)
                 else:
                     sleep(1)
-                html = driver.page_source
-                soup = BeautifulSoup(html, 'lxml')
-                event_info =soup.find("div", class_="TableEventInfo")
-                description_list = event_info.find_all("div", class_="Description")
+                html = driver.page_source # Gets the html code of an specific event
+                soup = BeautifulSoup(html, 'lxml') # Parses the code
+                event_info =soup.find('div', class_='TableEventInfo')
+                description_list = event_info.find_all('div', class_='Description')
                 description = description_list[1].text
                 date = description_list[0].text
                 soup = BeautifulSoup(html, 'lxml')
-                purchase_info =soup.find("div", class_="SectionPurchase")
-                check_price = purchase_info.find(id="comboTicket").text[1:]
+                purchase_info =soup.find("div", class_='SectionPurchase')
+                check_price = purchase_info.find(id='comboTicket').text[1:]
                 iterations += 1
-                price = purchase_info.find(id="comboTicket").text[1:].replace("(","").replace(") ","\n").replace("Elige tu entrada  ", "")
+                price = purchase_info.find(id='comboTicket').text[1:].replace('(','').replace(') ','\n').replace('Elige tu entrada  ', '')
                 if iterations == 5:
-                    price = "Sin información visitar link del evento"
+                    price = 'Sin información visitar link del evento'
                     break
             category_id = category
-            if category_id == "sport2":
-                category_id = "sport"
-            insert = f"INSERT INTO {category_id} ({category_id}ID, title, image, link, place, date, price, description)"
-            insert += " VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"
-            record = (title, image, link, place, date, price, description)
-            cursor.execute(insert, record)
-            connection.commit()
+            if category_id == 'sport2': # Rename the category to save it in the same DB category
+                category_id = 'sport'
+            """Create the query to insert data into the database"""
+            insert = f'INSERT INTO {category_id} ({category_id}ID, title, image, link, place, date, price, description)'
+            insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
+            record = (title, image, link, place, date, price, description) 
+            cursor.execute(insert, record) # Insert the data into the DB
+            connection.commit() # Save the changes
         page += 1
-        url = categories[category].replace("0", str(page))
-    print(f"All {category} events added to database")
+        url = categories[category].replace('0', str(page))
+    print(f'All {category} events added to database')
+
+"""Close the contection to te DB and the driver of selenium"""
 if connection.is_connected():
     cursor.close()
     connection.close()
