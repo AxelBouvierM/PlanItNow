@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script to extract data about movies from movie
+Script to extract data about theater from movie
 """
 
 from bs4 import BeautifulSoup
@@ -24,7 +24,7 @@ while theater_elements == []: # Loop to try execute until we got some theater da
     soup = BeautifulSoup(html, 'lxml') # Parses the html code 
     results = soup.find('div', class_='content') # get the div tag that contains information about the events
     theater_elements = results.find_all('div', class_='row alternate') # get the list of all theater events
-    for theater_element in theater_elements: # # traverse each theater event to get further information
+    for theater_element in theater_elements: # traverse each theater event to get further information
         title = str(theater_element.h2.a).split('>')[1].split('<')[0]
         image = theater_element.img['src']
         link = 'https://www.movie.com.uy/' + theater_element.a['href'][1:]
