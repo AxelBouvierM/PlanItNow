@@ -63,13 +63,13 @@ while True: # loop to get more results until next_page is not None
             image = soup.img['src'] # Get the link of the photo
             date = 'No aplica'
         except Exception:
-            pass
+            continue
         """Create the query to insert data into the database"""
         insert = """INSERT INTO restaurant (restaurantID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (title, image, link, place_location, date, price, description[:-1])
         cursor.execute(insert, record) # Insert the data into the DB
         connection.commit() # Save the change
-    if next_page is None: # Check if ther is another page with 220 more results
+    if next_page is None: # Check if ther is another page with 20 more results
         break
     url = f'https://maps.googleapis.com/maps/api/place/textsearch/json?pagetoken={next_page}&query=Restaurantes%20en%20Montevideo%20Uruguay&key={API_KEY}' # URL to 20 more results
     response = requests.get(url)
