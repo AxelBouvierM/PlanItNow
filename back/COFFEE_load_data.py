@@ -14,7 +14,7 @@ DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
 cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db 
 
-url = f'https://maps.googleapis.com/maps/api/place/textsearch/json?query=Cafes%20en%20Montevideo%20Uruguay&key={API_KEY}' # url google API with the search of coffees in Montevideo
+url = f'https://maps.googleapis.com/maps/api/place/textsearch/json?query=Cafes%20en%20Montevideo%20Uruguay&language=es-419&key={API_KEY}' # url google API with the search of coffees in Montevideo
 
 response = requests.get(url)
 results = response.json()
@@ -73,7 +73,7 @@ while True: # loop to get more results until next_page is not None
         connection.commit() # Save the change
     if next_page is None: # Check if ther is another page with 20 more results
         break
-    url = f'https://maps.googleapis.com/maps/api/place/textsearch/json?pagetoken={next_page}&query=Restaurantes%20en%20Montevideo%20Uruguay&key={API_KEY}' # URL to 20 more results
+    url = f'https://maps.googleapis.com/maps/api/place/textsearch/json?pagetoken={next_page}&query=Restaurantes%20en%20Montevideo%20Uruguay&language=es-419&key={API_KEY}' # URL to 20 more results
     response = requests.get(url)
     results = response.json()
     places = results.get('results')
