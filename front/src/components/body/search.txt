@@ -1,0 +1,7 @@
+EXPLICACION DE BARRA DE BUSQUEDA:
+
+SearchBar.jsx -> Es el archivo encargado de la request a la api y de estilizar
+la barra de busqueda en general.
+
+tvShow.jsx -> Archivo encargado del display de los resultados de la busqueda.
+Maneja principalmente el estilo de los resultados.
