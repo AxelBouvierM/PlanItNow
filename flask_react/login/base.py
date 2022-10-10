@@ -160,7 +160,7 @@ def data(category):
         for elements in data:
             info[elements[id]] = elements
     else:
-        info['error'] = "Categoria inexistente"
+        info['error'] = "Invalid category"
     return info
 
 if __name__ == "__main__":
