@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
+import Landpage from './components/pages/Landpage'
 import Home from './components/pages/Inicio'
 import ErrorPage from './components/pages/NoPage'
 import Agenda from './components/pages/Agenda'
@@ -17,13 +18,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home />} />
-        <Route path='/inicio' element={<Home />} />
+        <Route index element={<Landpage />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/agenda' element={<Agenda />} />
         <Route path='/categorias' element={<Agenda />} />
         <Route path='/cuenta' element={<Cuenta />} />
         <Route path='/configuracion' element={<Configuracion />} />
-        <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
