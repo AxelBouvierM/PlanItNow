@@ -139,7 +139,29 @@ def loginLogout():
     # Eliminacion de la cookie
     resp.delete_cookie("cookie")
     return resp
-    
+
+
+@app.route('/data/<category>', methods=['POST', 'GET'])
+def data(category):
+    app.config['MYSQL_DB'] = 'events'
+
+    categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum']
+    info = {}
+    if category in categories:
+        
+        insert = f"SELECT * FROM {category}"
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(insert)
+        # Fetch one record and return result
+        data = cursor.fetchall()
+        
+        id = category + 'ID'
+        
+        for elements in data:
+            info[elements[id]] = elements
+    else:
+        info['error'] = "Categoria inexistente"
+    return info
 
 if __name__ == "__main__":
     """ Main Function """
