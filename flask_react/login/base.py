@@ -84,7 +84,7 @@ def loginCheck():
     return jsonify('User no logeado')
 
 # Ruta para registrar un nuevo usuario  
-@app.route('/login/register', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def loginRegister():
     
     # Tomar los datos de registro (enviados desde el front)
