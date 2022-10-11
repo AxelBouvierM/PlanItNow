@@ -58,11 +58,11 @@ def loginAuth():
                 return resp
             else:
                 # Respuesta en caso de falla
-                resp = make_response(jsonify("Invalid Credentials"))
+                resp = make_response(jsonify(response={"status": "Invalid Credentials"}))
                 return resp
         else:
             # Respuesta en caso de falla
-            resp = make_response(jsonify("Invalid Credentials"))
+            resp = make_response(jsonify(response={"status": "Invalid Credentials"}))
             return resp
 
 # Ruta para chequear existencia de cookies    
