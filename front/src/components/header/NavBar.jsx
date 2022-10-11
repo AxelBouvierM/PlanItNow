@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Outlet, Link } from "react-router-dom";
 
 import { Fade as Hamburger } from 'hamburger-react'
-import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiGroup2Line, RiSettings2Line, RiLogoutBoxRLine, RiLayout2Line } from 'react-icons/ri';
+import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiSettings2Line, RiLogoutBoxRLine, RiLayout2Line } from 'react-icons/ri';
 
 import '../../styles/navigation.css';
 
