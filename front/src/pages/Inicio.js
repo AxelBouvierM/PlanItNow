@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { Parallax, Background } from 'react-parallax'
-import { NavBar } from '../components/header/NavBar';
-import { SearchBar } from '../components/body/searchBar/SearchBar';
+import { NavBar } from '../components/header/NavBar'
+import { SearchBar } from '../components/body/searchBar/SearchBar'
 import image1 from '../images/montaña1.jpg'
 
 const searchBarStyles = {
