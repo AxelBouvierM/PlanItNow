@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { Outlet, Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 
 import { IconContext } from "react-icons";
 import { RiArrowRightLine, RiArrowLeftLine } from 'react-icons/ri'
@@ -62,7 +61,7 @@ const LoginContainer = styled.div`
 
 const TextSpace = styled.h1`
   margin-top: 0em;
-  margin-bottom: 4em;
+  margin-bottom: 3em;
   font-size: 2.5vw;
   color: #fafafa;
 `;
@@ -141,7 +140,7 @@ const ButtonStyle = styled.button`
   margin-right: 1.5em;
   cursor: pointer;
   &:hover {
-	background-color: crimson;
+	background-color: royalblue;
   transition: 0.3s ease-in-out;
   }
 `;
@@ -161,14 +160,27 @@ const LoginText = styled.a`
   }
 `;
 
+const ErrorWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2em;
+`;
+
+const ErrorMessage = styled.p`
+  font-size: 1em;
+  font-weight: 450;
+  color: red;
+  text-transform: uppercase;
+`;
 
 function Login() {
 	const [username, setUser] = useState('')
 	const [password, setPass] = useState('')
 	const [giveAccess, setAccess] = useState(false)
   const [error, setError] = useState(false)
-
-	
   const navigate = useNavigate();
 
 	function SendFormInput(event) {
@@ -208,6 +220,11 @@ function Login() {
 			<LoginContainer>
 				<FormContainer onSubmit={SendFormInput}>
           <TextSpace>INICIAR SESIÓN</TextSpace>
+          {error && (
+            <ErrorWrapper>
+              <ErrorMessage>Usuario y/o contraseña incorrecta</ErrorMessage>
+            </ErrorWrapper>
+          )}
 						<InputContainer>
 							<Input
 								type="text"
@@ -241,12 +258,12 @@ function Login() {
                 </Icon>
               </ButtonStyle>
               <Link to="/register">
-                <LoginText>¿Todavía no estas registrado?</LoginText>
+                <LoginText>Crear cuenta nueva</LoginText>
               </Link>
+              <Outlet />
             </DataContainer>
 				</FormContainer>
 			</LoginContainer>
-      {error && <p>Usuario o contraseña incorrecta</p>}
 		</Background>
 	);
 }
