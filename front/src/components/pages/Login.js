@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import axios from 'axios'
-//import axios from "axios";
 
 function Login() {
 	const [username, setUser] = useState('')
@@ -19,19 +18,23 @@ function Login() {
 		};
 
 		axios.post('/login/auth', formData, { headers: headers })
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
+			.then((res) => {
+				if (res.data.response.status === 'ok') {
+					console.log(res.data.response.status);
+				} else {
+					console.log(res.data)
+				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
+	// 					let jsonRes = JSON.stringify(res.data.response);
+	// let respStatus = jsonRes.replaceAll('"}', '').slice(-2);
 
 	return (
 		<div>
 			<form onSubmit={SendFormInput}>
-
 				<label htmlFor="username" className="form-label">Usuario</label>
 				<input
 					type="text"
