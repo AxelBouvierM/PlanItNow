@@ -14,7 +14,10 @@ sudo apt-get install -y nodejs
   -> react-router: npm i -D react-router-dom
 	-> react-moment: npm i react-moment
 
-	NAVBAR:	
+  REGISTER:
+  -> react-password-checklist: npm install --save react-password-checklist
+	
+  NAVBAR:	
 	-> hamburger-react: npm install hamburger-react
 
 	SEARCHBAR:
