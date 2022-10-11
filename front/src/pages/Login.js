@@ -7,7 +7,6 @@ import { IconContext } from "react-icons";
 import { RiArrowRightLine, RiArrowLeftLine } from 'react-icons/ri'
 
 import montaña2 from '../images/montaña2.jpg'
-import logo from '../images/testLogo.png'
 
 const Background = styled.div`
   border: 1px solid #000; 

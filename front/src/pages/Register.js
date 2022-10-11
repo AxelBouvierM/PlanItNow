@@ -2,10 +2,8 @@ import { React, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import PasswordChecklist from 'react-password-checklist';
 
 import montaña4 from '../images/montaña4.jpg'
-import logo from '../images/testLogo.png'
 
 import { IconContext } from "react-icons";
 import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri'
