@@ -1,7 +1,8 @@
 import { React, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import PasswordChecklist from 'react-password-checklist';
 
 import montaña4 from '../images/montaña4.jpg'
 import logo from '../images/testLogo.png'
@@ -73,7 +74,7 @@ const RegisterContainer = styled.div`
 `;
 
 const TextSpace = styled.h1`
-  margin-bottom: 4em;
+  margin-bottom: 3em;
   font-size: 2.5vw;
   color: #fafafa;
 `;
@@ -175,13 +176,31 @@ const LoadingWrapper = styled.div`
   margin-top: 1em;
 `;
 
+const ErrorWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2em;
+`;
+
+const ErrorMessage = styled.p`
+  font-size: 1em;
+  font-weight: 450;
+  color: red;
+  text-transform: uppercase;
+`;
+
+
 function Register() {
 	const [username, setUser] = useState('')
 	const [mail, setMail] = useState('')
 	const [password, setPass] = useState('')
   const [isLoading, setLoading] = useState(false);
-  const [wrongMail, setWrongMail] = useState(false);
-
+  const [LoginRedirect, setLoginRedirect] = useState(false)
+  const [UserError, setUserError] = useState(false);
+  const navigate = useNavigate();
 
 	async function SendFormInput(event) {
 		event.preventDefault()
@@ -199,28 +218,21 @@ function Register() {
     setLoading(true);
     console.log('Cargando?', isLoading);
 
-    const response = await axios.post('/register', regData, { headers: headers }).catch((err) => {
+    const res = await axios.post('/register', regData, { headers: headers }).catch((err) => {
       console.log("Error: ", err);
     });
 
-    if (response) {
-      console.log("Response: ", response.data);
+    if (res.data.response.status === 'ok') {
+      // chequear ubicacion de status: "ok" en la response para que el redirect se aplique solo en logins con usuario y contraseña correcta.
+      setLoginRedirect(true);
+    } else if (res.data.response.status === 'El usuario ya existe!') {
+      setLoginRedirect(false);
+      setUserError(true);
     }
     setLoading(false);
-    console.log('Cargando?', isLoading);
   };
-		/*axios.post('/register', regData, { headers: headers })
-			.then((res) => {
-				if (res.data === 'Not Found') {
-					console.log(res);
-				} else {
-					console.log(res)
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};*/
+  
+  if (LoginRedirect) navigate('/login');
 
 	return (
 		<Background>
@@ -233,7 +245,12 @@ function Register() {
         </InfoContainer>
         <RegisterContainer>
           <FormContainer onSubmit={SendFormInput}>
-            <TextSpace>REGISTRARTE</TextSpace>
+            <TextSpace>REGÍSTRATE</TextSpace>
+            {UserError && (
+              <ErrorWrapper>
+                <ErrorMessage>Usuario y/o contraseña incorrecta</ErrorMessage>
+              </ErrorWrapper>
+            )}
             <InputContainer>
             <Input
               type="text"
@@ -256,8 +273,7 @@ function Register() {
               <Input
               type="password"
               placeholder="Contraseña"
-              value={password}
-              onChange={(event) => setPass(event.target.value)}
+              onChange={(event) => setPass(event.target.value)} 
               required>
               </Input>
             </InputContainer>
