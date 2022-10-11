@@ -7,10 +7,11 @@ import Landpage from './pages/Landpage'
 import Home from './pages/Inicio'
 import ErrorPage from './pages/NoPage'
 import Agenda from './pages/Agenda'
-import Cuenta from './pages/Cuenta'
+import Profile from './pages/Profile'
 import Configuracion from './pages/Configuracion'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Categories from './pages/Categories'
 
 import './index.css';
 
@@ -23,8 +24,8 @@ export default function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
         <Route path='/agenda' element={<Agenda />} />
-        <Route path='/categorias' element={<Agenda />} />
-        <Route path='/cuenta' element={<Cuenta />} />
+        <Route path='/categories' element={<Categories />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path='/configuracion' element={<Configuracion />} />
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<ErrorPage />} />
