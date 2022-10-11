@@ -88,7 +88,7 @@ def loginCheck():
 def loginRegister():
     
     # Tomar los datos de registro (enviados desde el front)
-    email = request.json.get('email')
+    email = request.json.get('mail')
     username = request.json.get('username')
     password = request.json.get('password')
 
