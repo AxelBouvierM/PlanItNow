@@ -3,7 +3,7 @@
 import mysql.connector
 from flask import Flask 
 
-DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
+DB_KEY = open('DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable
 
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
 cursor = connection.cursor(dictionary=True) 
@@ -24,4 +24,4 @@ def data(category):
     return (data_dict)
 
 if __name__ == "__main__":
-	app.run(port=5000, host="localhost", debug=True)
+	app.run(port=5000, host="0.0.0.0", debug=True)
