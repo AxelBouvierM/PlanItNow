@@ -8,8 +8,14 @@ Google chrome - https://gitlab.com/gitlab-org/gitlab-development-kit/-/issues/59
   sudo apt-get update
   sudo apt-get install google-chrome-stable
   sudo pip install lxml
+  sudo pip install requests
   --------------------------------------------------------
 Database:
+sudo apt update && sudo apt -y  install wget
+wget https://repo.mysql.com//mysql-apt-config_0.8.22-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
 pip install mysql-connector-python
+sudo apt update
+sudo apt install mysql-server
 ----------------------------------------------------------
 
