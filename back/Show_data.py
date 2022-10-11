@@ -2,7 +2,7 @@
 
 import mysql.connector
 from flask import Flask 
-API_KEY = open('API_KEY.txt').read() #open and save the api keyinto a variable
+
 DB_KEY = open('DB_KEY.txt').read() #open and save the mysql pass into a variable
 
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)
