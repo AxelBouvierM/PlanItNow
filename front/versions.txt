@@ -71,3 +71,5 @@ var A = React.createClass({
   }
 
 ###### ICONO HISTORIAL RiHistoryLine
+
+###### BUSCAR INFO PM2 DEPENDENCIA PARA QUE SI SE CAE NODE SE VUELVA A LEVANTAR ######

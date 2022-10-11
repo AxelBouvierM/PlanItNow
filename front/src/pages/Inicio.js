@@ -1,9 +1,8 @@
 import React from 'react';
 import { Parallax, Background } from 'react-parallax'
-import { NavBar } from '../header/NavBar';
-import { SearchBar } from '../body/searchBar/SearchBar';
-import image1 from '../../images/montaña1.jpg'
-
+import { NavBar } from '../components/header/NavBar';
+import { SearchBar } from '../components/body/searchBar/SearchBar';
+import image1 from '../images/montaña1.jpg'
 
 const searchBarStyles = {
   display: 'flex',
@@ -25,6 +24,8 @@ const bgStyles = {
 };
 
 function Inicio() {
+  // metodo get para chequear si el user esta logeado (endpoint /login/check), si no esta logeado redireccionar
+  // a landpage
   return (
     <>
       <Parallax strength={500}>

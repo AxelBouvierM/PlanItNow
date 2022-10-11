@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
-import Landpage from './components/pages/Landpage'
-import Home from './components/pages/Inicio'
-import ErrorPage from './components/pages/NoPage'
-import Agenda from './components/pages/Agenda'
-import Cuenta from './components/pages/Cuenta'
-import Configuracion from './components/pages/Configuracion'
-import Login from './components/pages/Login'
-import Register from './components/pages/Register'
+import Landpage from './pages/Landpage'
+import Home from './pages/Inicio'
+import ErrorPage from './pages/NoPage'
+import Agenda from './pages/Agenda'
+import Cuenta from './pages/Cuenta'
+import Configuracion from './pages/Configuracion'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 import './index.css';
 
