@@ -28,7 +28,7 @@ mysql = MySQL(app)
 # Ruta para confirmacion de usuario existente (permitir ingreso)
 @app.route('/login/auth', methods=['POST'])
 def loginAuth():
-
+    app.config['MYSQL_DB'] = 'login'
     # Tomar los datos de inicio de sesion (enviados desde el front)
     username = request.json.get('username')
     password = request.json.get('password')
@@ -68,6 +68,7 @@ def loginAuth():
 # Ruta para chequear existencia de cookies    
 @app.route('/login/check', methods=['GET'])
 def loginCheck():
+    app.config['MYSQL_DB'] = 'login'
     try:
         # Obtener la cookie generada en el login (si existe)
         existCookies = request.cookies.get('cookie')
@@ -78,24 +79,24 @@ def loginCheck():
         user = cursor.fetchone()
 
         if user:
-            return jsonify('Logeado')
+            return jsonify(response={"status": "Logeado"})
     except Exception:
         pass
-    return jsonify('User no logeado')
+    return jsonify(response={"status": "User no logeado"})
 
 # Ruta para registrar un nuevo usuario  
 @app.route('/register', methods=['POST'])
 def loginRegister():
-    
+    app.config['MYSQL_DB'] = 'login'
     # Tomar los datos de registro (enviados desde el front)
     email = request.json.get('mail')
     username = request.json.get('username')
     password = request.json.get('password')
-
+    msg = ''
     # Chequeo que los tres campos no esten vacios
     if username is not None and password is not None and email is not None:
         # Mensaje de error en caso de falla
-        msg = ''
+        
 
         # Chequeo si es un usuario existente
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -128,9 +129,10 @@ def loginRegister():
             # Guardando los cambios
             mysql.connection.commit()
             msg = 'Ok'
-    elif request.method == 'POST':
-        msg = "Complete todos los datos"
-    return msg
+    else:
+        msg = {"status": "Complete all data"}
+    return jsonify(response={"status": msg})
+    # return jsonify(response={"status": msg})
 
 # Ruta para deslogear usuario, eliminacion de la cookie
 @app.route('/login/logout', methods=['GET'])
@@ -140,6 +142,36 @@ def loginLogout():
     resp.delete_cookie("cookie")
     return resp
 
+@app.route('/newPWD', methods=['POST'])
+def newPWD():
+    app.config['MYSQL_DB'] = 'login'
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+    print(existCookies)
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM users WHERE username = %s AND UserID = %s', (existCookies.get('username'), existCookies.get('UserID')))
+    user = cursor.fetchone()
+    print(user)
+
+    if user:
+        oldPassword = request.json.get('oldPassword')
+        newPassword = request.json.get('newPassword')
+        # Codificando password en utf-8, para comprobar igualdad con encriptacion
+        p = oldPassword.encode('utf-8')
+        hashPWD = bcrypt.checkpw(p, user['password'].encode('utf-8'))
+
+        if hashPWD is True:
+            pwd = newPassword.encode('utf-8')
+            salt = bcrypt.gensalt()
+            hashPWD = bcrypt.hashpw(pwd, salt)
+            print(f"CONTRASEÑA EN DB = {user['password']}")
+            # exe = f"UPDATE users SET password = {hashPWD} WHERE password = {user['password']}"
+            cursor.execute('UPDATE users SET password = %s WHERE password = %s', (hashPWD, user['password']))
+            mysql.connection.commit()
+            return jsonify(response={"status": "Ok"})
+        else:
+            return jsonify(response={"status": "Old password invalid"})
 
 @app.route('/data/<category>', methods=['POST', 'GET'])
 def data(category):
