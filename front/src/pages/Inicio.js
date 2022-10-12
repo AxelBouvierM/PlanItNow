@@ -1,12 +1,11 @@
-/*import '../styles/App.css';*/
+import '../styles/App.css';
 /*import styled from 'styled-components';*/
-import Slides from '../components/ImgSlides/Slides';
 import React from 'react';
-import { NavBar } from '../components/header/NavBar';
-import { SearchBar } from '../components/body/searchBar/SearchBar';
+import { NavBar } from '../components/header/NavBar'
+import { SearchBar } from '../components/body/searchBar/SearchBar'
 import image1 from '../images/montaña1.jpg';
 import { Parallax, Background } from 'react-parallax';
-
+import Slides from '../components/ImgSlides/Slides';
 
 const searchBarStyles = {
   display: 'flex',

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoClose, IoSearch } from 'react-icons/io5';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -7,7 +8,6 @@ import MoonLoader from 'react-spinners/MoonLoader';
 import { useDebounce } from '../../../hooks/debounceHook';
 import axios from 'axios';
 import { TvShow } from '../searchResults/tvShow';
-
 // "&" SELECTOR REFERENCES TO THE PREVIOUS COMPONENT
 
 // before click searchbar container
@@ -101,9 +101,27 @@ const LoadingWrapper = styled.div`
   justify-content: center;
 `;
 
+
+// Button properties
+const Button = styled.button`
+  background-color: transparent;  
+  padding: 10px 15px;
+  border-radius: 10px;
+  outline: 0;
+  text-transform: uppercase;
+  margin: auto;
+  cursor: pointer;
+  font-size: 20px;
+  border-color: #fafafa;
+  border: solid;
+  color: #bebebe;
+`;
+
+
 // displayed container text
 const WarningMessage = styled.span`
   color: #a1a1a1;
+  borderRadius: 10;
   font-size: 14px;
   display: flex;
   align-self: center;
@@ -124,7 +142,9 @@ const containerVariants = {
 // dict that defines the searchbar open transition
 const containerTransition = { type: "spring", damping: 22, stiffness: 100 };
 
-export function SearchBar(props) {
+export function SearchBar({ props }) {
+
+
     // const [a, b] = useState(...) destructuring explanation:
     // a = variable name
     // b = function to update the current variable
@@ -139,7 +159,12 @@ export function SearchBar(props) {
 
     const isEmpty = !tvShows || tvShows.length === 0;
 
+    //use to navigate to another route
+    let navigate = useNavigate();
+
     // no results handler 
+    // Probando algo de buscar libros
+    
     const changeHandler = (searchResult) => {
         searchResult.preventDefault();
         if (searchResult.target.value.trim() === "") setNoTvShows(false);
@@ -246,9 +271,13 @@ export function SearchBar(props) {
                         </LoadingWrapper>
                     )}
                     {!isLoading && isEmpty && !noTvShows && (
-                        <LoadingWrapper>
-                            <WarningMessage>Start typing to Search</WarningMessage>
-                        </LoadingWrapper>
+                        <Button
+                          onClick={() => {
+                            navigate("/categories");
+                          }}
+                        >
+                            Categories
+                        </Button>                    
                     )}
                     {!isLoading && noTvShows && (
                         <LoadingWrapper>
@@ -264,6 +293,7 @@ export function SearchBar(props) {
                                     name={show.name}
                                     rating={show.rating && show.rating.average}
                                 />
+                                
                             ))}
                         </>
                     )}

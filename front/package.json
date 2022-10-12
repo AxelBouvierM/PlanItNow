@@ -11,15 +11,20 @@
     "framer-motion": "^7.4.0",
     "hamburger-react": "^2.5.0",
     "react": "^18.2.0",
+    "react-art": "^18.2.0",
     "react-blur": "^1.1.1",
     "react-click-outside-hook": "^1.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-moment": "^1.1.2",
+    "react-native": "^0.70.2",
+    "react-native-web": "^0.18.9",
+    "react-native-webview": "^11.23.1",
     "react-parallax": "^3.5.1",
     "react-password-checklist": "^1.4.2",
     "react-responsive": "^9.0.0",
-    "react-scripts": "5.0.1",
+    "react-router-native": "^6.4.2",
+    "react-scripts": "^5.0.1",
     "react-scroll-parallax": "^3.3.1",
     "react-slick": "^0.29.0",
     "react-spinners": "^0.13.4",
@@ -60,6 +65,6 @@
     }
   },
   "devDependencies": {
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.2"
   }
 }

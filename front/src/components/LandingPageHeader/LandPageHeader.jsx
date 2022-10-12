@@ -1,9 +1,7 @@
-import React from 'react'
+/*import React from 'react'
 import styled from 'styled-components'
 import { Outlet, Link } from 'react-router-dom';
 
-import Login from '../../pages/Login'
-import Register from '../../pages/Register'
 
 import testLogo from '../../images/testLogo.png'
 
@@ -102,3 +100,4 @@ function LandPageHeader() {
 }
 
 export default LandPageHeader;
+*/

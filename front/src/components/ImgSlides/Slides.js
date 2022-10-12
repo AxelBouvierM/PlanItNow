@@ -45,7 +45,7 @@ function Slides() {
       <div className="container">
         <Slider {...settings}>
         {dataDigitalBestSeller.map((item, idx) =>(
-            <div className={idx===imageIndex ? 'card activeCard' : 'card'} onClick={item.linkPage}>
+            <div className={idx===imageIndex ? 'card activeCard' : 'card'}>
             <div className='card-top'>
                 <img src={item.linkImg} alt={item.title} />
                 <h1>{item.title}</h1>
