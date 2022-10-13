@@ -21,6 +21,7 @@ export default function App() {
       <Routes>
         <Route index element={<Landpage />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
         <Route path='/agenda' element={<Agenda />} />
         <Route path='/categories' element={<Categories />} />
