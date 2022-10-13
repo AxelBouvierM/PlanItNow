@@ -11,9 +11,7 @@ from selenium import webdriver
 from time import sleep
 
 
-DB_KEY = open('DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable
-
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password='AEPINMM') # create connection to the events database
 cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
 
 """ List of all the categories to load in the databases """
