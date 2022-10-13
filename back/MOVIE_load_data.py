@@ -1,15 +1,11 @@
-#!/usr/bin/python3
-"""
-Script to extract data about movies from movie
-"""
+""" Script to extract data about movies from movie """
 
 from bs4 import BeautifulSoup
+import datetime
 import mysql.connector
 from selenium import webdriver
 
-DB_KEY = open('DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable
-
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password='AEPINMM') # create connection to the events database
 cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
 
 movie_elements = [] # List where the movie events are going to be loaded
