@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import LandPageHeader from '../components/LandingPageHeader/LandPageHeader'
-
+import LandPageHeader from '../components/LandingPage/LandPageHeader'
+import LandPageBody from '../components/LandingPage/LandPageBody'
 import montaña5 from '../images/montaña5.jpg'
 
 
 const Background = styled.div`
-  border: 1px solid #000; 
   background-image: url(${montaña5});
   background-position: center;
   background-repeat: no-repeat;
@@ -18,10 +17,10 @@ const Background = styled.div`
 
 function Landpage() {
 
-	// crear botones para login y register con un modulo link y outlet de react-router-dom
   return (
 	<Background>
 	  <LandPageHeader />
+    <LandPageBody/>
 	</Background>
   )
 }
