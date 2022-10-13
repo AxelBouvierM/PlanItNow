@@ -3,30 +3,51 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { dataDigitalBestSeller } from './data';
 import {useState} from "react"
-/*import {FaArrowRight, FaArrowLeft} from "react-icons/fa"*/
+import styled from "styled-components";
+
+const Container = styled.div`
+  max-height: 500px;
+  max-width: 700px;
+  justify-content: center;
+  margin: auto;
+  padding-top: 40px;
+`;
+
+const CardToph1 = styled.h1`
+  font-size: 1rem;
+  margin: 10px;
+  margin-top: 10px;
+`;
+
+const Category = styled.span`
+  position: relative;
+  &:before {
+    content: '';
+    background: rgb(255, 61, 61);
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+`;
+
+const CardBottom = styled.div`
+  margin: 10px;
+  margin-top: 70px;
+`;
+
+const CardTop = styled.div`
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: white;
+`;
 
 
 function Slides() {
 
-  /*const NextArrow = ({onClick}) => {
-    return (
-      <div className="arrow next" onClick={onClick}>
-        <FaArrowRight/>
-      </div>
-    )
-  }
-
-  const PrevArrow = ({onClick}) => {
-    return (
-      <div className="arrow prev" onClick={onClick}>
-        <FaArrowLeft/>
-      </div>
-    )
-  }*/
-
   const [imageIndex, setImageIndex] = useState(0);
-
-
 
   const settings = {
     focusOnSelect: true,
@@ -34,30 +55,62 @@ function Slides() {
     centerMode: true,
     infinite: true,
     lazyLoad:true,
-    centerPadding: "0px",
+    centerPadding: "50px",
     slidesToShow: 3,
     speed: 300,
-    /*nextArrow: <NextArrow/>,
-    prevArrow: <PrevArrow/>,*/
     beforeChange: (current, next) => setImageIndex(next),
+    responsive: [
+      {
+        breakpoint: 281,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: true,
+        },
+      },
+      {
+        breakpoint: 376,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: true,
+        },
+      },
+      {
+        breakpoint: 769,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          centerMode: true,
+        },
+      },
+      {
+        breakpoint: 1025,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          centerMode: true,
+        },
+      },
+    ],
   };
     return (
-      <div className="container">
+      <Container>
         <Slider {...settings}>
         {dataDigitalBestSeller.map((item, idx) =>(
             <div className={idx===imageIndex ? 'card activeCard' : 'card'}>
-            <div className='card-top'>
+            <CardTop>
                 <img src={item.linkImg} alt={item.title} />
-                <h1>{item.title}</h1>
-            </div>
-            <div className='card-bottom'>
+                <CardToph1>{item.title}</CardToph1>
+            </CardTop>
+            <CardBottom>
                 <h3>{item.price}</h3>
-                <span className="category">{item.category}</span>
-            </div>
+                <Category>{item.category}</Category>
+            </CardBottom>
               </div>
             ))}
           </Slider>
-      </div>
+      </Container>
     );
 }
 export default Slides
