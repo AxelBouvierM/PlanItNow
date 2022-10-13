@@ -121,7 +121,7 @@ const Button = styled.button`
 // displayed container text
 const WarningMessage = styled.span`
   color: #a1a1a1;
-  borderRadius: 10;
+  border-radius: 10;
   font-size: 14px;
   display: flex;
   align-self: center;
