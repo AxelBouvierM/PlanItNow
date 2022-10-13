@@ -19,7 +19,6 @@ const TitleCat = styled.h1`
   text-shadow: 0 0 8px black;
 `;
 
-
 function Categories() {
   return (
     <>
@@ -28,10 +27,14 @@ function Categories() {
           <img src={montaña2} alt='montaña2' />
         </Background>
         <div className='bgDimensions' style={{ height: '100vh' }}>
-          <div>
-            <TitleCat>Juegos</TitleCat>
-            <CatSlides />
-          </div>
+            <div>
+              <TitleCat>Juegos</TitleCat>
+              <CatSlides />
+            </div>
+            <div>
+              <TitleCat>Cosas</TitleCat>
+              <CatSlides />
+            </div>
         </div>
       </Parallax>
     </>
