@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
+import Landpage from './pages/Landpage'
 import Home from './pages/Inicio'
 import ErrorPage from './pages/NoPage'
 import Agenda from './pages/Agenda'
 import Profile from './pages/Profile'
 import Configuracion from './pages/Configuracion'
 import Categories from './pages/Categories'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 import './index.css';
 
@@ -16,11 +19,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route index element={<Landpage />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/home' element={<Home />} />
         <Route path='/agenda' element={<Agenda />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/configuracion' element={<Configuracion />} />
+        <Route path='/register' element={<Register />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
