@@ -51,7 +51,7 @@ def loginAuth():
                 UserID = pwd.get('UserID')
                 token = jwt.encode({"username": username, "UserID": UserID}, "AEPINMM")
                 # Seteando respuesta
-                resp = make_response(jsonify(response={"status": "ok"}))
+                resp = make_response(jsonify(response={"status": "Ok"}))
                 resp.status_code = 200
                 # Seteo de cookie en caso de usuario valido
                 resp.set_cookie("cookie", token)
@@ -79,10 +79,10 @@ def loginCheck():
         user = cursor.fetchone()
 
         if user:
-            return jsonify(response={"status": "Logeado"})
+            return jsonify(response={"status": "Ok"})
     except Exception:
         pass
-    return jsonify(response={"status": "User no logeado"})
+    return jsonify(response={"status": "User not logged in"})
 
 # Ruta para registrar un nuevo usuario  
 @app.route('/register', methods=['POST'])
@@ -104,16 +104,16 @@ def loginRegister():
         user = cursor.fetchone()
         
         if user:
-            msg = 'El usuario ya existe!'
+            msg = 'User already exists'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             # At least one or more non-@ , then a @ , then at least one or more non-@ , then a dot, then at least one or more non-@"
-            msg = 'Direccion de correo invalida!'
+            msg = 'Invalid email address'
         elif not re.match(r'[A-Za-z0-9]+', username):
-            msg = 'El nombre de usuario debe contener solo caracteres y numeros!'
+            msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
-            msg = 'Por favor complete todos los datos!'
+            msg = 'Please complete all the data'
         elif validar_email(email, debug=False) == False:
-            msg = 'Email no valido!'
+            msg = 'Invalid email'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
             
@@ -137,7 +137,7 @@ def loginRegister():
 # Ruta para deslogear usuario, eliminacion de la cookie
 @app.route('/login/logout', methods=['GET'])
 def loginLogout():
-    resp = make_response(jsonify(response={"status": "del success"}))
+    resp = make_response(jsonify(response={"status": "Ok"}))
     # Eliminacion de la cookie
     resp.delete_cookie("cookie")
     return resp

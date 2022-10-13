@@ -3,6 +3,7 @@ pip install flask-mysqldb
 pip install flask-WTF
 pip install py3dns
 pip install mysql-connector-python
-
+pip install jwt
+pip install bcrypt
 # Posible problema con mysqlclient
 sudo aptitude install libmysqlclient-dev
