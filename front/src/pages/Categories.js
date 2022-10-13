@@ -2,7 +2,17 @@ import styled from 'styled-components';
 import React from 'react';
 import montaña2 from '../images/montaña2.jpg'
 import CatSlides from '../components/CategoriesSlider/CatSlides';
-import { Parallax, Background } from 'react-parallax';
+import { Parallax } from 'react-parallax';
+
+const Background = styled.div`
+  border: 1px solid #000; 
+  background-image: url(${montaña2});
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  width: 200vw;
+  height: 100vh;
+`;
 
 const bgStyles = {
   backgroundPosition: 'center',
@@ -30,8 +40,6 @@ function Categories() {
             <div>
               <TitleCat>Juegos</TitleCat>
               <CatSlides />
-            </div>
-            <div>
               <TitleCat>Cosas</TitleCat>
               <CatSlides />
             </div>
