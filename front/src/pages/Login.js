@@ -74,13 +74,6 @@ const FormContainer = styled.form`
   position: relative;
 `;
 
-/* const ImageSpace = styled.img`
-  max-width: 100px;
-  max-height: 100px;
-  margin-top: 1em;
-  margin-bottom: 2em;
-`;*/
-
 const InputContainer = styled.div`
   width: 60%;
   display: flex;
