@@ -148,11 +148,9 @@ def newPWD():
     existCookies = request.cookies.get('cookie')
     # Decodificacion de token para el chequeo de coincidencia
     existCookies = jwt.decode(existCookies, "AEPINMM")
-    print(existCookies)
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM users WHERE username = %s AND UserID = %s', (existCookies.get('username'), existCookies.get('UserID')))
     user = cursor.fetchone()
-    print(user)
 
     if user:
         oldPassword = request.json.get('oldPassword')
@@ -165,7 +163,6 @@ def newPWD():
             pwd = newPassword.encode('utf-8')
             salt = bcrypt.gensalt()
             hashPWD = bcrypt.hashpw(pwd, salt)
-            print(f"CONTRASEÑA EN DB = {user['password']}")
             # exe = f"UPDATE users SET password = {hashPWD} WHERE password = {user['password']}"
             cursor.execute('UPDATE users SET password = %s WHERE password = %s', (hashPWD, user['password']))
             mysql.connection.commit()
@@ -194,6 +191,43 @@ def data(category):
     else:
         info['error'] = "Invalid category"
     return info
+"""
+@app.route('/schedule', methods=['POST'])
+def schedule():
+    app.config['MYSQL_DB'] = 'login'
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM users WHERE username = %s AND UserID = %s', (existCookies.get('username'), existCookies.get('UserID')))
+    user = cursor.fetchone()
+    cursor.close()
+
+    if user:
+        categoryID = request.json.get('categoryID')
+        title = request.json.get('title')
+        date = request.json.get('date')
+        username = user.get('username')
+        UserID = user.get('UserID')
+        print(categoryID)
+        print(f"Tipo de catID: {type(categoryID)}")
+        print(username)
+        print(date)
+        print(title)
+        print(UserID)
+
+        print(app.config['MYSQL_DB'])
+        app.config['MYSQL_DB'] = 'events'
+        print(app.config['MYSQL_DB'])
+        c = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        print(app.config['MYSQL_DB'])
+        c.execute('INSERT INTO schedule VALUES (NULL, %s, %s, %s, %s, %s)', (UserID, username, title, categoryID, date,))
+        mysql.connection.commit()
+        return "OK"
+    return "Falso"
+"""
+
 
 if __name__ == "__main__":
     """ Main Function """

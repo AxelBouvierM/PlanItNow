@@ -110,3 +110,37 @@ CREATE TABLE IF NOT EXISTS `brewery` (
     `description` varchar(2000) NOT NULL,
     PRIMARY KEY (`breweryID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `coffee` (
+    `coffeeID` int(11) NOT NULL AUTO_INCREMENT,  
+    `title` varchar(255) NOT NULL,
+    `image` varchar(255) NOT NULL,
+    `link` varchar(255) NOT NULL,
+    `place` varchar(255) NOT NULL,
+    `date` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
+    `description` varchar(2000) NOT NULL,
+    PRIMARY KEY (`coffeeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `museum` (
+    `museumID` int(11) NOT NULL AUTO_INCREMENT,  
+    `title` varchar(255) NOT NULL,
+    `image` varchar(255) NOT NULL,
+    `link` varchar(255) NOT NULL,
+    `place` varchar(255) NOT NULL,
+    `date` varchar(255) NOT NULL,
+    `price` varchar(1000) NOT NULL,
+    `description` varchar(2000) NOT NULL,
+    PRIMARY KEY (`museumID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `schedule` (
+    `scheduleID` int(11) NOT NULL AUTO_INCREMENT,
+    `userID` varchar(1000) NOT NULL,
+    `username` varchar(50) NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `categoryID` int(11) NOT NULL,
+    `date` varchar(255) NOT NULL,
+    PRIMARY KEY (`scheduleID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
