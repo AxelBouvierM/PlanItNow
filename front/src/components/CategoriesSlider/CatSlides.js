@@ -7,10 +7,9 @@ import './CatSlides.css';
 import { dataDigitalBestSeller } from '../ImgSlides/data';
 
 const Container = styled.div`
-  max-width: 84em;
-  max-height: 80px;
+  max-height: 500px;
+  max-width: 100%;
   justify-content: center;
-  margin: auto;
 `;
 
 const Card = styled.div`
