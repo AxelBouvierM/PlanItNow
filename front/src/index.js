@@ -20,6 +20,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Landpage />} />
+        <Route path='/landpage' element={<Landpage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
