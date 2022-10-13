@@ -1,4 +1,4 @@
-/*import React from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import LandPageHeader from '../components/LandingPageHeader/LandPageHeader'
@@ -27,4 +27,3 @@ function Landpage() {
 }
 
 export default Landpage
-*/
