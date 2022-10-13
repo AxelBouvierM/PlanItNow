@@ -220,10 +220,11 @@ function Register() {
       console.log("Error: ", err);
     });
 
-    if (res.data.response.status === 'ok') {
-      // chequear ubicacion de status: "ok" en la response para que el redirect se aplique solo en logins con usuario y contraseña correcta.
+    console.log(res);
+    if (res.data.response.status === 'Ok') {
+      // crear msj de Cuenta creada correctamente y redireccion segundos despues.
       setLoginRedirect(true);
-    } else if (res.data.response.status === 'El usuario ya existe!') {
+    } else {
       setLoginRedirect(false);
       setUserError(true);
     }
@@ -246,7 +247,7 @@ function Register() {
             <TextSpace>REGÍSTRATE</TextSpace>
             {UserError && (
               <ErrorWrapper>
-                <ErrorMessage>Usuario y/o contraseña incorrecta</ErrorMessage>
+                <ErrorMessage>Ha ocurrido un error, Verifique los datos ingresados.</ErrorMessage>
               </ErrorWrapper>
             )}
             <InputContainer>
