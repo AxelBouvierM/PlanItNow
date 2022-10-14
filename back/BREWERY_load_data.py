@@ -6,9 +6,10 @@ import mysql.connector
 import requests
 from selenium import webdriver
 
-API_KEY = "AIzaSyCbVsTWbCgBRCl8oyBU8Oav74EaG7MmCeY"
+API_KEY = open('/home/planitnow_pin/PlanItNow/back/API_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable 
+DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable 
 
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password='AEPINMM') # create connection to the events database
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
 cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
 
 url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query=Cervecerias%20en%20Montevideo%20Uruguay&language=es-419&key={API_KEY}" # url google API with the search of breweries in Montevideo
