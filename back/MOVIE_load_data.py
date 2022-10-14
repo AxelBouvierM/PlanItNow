@@ -5,7 +5,9 @@ import datetime
 import mysql.connector
 from selenium import webdriver
 
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password='AEPINMM') # create connection to the events database
+DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable 
+
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
 cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
 
 movie_elements = [] # List where the movie events are going to be loaded
@@ -21,17 +23,41 @@ while movie_elements == []: # Loop to try execute until we got some movie data
     results = soup.find('div', class_='content') # get the div tag that contains information about the movies
     movie_elements = results.find_all('div', class_="row alternate") # get the list of all the movies
     for movie_element in movie_elements: # traverse each movie to get further information
-        title = str(movie_element.h2.a).split('>')[1].split('<')[0]
-        image = movie_element.img['src']
-        link = 'https://www.movie.com.uy/' + movie_element.a['href'][1:]
+        try:
+            title = str(movie_element.h2.a).split('>')[1].split('<')[0]
+        except Exception:
+            title = 'Sin información'
+        try:
+            image = movie_element.img['src']
+        except Exception:
+            title = 'Sin información'
+        try:
+            link = 'https://www.movie.com.uy/' + movie_element.a['href'][1:]
+        except Exception:
+            title = 'Sin información'
         p_list = movie_element.find_all('div', class_='col-lg-6 col-md-6 col-sm-6 col-xs-6')
-        duration = p_list[0].text.replace('\n','').split('Duración')[1]
-        director = p_list[1].text.replace('\n','').split('Director')[1]
-        genre = p_list[2].text.replace('\n','').split('Género')[1]
-        actors = p_list[3].text.replace('\n','').split('Actores')[1]
-        place = movie_element.ul.text.replace('\n','').replace('Movie', ', Movie')[2:]
+        try:
+            duration = p_list[0].text.replace('\n','').split('Duración')[1]
+        except Exception:
+            duration = 'Sin información'    
+        try:
+            director = p_list[1].text.replace('\n','').split('Director')[1]
+        except Exception:
+            director = 'Sin información'
+        try:    
+            genre = p_list[2].text.replace('\n','').split('Género')[1]
+        except Exception:
+            genre = 'Sin información'    
+        try:    
+            actors = p_list[3].text.replace('\n','').split('Actores')[1]
+        except Exception:
+            duration = 'Sin información'
+        try:    
+            place = movie_element.ul.text.replace('\n','').replace('Movie', ', Movie')[2:]
+        except Exception:
+            duration = 'Sin información'
         if 'PROXIMAS' in place:
-            place = 'Estreno - Consultar el link de la pelicula proximo a la fecha de estreno'
+            place = 'Proximo estreno - Consultar link de la pelicula para mas información'
         description = ''
         date_info = None
         while description == '' and date_info is None: # loop to get complete data because sometimes the scrap can't get the information correctly
@@ -48,7 +74,10 @@ while movie_elements == []: # Loop to try execute until we got some movie data
             for date in dates:
                 date_list.append(date.get('value'))  
         description += 'Genero: ' + genre + '\n\n' + 'Duración: ' + duration + '\n\n'+ 'Actores: ' + actors + '\n\n' + 'Director: ' + director
-        since_date = date_list[0]
+        try:
+            since_date = date_list[0]
+        except Exception:
+            since_date = 'Sin información'
         to_date = date_list[len(date_list) - 1]
         if since_date == to_date:
             date = to_date
@@ -60,8 +89,7 @@ while movie_elements == []: # Loop to try execute until we got some movie data
         record = (title, image, link, place, date, price, description)
         cursor.execute(insert, record) # Insert the data into the DB
         connection.commit() # Save the changes
-print(f'All movie events added to database')
-
+print(f'The movie script was exectued at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M")}')
 """Close the contection to te DB and the driver of selenium"""
 if connection.is_connected():
     cursor.close()
