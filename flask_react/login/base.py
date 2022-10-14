@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """This will be our main project file, all our Python code will be in this file (Routes, MySQL connection, validation, etc)"""
+from crypt import methods
 from http import cookies
 import json
+import sched
 from flask import Flask, jsonify, make_response, request
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
@@ -191,42 +193,54 @@ def data(category):
     else:
         info['error'] = "Invalid category"
     return info
-"""
+
 @app.route('/schedule', methods=['POST'])
 def schedule():
     app.config['MYSQL_DB'] = 'login'
     existCookies = request.cookies.get('cookie')
     # Decodificacion de token para el chequeo de coincidencia
     existCookies = jwt.decode(existCookies, "AEPINMM")
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM users WHERE username = %s AND UserID = %s', (existCookies.get('username'), existCookies.get('UserID')))
-    user = cursor.fetchone()
-    cursor.close()
 
-    if user:
+    if existCookies:
+        username = existCookies.get('username')
+        UserID = existCookies.get('UserID')
         categoryID = request.json.get('categoryID')
         title = request.json.get('title')
         date = request.json.get('date')
-        username = user.get('username')
-        UserID = user.get('UserID')
-        print(categoryID)
-        print(f"Tipo de catID: {type(categoryID)}")
-        print(username)
-        print(date)
-        print(title)
-        print(UserID)
+        event = request.json.get('event')
+        category = request.json.get('category')
 
-        print(app.config['MYSQL_DB'])
         app.config['MYSQL_DB'] = 'events'
-        print(app.config['MYSQL_DB'])
-        c = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-
-        print(app.config['MYSQL_DB'])
-        c.execute('INSERT INTO schedule VALUES (NULL, %s, %s, %s, %s, %s)', (UserID, username, title, categoryID, date,))
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('INSERT INTO schedule VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)', (UserID, username, title, categoryID, category, event, date,))
         mysql.connection.commit()
-        return "OK"
-    return "Falso"
-"""
+        return jsonify(response={"status": "Ok"})
+    else:
+        return jsonify(response={"status": "The event could not be scheduled"})
+
+@app.route('/calendar', methods=['GET'])
+def calendar():
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+    if existCookies:
+        app.config['MYSQL_DB'] = 'events'
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM schedule WHERE userID = %s', (existCookies.get('UserID'),))
+        schedule = cursor.fetchone()
+
+        if schedule:
+            category = schedule.get('category')
+            id = category + 'ID'
+            insert = f'SELECT * FROM {category} WHERE title = %s'
+            cursor.execute(insert, (schedule.get('event'),))
+            event = cursor.fetchone()
+            data = {"event": event, "schedule": schedule}
+            return (data)
+        else:
+            return jsonify(response={"status": "There are no scheduled events"})
+    else:
+        return ("User not logged in")
 
 
 if __name__ == "__main__":
