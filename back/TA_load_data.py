@@ -1,7 +1,4 @@
-#!/usr/bin/python3
-"""
-Script to extract data about events from tick antel
-"""
+""" Script to extract data about events from tick antel """
 
 from bs4 import BeautifulSoup
 import datetime
@@ -10,8 +7,9 @@ import requests
 from selenium import webdriver
 from time import sleep
 
+DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable 
 
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password='AEPINMM') # create connection to the events database
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
 cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
 
 """ List of all the categories to load in the databases """
@@ -55,11 +53,13 @@ for category in categories: # traverse all the caregories
         html = requests.get(link) # Gets the html code of an specific event
         soup = BeautifulSoup(html.content, 'lxml') # Parses the code
         info_espectaculo = soup.find(id='espectaculo') # in this tag we got information about the Title and date of the event
-        title = 'Sin información'
         since_date = 'Sin información'
         to_date = since_date
         if info_espectaculo is not None:
-            title= info_espectaculo.find('h1', class_='title').find('span', class_='span-block').text
+            try:
+                title= info_espectaculo.find('h1', class_='title').find('span', class_='span-block').text
+            except Exception:
+                title = 'Sin información'
             if title != 'Sin información':
                 span_list = (info_espectaculo.find('h1',class_='title').find_all('span'))
                 if 'del' in span_list[0]:
@@ -77,7 +77,7 @@ for category in categories: # traverse all the caregories
             if info_price != []:
                 try:
                     span_list = info_price[2].find_all('span')
-                except IndexError:
+                except Exception:
                     pass
                 if span_list != []:
                     if 'Precio de las entradas:' == span_list[0].text:
@@ -110,7 +110,7 @@ for category in categories: # traverse all the caregories
             cursor.execute(insert, record) # Insert the data into the DB
             connection.commit() # Save the changes
     print(f'All {category} events added to database')
-
+print(f'The Tick Antel script was exectued at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M")}')
 """Close the contection to te DB and the driver of selenium"""
 if connection.is_connected():
     cursor.close()

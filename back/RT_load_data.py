@@ -1,7 +1,4 @@
-#!/usr/bin/python3
-"""
-Script to extract data about events from red tickets
-"""
+""" Script to extract data about events from red tickets """
 
 from bs4 import BeautifulSoup
 import datetime
@@ -9,8 +6,9 @@ import mysql.connector
 from selenium import webdriver
 from time import sleep
 
+DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable 
 
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password='AEPINMM') # create connection to the events database
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
 cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
 
 """ List of all the categories to load in the databases """
@@ -38,11 +36,16 @@ for category in categories: # traverse all the caregories
         events = results.find_all('article', class_='card') # Get a list of all the events displayed in the page
         for event in events: # traverse each event to get further information
             span_list = event.find_all('span')
-            title = span_list[0].text
+            try:
+                title = span_list[0].text
+            except Exception:
+                title = 'Sin información'
             image = f'https://redtickets.uy/' + event.img['data-src']
             link = f'https://redtickets.uy/' + event.a['href']
-            date = span_list[1].text
-            place = span_list[2].text 
+            try:
+                place = span_list[2].text 
+            except Exception:
+                place = 'Sin información'
             description = ""
             check_price = ""
             iterations = 0
@@ -56,14 +59,26 @@ for category in categories: # traverse all the caregories
                 soup = BeautifulSoup(html, 'lxml') # Parses the code
                 event_info =soup.find('div', class_='TableEventInfo')
                 description_list = event_info.find_all('div', class_='Description')
-                description = description_list[1].text
-                date = description_list[0].text
+                try:
+                    description = description_list[1].text
+                except Exception:
+                    description = 'Sin información'
+                try:
+                    date = description_list[0].text
+                except Exception:
+                    date = 'Sin información'
                 soup = BeautifulSoup(html, 'lxml')
                 purchase_info =soup.find("div", class_='SectionPurchase')
-                check_price = purchase_info.find(id='comboTicket').text[1:]
+                try:
+                    check_price = purchase_info.find(id='comboTicket').text[1:]
+                except Exception:
+                    check_price = ''
                 iterations += 1
-                price = purchase_info.find(id='comboTicket').text[1:].replace('(','').replace(') ','\n').replace('Elige tu entrada  ', '')
-                if iterations == 5:
+                try:
+                    price = purchase_info.find(id='comboTicket').text[1:].replace('(','').replace(') ','\n').replace('Elige tu entrada  ', '')
+                except Exception:
+                    price = 'Sin información'
+                if iterations == 3:
                     price = 'Sin información visitar link del evento'
                     break
             category_id = category
@@ -78,7 +93,7 @@ for category in categories: # traverse all the caregories
         page += 1
         url = categories[category].replace('0', str(page))
     print(f'All {category} events added to database')
-
+print(f'The Red Tickets script was exectued at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M")}')
 """Close the contection to te DB and the driver of selenium"""
 if connection.is_connected():
     cursor.close()
