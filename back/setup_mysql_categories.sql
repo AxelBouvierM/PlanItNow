@@ -141,6 +141,8 @@ CREATE TABLE IF NOT EXISTS `schedule` (
     `username` varchar(50) NOT NULL,
     `title` varchar(255) NOT NULL,
     `categoryID` int(11) NOT NULL,
+    `category` varchar(255) NOT NULL,
+    `event` varchar(255) NOT NULL,
     `date` varchar(255) NOT NULL,
     PRIMARY KEY (`scheduleID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
