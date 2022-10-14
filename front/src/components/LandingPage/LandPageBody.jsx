@@ -126,8 +126,8 @@ const DiscoverIconContainer = styled.div`
 `;
 
 const DiscoverIcon = styled.span`
-	width: 7em;
-	height: 7em;
+	width: 5.5em;
+	height: 5.5em;
 	display: flex;
 	position: relative;
 	border: solid 3px #fafafa;
