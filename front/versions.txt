@@ -20,6 +20,10 @@ sudo apt-get install -y nodejs
   NAVBAR:	
 	-> hamburger-react: npm install hamburger-react
 
+  CARROUSEL:
+  -> react-slick: npm i react-slick
+  -> slick-carousel: npm install slick-carousel
+  
 	SEARCHBAR:
 	-> framer motion: npm install framer-motion
 	-> styled-components: npm install styled-components --save
