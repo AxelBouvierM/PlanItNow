@@ -81,7 +81,6 @@ function Slides() {
 		<Container>
 			<Slider {...settings} >
 				{dataDigitalBestSeller.map((item) => (
-					// en vez de usar un className dependiente usar useState()
 					<>
 					<CardTop>
 						<Images src={item.linkImg} alt={item.title} />
