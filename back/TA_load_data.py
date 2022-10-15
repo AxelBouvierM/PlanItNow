@@ -111,7 +111,7 @@ for category in categories: # traverse all the caregories
                 price = f'$ {to_price}'
             else:
                 price = f'Desde $ {from_price} hasta $ {to_price}'
-            if 'cancelado' in date or 'Cancelado' in date or 'CANCELADO' in date:
+            if '/' not in date:
                 continue
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category} ({category}ID, title, image, link, place, date, price, description)'
