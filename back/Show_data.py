@@ -1,25 +1,39 @@
 #!/usr/bin/python3
+"""Send data to API"""
+from flask import Flask, request
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
 
-import mysql.connector
-from flask import Flask 
-
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password="AEPINMM")
-cursor = connection.cursor(dictionary=True) 
 app = Flask(__name__)
-categories = ["brewery", "coffee", "dance", "movie", "museum", "music", "others", "party", "restaurant", "sport", "theater"]
 
-@app.route("/data/<category>")
+DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable 
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = DB_KEY
+app.config['MYSQL_DB'] = 'events'
+
+mysql = MySQL(app)
+
+@app.route('/data/<category>', methods=['POST', 'GET'])
 def data(category):
-    if category not in categories:
-        return ("Category not found")
-    query = f"SELECT * FROM `{category}`"
-    cursor.execute(query)
-    data = cursor.fetchall()
-    data_dict = {}
-    id = category + "ID"
-    for dic in data:
-        data_dict[dic[id]] = dic
-    return (data_dict)
+    categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum', 'entertainment']
+    info = {}
+    if category in categories:
+        
+        insert = f"SELECT * FROM {category}"
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(insert)
+        # Fetch one record and return result
+        data = cursor.fetchall()
+        
+        id = category + 'ID'
+        
+        for elements in data:
+            info[elements[id]] = elements
+    else:
+        info['error'] = "Categoria inexistente"
+    return info
 
-if __name__ == "__main__":
-    app.run(port=5000, host="0.0.0.0", debug=True)
+if __name__ == '__main__':
+    app.run(port=5000, host='0.0.0.0', debug=True)
