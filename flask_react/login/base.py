@@ -194,6 +194,28 @@ def data(category):
         info['error'] = "Invalid category"
     return info
 
+@app.route('/data', methods=['GET'])
+def dataAll():
+    app.config['MYSQL_DB'] = 'events'
+    categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum']
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    elements = {}
+    for category in categories:
+        insert = f'SELECT * FROM {category}'
+        cursor.execute(insert)
+        events = cursor.fetchall()
+        if events:
+            dic = {}
+            for event in events:
+                dic[event['title']] = event
+                elements[category] = dic
+        else:
+            elements['status'] = 'Not found'
+    return elements
+
+
 @app.route('/schedule', methods=['POST'])
 def schedule():
     app.config['MYSQL_DB'] = 'login'
