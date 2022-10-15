@@ -14,9 +14,16 @@ sudo apt-get install -y nodejs
   -> react-router: npm i -D react-router-dom
 	-> react-moment: npm i react-moment
 
-	NAVBAR:	
+  REGISTER:
+  -> react-password-checklist: npm install --save react-password-checklist
+	
+  NAVBAR:	
 	-> hamburger-react: npm install hamburger-react
 
+  CARROUSEL:
+  -> react-slick: npm i react-slick
+  -> slick-carousel: npm install slick-carousel
+  
 	SEARCHBAR:
 	-> framer motion: npm install framer-motion
 	-> styled-components: npm install styled-components --save
@@ -71,3 +78,5 @@ var A = React.createClass({
   }
 
 ###### ICONO HISTORIAL RiHistoryLine
+
+###### BUSCAR INFO PM2 DEPENDENCIA PARA QUE SI SE CAE NODE SE VUELVA A LEVANTAR ######
