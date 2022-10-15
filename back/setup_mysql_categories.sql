@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `museum` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `entertainment` (
-    `entertainment` int(11) NOT NULL AUTO_INCREMENT,  
+    `entertainmentID` int(11) NOT NULL AUTO_INCREMENT,  
     `title` varchar(255) NOT NULL,
     `image` varchar(255) NOT NULL,
     `link` varchar(255) NOT NULL,
