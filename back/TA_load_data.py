@@ -88,9 +88,17 @@ for category in categories: # traverse all the caregories
                         from_price = span_list[0].text
                         to_price = from_price
             info_description = soup.find(id='tab-informacion')
-            description = 'Sin información'
-            if info_description is not None:
-                description = info_description.contents[1].text
+            description = ''
+            try:
+                for idx in range(len(info_description.contents)-1):
+                    if info_description.contents[idx] == '\n' and idx != 0:
+                        description += '\n'
+                    try:
+                        description += info_description.contents[idx].text
+                    except Exception:
+                        continue
+            except Exception:
+                description = 'Sin información'
             info_place = soup.find(id='lugar')
             place = 'Sin información'
             if info_place is not None:
@@ -103,6 +111,8 @@ for category in categories: # traverse all the caregories
                 price = f'$ {to_price}'
             else:
                 price = f'Desde $ {from_price} hasta $ {to_price}'
+            if 'cancelado' in date or 'Cancelado' in date or 'CANCELADO' in date:
+                continue
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category} ({category}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
