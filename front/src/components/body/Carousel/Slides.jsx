@@ -4,13 +4,15 @@ import "slick-carousel/slick/slick-theme.css";
 import { dataDigitalBestSeller } from './data';
 import styled from "styled-components";
 
+import '../../../styles/slides.css'
+
 const Container = styled.div`
   max-height: 70vh;
   max-width: 90vw;
   margin: auto;
-  padding-top: 7em;
-  text-align: center;
+  padding-top: 10em;
   color: #fafafa;
+  text-align: center;
 `;
 
 const CardTop = styled.div`
@@ -55,7 +57,7 @@ function Slides() {
 					slidesToShow: 1,
 					slidesToScroll: 1,
 					centerMode: true,
-					arrows: true,
+					arrows: false,
 				},
 			},
 			{
