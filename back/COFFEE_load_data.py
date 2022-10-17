@@ -55,7 +55,7 @@ while True: # loop to get more results until next_page is not None
                 description += day + '\n'
             description = description[:-1]
         link = results.get('website')
-        image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxmaxheight=1600&photo_reference={photo_reference}&key={API_KEY}'
+        image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxheight=1600&photo_reference={photo_reference}&key={API_KEY}'
         chrome_options = webdriver.ChromeOptions() # Class for managing ChromeDriver specific options.
         chrome_options.add_argument('headless') # Set headles option to start Chrome in the "background" without any visual output or windows 
         driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
