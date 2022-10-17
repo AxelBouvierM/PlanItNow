@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { React, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { Outlet, Link, useNavigate } from 'react-router-dom';
@@ -189,7 +189,7 @@ function Login() {
 
 		axios.post('/login/auth', formData, { headers: headers })
 			.then((res) => {
-        if (res.data.response.status === 'ok') {
+        if (res.data.response.status === 'Ok') {
           setAccess(true);
 				} else {
           setAccess(false);

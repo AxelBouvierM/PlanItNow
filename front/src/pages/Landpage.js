@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import LandPageHeader from '../components/LandingPage/LandPageHeader'
 import LandPageBody from '../components/LandingPage/LandPageBody'
+import Footer from '../components/footer/Footer'
 import montaña5 from '../images/montaña5.jpg'
 
 
@@ -21,6 +22,7 @@ function Landpage() {
 	<Background>
 	  <LandPageHeader />
     <LandPageBody/>
+    <Footer />
 	</Background>
   )
 }
