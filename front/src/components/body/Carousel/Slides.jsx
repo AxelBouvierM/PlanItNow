@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from "styled-components";
 import Slider from "react-slick";
@@ -42,7 +42,6 @@ const CardTitle = styled.h1`
 `;
 
 function Slides() {
-	const [request, setRequest] = useState(false);
 	const [slidesData, setSlidesData] = useState([]);
 
 	function randomizer(obj) {
@@ -50,27 +49,26 @@ function Slides() {
 		return obj[keys[keys.length * Math.random() << 0]];
 	};
 
-	if (!request) {
+	useEffect(() => {
 		axios.get('/data')
-			.then((res) => {
-				const sport = randomizer(res.data.sport);
-				setSlidesData(slidesData => [...slidesData, sport]);
-				const party = randomizer(res.data.party);
-				setSlidesData(slidesData => [...slidesData, party]);
-				const others = randomizer(res.data.others);
-				setSlidesData(slidesData => [...slidesData, others]);
-				const music = randomizer(res.data.music);
-				setSlidesData(slidesData => [...slidesData, music]);
-				const theater = randomizer(res.data.theater);
-				setSlidesData(slidesData => [...slidesData, theater]);
-				const dance = randomizer(res.data.dance);
-				setSlidesData(slidesData => [...slidesData, dance]);
-				setRequest(true);
-				})
+		.then((res) => {
+			const sport = randomizer(res.data.sport);
+			setSlidesData(slidesData => [...slidesData, sport]);
+			const party = randomizer(res.data.party);
+			setSlidesData(slidesData => [...slidesData, party]);
+			const others = randomizer(res.data.others);
+			setSlidesData(slidesData => [...slidesData, others]);
+			const music = randomizer(res.data.music);
+			setSlidesData(slidesData => [...slidesData, music]);
+			const theater = randomizer(res.data.theater);
+			setSlidesData(slidesData => [...slidesData, theater]);
+			const dance = randomizer(res.data.dance);
+			setSlidesData(slidesData => [...slidesData, dance]);
+		})
 			.catch((err) => {
 				console.log(err);
 			});
-		}
+		}, []);
 
 	const settings = {
 		focusOnSelect: true,
@@ -117,10 +115,10 @@ function Slides() {
 			<Slider {...settings} >
 				{slidesData.map((item) => (
 					<>
-					<CardTop>
-						<Images src={item.image} alt={item.title} />
+					<CardTop key={'CardTop' + item}>
+						<Images src={item.image} alt={item.title} key={'Image' + item} />
 					</CardTop>
-					<CardTitle>{item.title}</CardTitle>
+					<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
 					</>
 				))}
 			</Slider>
