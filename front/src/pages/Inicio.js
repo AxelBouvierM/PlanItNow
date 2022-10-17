@@ -8,7 +8,6 @@ import { SearchBar } from '../components/body/searchBar/SearchBar'
 import Slides from '../components/body/Carousel/Slides';
 
 import rambla from '../images/rambla6.jpg'
-import waves from '../images/layered-waves-haikei.svg'
 import Footer from '../components/footer/Footer';
 import { FaFileExcel } from 'react-icons/fa';
 
@@ -49,6 +48,7 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
+  font-size: 1.2em;
 `;
 
 const navBarStyles = {
