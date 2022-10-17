@@ -8,95 +8,89 @@ const HeaderContainer = styled.div`
 	display: flex;
 	position: relative;
 	width: 100vw;
-	height: 10vh;
-	background-color: rgba(0,0,0,0.50);
+  padding: 0 3em;
+  @media all and (max-width:37em) {
+    & {
+      padding: 0 1em;
+    }
+  }
 `;
 
 const LogoContainer = styled.div`
 	display: flex;
 	position: relative;
-	width: 50%;
-	height: 100%;
+  width: fit-content;
+  margin-right: 1em;
 `;
 
 const Logo = styled.img`
-	display: flex;
-	position: relative;
-  width: 30%;
-  height: auto;
+	width: 7em;
+	height: 7em;
+	opacity: 1;
+  @media all and (max-width:37em) {
+    & {
+    width: 5em;
+    height: 5em;
+    }
+  }
 `;
 
 const ButtonsContainer = styled.div`
-	display: inline-flex;
-	position: relative;
-	width: 50%;
-	height: 100%;
-	align-items: center;
-	gap: 3em;
-	flex-direction: row-reverse;
-`;
-
-const LoginButton = styled.button`
-  width: 10em;
-  height: 3em;
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
+  display: flex;
   position: relative;
-  background-color: transparent;
-  border: 3px solid #fafafa;
-  color: white;
-  font-size: 1em;
-  vertical-align: middle;
-  backdrop-filter: blur(15px);
-  right: 0;
-  margin-right: 2em;
-  cursor: pointer;
-  &:hover {
-	background-color: rgba(0,0,0,0.50);
-  	transition: 0.3s ease-in-out;
-  }
-`;
-
-const RegisterButton = styled.button`
-  width: 10em;
-  height: 3em;
-  display: inline-block;
+  width: fit-content;
+  flex-flow: row wrap;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  background-color: transparent;
-  border: none;
-  border-bottom: 3px solid #fafafa;
-  color: white;
-  font-size: 1em;
-  vertical-align: middle;
-  backdrop-filter: blur(15px);
-  right: 0;
   margin-left: auto;
-  cursor: pointer;
+`;
+
+const AccountButton = styled.a`
+  display:inline-block;
+  margin: 0 1em;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#FFFFFF;
+  text-align:center;
+  transition: all 0.2s;
   &:hover {
-	background-color: rgba(0,0,0,0.50);
-  	transition: 0.3s ease-in-out;
+    color:#000000;
+    background-color: #fafafa;
   }
+  @media all and (max-width:600px) {
+    & {
+    display: block;
+    margin: auto;
+  }
+}
+`;
+
+const ButtonTitle = styled.span`
+	z-index: 1;
+  position: relative;
 `;
 
 function LandPageHeader() {
   return (
-	<HeaderContainer>
-  <LogoContainer>
-			  <Logo src={testLogo}/>
-		</LogoContainer>
-		<ButtonsContainer>
-			  <Link to="/login">
-				  <LoginButton type="button">Iniciar sesión</LoginButton>
-			  </Link>
-			<Link to="/register">
-				<RegisterButton type="button">Registrarse</RegisterButton>
-			</Link>
-		  	<Outlet />
-		</ButtonsContainer>
-	</HeaderContainer>
+    <HeaderContainer>
+      <LogoContainer>
+        <Logo src={testLogo} />
+      </LogoContainer>
+      <ButtonsContainer>
+        <Link to="/register">
+          <AccountButton type="button"><ButtonTitle>Registrarse</ButtonTitle></AccountButton>
+        </Link>
+        <Link to="/login">
+          <AccountButton type="button"><ButtonTitle>Iniciar sesión</ButtonTitle></AccountButton>
+        </Link>
+        <Outlet />
+      </ButtonsContainer>
+    </HeaderContainer>
   )
 }
 
