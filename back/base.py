@@ -51,7 +51,7 @@ def loginAuth():
                 UserID = pwd.get('UserID')
                 token = jwt.encode({"username": username, "UserID": UserID}, "AEPINMM")
                 # Seteando respuesta
-                resp = make_response(jsonify(response={"status": "ok"}))
+                resp = make_response(jsonify(response={"status": "Ok"}))
                 resp.status_code = 200
                 # Seteo de cookie en caso de usuario valido
                 resp.set_cookie("cookie", token)
@@ -79,10 +79,10 @@ def loginCheck():
         user = cursor.fetchone()
 
         if user:
-            return jsonify(response={"status": "Logeado"})
+            return jsonify(response={"status": "Ok"})
     except Exception:
         pass
-    return jsonify(response={"status": "User no logeado"})
+    return jsonify(response={"status": "User not logged in"})
 
 # Ruta para registrar un nuevo usuario  
 @app.route('/register', methods=['POST'])
@@ -104,16 +104,16 @@ def loginRegister():
         user = cursor.fetchone()
         
         if user:
-            msg = 'El usuario ya existe!'
+            msg = 'User already exists'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             # At least one or more non-@ , then a @ , then at least one or more non-@ , then a dot, then at least one or more non-@"
-            msg = 'Direccion de correo invalida!'
+            msg = 'Invalid email address'
         elif not re.match(r'[A-Za-z0-9]+', username):
-            msg = 'El nombre de usuario debe contener solo caracteres y numeros!'
+            msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
-            msg = 'Por favor complete todos los datos!'
+            msg = 'Please complete all the data'
         elif validar_email(email, debug=False) == False:
-            msg = 'Email no valido!'
+            msg = 'Invalid email'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
             
@@ -137,7 +137,7 @@ def loginRegister():
 # Ruta para deslogear usuario, eliminacion de la cookie
 @app.route('/login/logout', methods=['GET'])
 def loginLogout():
-    resp = make_response(jsonify(response={"status": "del success"}))
+    resp = make_response(jsonify(response={"status": "Ok"}))
     # Eliminacion de la cookie
     resp.delete_cookie("cookie")
     return resp
@@ -148,11 +148,9 @@ def newPWD():
     existCookies = request.cookies.get('cookie')
     # Decodificacion de token para el chequeo de coincidencia
     existCookies = jwt.decode(existCookies, "AEPINMM")
-    print(existCookies)
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM users WHERE username = %s AND UserID = %s', (existCookies.get('username'), existCookies.get('UserID')))
     user = cursor.fetchone()
-    print(user)
 
     if user:
         oldPassword = request.json.get('oldPassword')
@@ -165,7 +163,6 @@ def newPWD():
             pwd = newPassword.encode('utf-8')
             salt = bcrypt.gensalt()
             hashPWD = bcrypt.hashpw(pwd, salt)
-            print(f"CONTRASEÑA EN DB = {user['password']}")
             # exe = f"UPDATE users SET password = {hashPWD} WHERE password = {user['password']}"
             cursor.execute('UPDATE users SET password = %s WHERE password = %s', (hashPWD, user['password']))
             mysql.connection.commit()
@@ -177,7 +174,7 @@ def newPWD():
 def data(category):
     app.config['MYSQL_DB'] = 'events'
 
-    categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum']
+    categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum', 'entertainment']
     info = {}
     if category in categories:
         
@@ -194,6 +191,77 @@ def data(category):
     else:
         info['error'] = "Invalid category"
     return info
+
+@app.route('/data', methods=['GET'])
+def dataAll():
+    app.config['MYSQL_DB'] = 'events'
+    categories = ['music', 'theater', 'sport', 'party', 'others', 'dance']
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    elements = {}
+    for category in categories:
+        insert = f'SELECT * FROM {category}'
+        cursor.execute(insert)
+        events = cursor.fetchall()
+        if events:
+            dic = {}
+            for event in events:
+                dic[event['title']] = event
+                elements[category] = dic
+        else:
+            elements['status'] = 'Not found'
+    return elements
+
+
+@app.route('/schedule', methods=['POST'])
+def schedule():
+    app.config['MYSQL_DB'] = 'login'
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+
+    if existCookies:
+        username = existCookies.get('username')
+        UserID = existCookies.get('UserID')
+        categoryID = request.json.get('categoryID')
+        title = request.json.get('title')
+        date = request.json.get('date')
+        event = request.json.get('event')
+        category = request.json.get('category')
+
+        app.config['MYSQL_DB'] = 'events'
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('INSERT INTO schedule VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)', (UserID, username, title, categoryID, category, event, date,))
+        mysql.connection.commit()
+        return jsonify(response={"status": "Ok"})
+    else:
+        return jsonify(response={"status": "The event could not be scheduled"})
+
+@app.route('/calendar', methods=['GET'])
+def calendar():
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+    if existCookies:
+        app.config['MYSQL_DB'] = 'events'
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM schedule WHERE userID = %s', (existCookies.get('UserID'),))
+        schedule = cursor.fetchone()
+
+        if schedule:
+            category = schedule.get('category')
+            id = category + 'ID'
+            insert = f'SELECT * FROM {category} WHERE title = %s'
+            cursor.execute(insert, (schedule.get('event'),))
+            event = cursor.fetchone()
+            data = {"event": event, "schedule": schedule}
+            return (data)
+        else:
+            return jsonify(response={"status": "There are no scheduled events"})
+    else:
+        return ("User not logged in")
+
 
 if __name__ == "__main__":
     """ Main Function """
