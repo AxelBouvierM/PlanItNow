@@ -8,7 +8,6 @@ from flask import Flask, jsonify, make_response, request
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
-from emailValidator import validar_email
 import jwt
 import uuid
 import bcrypt
@@ -104,9 +103,14 @@ def loginRegister():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         user = cursor.fetchone()
+
+        cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
+        mail = cursor.fetchone()
         
         if user:
             msg = 'User already exists'
+        elif mail:
+            msg = 'Mail already exists'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             # At least one or more non-@ , then a @ , then at least one or more non-@ , then a dot, then at least one or more non-@"
             msg = 'Invalid email address'
@@ -114,8 +118,6 @@ def loginRegister():
             msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
             msg = 'Please complete all the data'
-        elif validar_email(email, debug=False) == False:
-            msg = 'Invalid email'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
             
