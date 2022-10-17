@@ -72,6 +72,7 @@ const SecondBodyContainer = styled.div`
 	flex-direction: column;
 `;
 
+// cambiar a display block cuando el display sea menor a 600px
 const OfferContainer = styled.div`
 	display: flex;
 	position: relative;
@@ -157,7 +158,7 @@ const DiscoverTextContainer = styled.div`
 
 const DiscoverText = styled.p`
 	color: #fafafa;
-	font-size: 1.3em;
+	font-size: 1.2em;
 	text-transform: uppercase;
 `;
 
