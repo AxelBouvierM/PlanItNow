@@ -85,7 +85,7 @@ while True: # loop to get more results until next_page is not None
             if elements[element] is None:
               elements[element] = 'Sin información'
         """Create the query to insert data into the database"""
-        insert = """INSERT INTO others (othersID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
+        insert = """INSERT INTO entertainment (entertainmentID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place_location'], elements['date'], elements['price'], elements['description'])
         cursor.execute(insert, record) # Insert the data into the DB
         connection.commit() # Save the change
