@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
-import Landpage from './components/pages/Landpage'
-import Home from './components/pages/Inicio'
-import ErrorPage from './components/pages/NoPage'
-import Agenda from './components/pages/Agenda'
-import Cuenta from './components/pages/Cuenta'
-import Configuracion from './components/pages/Configuracion'
-import Login from './components/pages/Login'
-import Register from './components/pages/Register'
+import Landpage from './pages/Landpage'
+import Home from './pages/Inicio'
+import ErrorPage from './pages/NoPage'
+import Agenda from './pages/Agenda'
+import Profile from './pages/Profile'
+import Configuracion from './pages/Configuracion'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Categories from './pages/Categories'
 
 import './index.css';
 
@@ -19,12 +20,13 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Landpage />} />
+        <Route path='/landpage' element={<Landpage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
         <Route path='/agenda' element={<Agenda />} />
-        <Route path='/categorias' element={<Agenda />} />
-        <Route path='/cuenta' element={<Cuenta />} />
+        <Route path='/categories' element={<Categories />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path='/configuracion' element={<Configuracion />} />
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<ErrorPage />} />
