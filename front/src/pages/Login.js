@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { React, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { Outlet, Link, useNavigate } from 'react-router-dom';
@@ -73,13 +73,6 @@ const FormContainer = styled.form`
   align-items: center;
   position: relative;
 `;
-
-/* const ImageSpace = styled.img`
-  max-width: 100px;
-  max-height: 100px;
-  margin-top: 1em;
-  margin-bottom: 2em;
-`;*/
 
 const InputContainer = styled.div`
   width: 60%;
@@ -196,7 +189,7 @@ function Login() {
 
 		axios.post('/login/auth', formData, { headers: headers })
 			.then((res) => {
-        if (res.data.response.status === 'ok') {
+        if (res.data.response.status === 'Ok') {
           setAccess(true);
 				} else {
           setAccess(false);

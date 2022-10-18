@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   max-height: 500px;
-  max-width: 700px;
+  max-width: 1050px;
   justify-content: center;
   margin: auto;
   padding-top: 40px;

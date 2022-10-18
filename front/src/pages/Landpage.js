@@ -1,14 +1,57 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import LandPageHeader from '../components/LandingPageHeader/LandPageHeader'
+import LandPageHeader from '../components/LandingPage/LandPageHeader'
+import LandPageBody from '../components/LandingPage/LandPageBody'
+import Footer from '../components/footer/Footer'
+import concierto2 from '../images/concierto100.jpg'
+import teatro from '../images/teatro.jpg'
+import cerveza from '../images/brewery100.jpg'
+import entreFoto from '../images/entreFoto.jpg'
 
-import montaña5 from '../images/montaña5.jpg'
+/*const Background = styled.div`
+  background-image: url(${concierto2});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+`;*/
 
+const BgContainer = styled.div`
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+`;
 
-const Background = styled.div`
-  border: 1px solid #000; 
-  background-image: url(${montaña5});
+const FirstBackground = styled.img`
+  display: flex;
+  position: relative;
+  width: 100vw;
+  z-index: 1;
+`;
+
+const SeparatorContainer = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+const SecondBgContainer = styled.div`
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 80vh;
+`;
+const SecondBackground = styled.img`
+  display: flex;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+`;
+
+const ThirdBackground = styled.div`
+  background-image: url(${teatro});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -18,11 +61,23 @@ const Background = styled.div`
 
 function Landpage() {
 
-	// crear botones para login y register con un modulo link y outlet de react-router-dom
   return (
-	<Background>
-	  <LandPageHeader />
-	</Background>
+  <>
+    <BgContainer>
+    <FirstBackground src={concierto2}/>
+      <LandPageHeader />
+      <LandPageBody />
+    </BgContainer>
+    <SeparatorContainer>
+      <SecondBackground src={entreFoto}/>
+    </SeparatorContainer>
+    <SecondBgContainer>
+      <SecondBackground src={cerveza}/>
+    </SecondBgContainer>
+  <ThirdBackground>
+  </ThirdBackground>
+  <Footer />
+  </>
   )
 }
 
