@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import LandPageHeader from '../components/LandingPage/LandPageHeader'
 import LandPageBody from '../components/LandingPage/LandPageBody1'
-import LandPageBody2 from '../components/LandingPage/LandPageBody2'
 import Footer from '../components/footer/Footer'
 import concierto2 from '../images/concierto100.jpg'
 import teatro from '../images/teatro.jpg'
@@ -18,6 +17,7 @@ import entreFoto from '../images/entreFoto.jpg'
   width: 100vw;
   height: 100vh;
 `;*/
+
 const BgContainer = styled.div`
   display: flex;
   position: relative;
