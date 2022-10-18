@@ -57,7 +57,7 @@ while True: # loop to get more results until next_page is not None
         image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_reference}&key={API_KEY}' # url google API to get the photo of a restaurant
         chrome_options = webdriver.ChromeOptions() # Class for managing ChromeDriver specific options.
         chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows 
-        driver = webdriver.Chrome('/home/vagrant/PlanItNow/maxi/back/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
+        driver = webdriver.Chrome('/home/vagrant/PlanItNow/back/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
         driver.get(image_url) 
         html = driver.page_source # Get the source of the current page
         soup = BeautifulSoup(html, 'lxml') # Parses the code
