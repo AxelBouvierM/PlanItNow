@@ -23,7 +23,7 @@ for category in categories: # traverse all the caregories
     """Start the browser"""
     chrome_options = webdriver.ChromeOptions() # Class for managing ChromeDriver specific options.
     chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows 
-    driver = webdriver.Chrome('/home/vagrant/PlanItNow/maxi/back/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
+    driver = webdriver.Chrome('/home/vagrant/PlanItNow/back/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
     driver.get(categories[category]) # get information of the link
 
     """Create some variables to emulate the scroll"""
