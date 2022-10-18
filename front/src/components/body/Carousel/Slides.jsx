@@ -1,12 +1,12 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { dataDigitalBestSeller } from './data';
+
 import styled from "styled-components";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../Modal/Modal.js'
 import '../../../styles/slides.css'
-import '../Modal/Modal.css'
+import axios from 'axios';
 
 const Container = styled.div`
   max-height: 70vh;
@@ -38,12 +38,40 @@ const CardTitle = styled.h1`
 	margin-top: 0.3em;
 	font-size: 1.4em;
 	font-weight: 300;
+	text-transform: uppercase;
 `;
 
 function Slides() {
     const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
-	const [slideIndex, setSlideIndex] = useState(0);
+	const [slidesData, setSlidesData] = useState([]);
+
+	function randomizer(obj) {
+		var keys = Object.keys(obj);
+		return obj[keys[keys.length * Math.random() << 0]];
+	};
+
+	useEffect(() => {
+			axios.get('./data')
+			.then((res) => {
+					const sport = randomizer(res.data.sport);
+					setSlidesData(slidesData => [...slidesData, sport]);
+					const party = randomizer(res.data.party);
+					setSlidesData(slidesData => [...slidesData, party]);
+					const others = randomizer(res.data.others);
+					setSlidesData(slidesData => [...slidesData, others]);
+					const music = randomizer(res.data.music);
+					setSlidesData(slidesData => [...slidesData, music]);
+					const theater = randomizer(res.data.theater);
+					setSlidesData(slidesData => [...slidesData, theater]);
+					const dance = randomizer(res.data.dance);
+					setSlidesData(slidesData => [...slidesData, dance]);
+			})
+					.catch((err) => {
+						console.log(err);
+					});
+	}, []);
+
 
 	const settings = {
 		focusOnSelect: true,
@@ -55,7 +83,7 @@ function Slides() {
 		speed: 400,
 		lazyLoad: true,
 		swipeToSlide: true,
-		beforeChange: (current, next)=>setSlideIndex(next),
+		/*beforeChange: (current, next)=>setSlideIndex(next),*/
 		responsive: [
 			{
 				breakpoint: 767,
@@ -85,18 +113,14 @@ function Slides() {
 			},
 		],
 	};
+
 	return (
 		<Container>
 			<Slider {...settings} >
-				{dataDigitalBestSeller.map((item, index) => (
+				{slidesData.map((item, index) => (
 				<div key={index}>
-					<CardTop className={index === slideIndex} key={index}>
-						<Images src={item.linkImg} alt={item.title} onClick={() => {
-							setOpenModal(true);
-							setSelected(item);
-						}}
-						/>
-
+					<CardTop key={index}>
+						<Images src={item.linkImg} alt={item.title} onClick={() => {setOpenModal(true); setSelected(item);}}/>
 					</CardTop>
 					<CardTitle>{item.title}</CardTitle>
 				</div>
