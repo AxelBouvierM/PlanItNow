@@ -6,9 +6,11 @@ import testLogo from '../../images/testLogo.png'
 
 const HeaderContainer = styled.div`
 	display: flex;
-	position: relative;
+	position: absolute;
 	width: 100vw;
   padding: 0 3em;
+  top: 0;
+  z-index: 3;
   @media all and (max-width:37em) {
     & {
       padding: 0 1em;
