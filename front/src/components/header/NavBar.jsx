@@ -20,7 +20,6 @@ export function NavBar() {
 			document.body.style.overflow = 'unset';
 		}
 	}
-	
   	return (
 	<header>
 		<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>

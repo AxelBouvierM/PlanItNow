@@ -74,12 +74,6 @@ const Content = styled.div`
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
   z-index: 5;
-  @media all and (max-width:300px) {
-    	& {
-     	max-width: 90vw;
-			max-height: 80vh;
-    	}
-  	}
 `;
 
 const Icon = styled.i`
@@ -93,6 +87,11 @@ const InfoText = styled.p`
 	color: #000;
   font-size: 1em;
 	font-weight: 350;
+  @media all and (max-width:300px) { 
+    & { 
+      font-size: 0.7em; 
+    } 
+  }
 `;
 
 const Date = styled.div`
@@ -117,6 +116,8 @@ const Price = styled.div`
 `;
 
 const Description = styled.p`
+  display: flex;
+  position: relative;
   max-height: 50%;
   margin-top: 0.5em;
 	font-size: 0.8em;
@@ -127,7 +128,7 @@ const Description = styled.p`
 
 const BottomButtons = styled.div`
   display: block;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -136,7 +137,6 @@ const BottomButtons = styled.div`
   text-decoration: none;
   color: white;
   font-size: 16px;
-  margin-top: 1em;
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
 `;
@@ -158,7 +158,12 @@ const MoreInfoButton = styled.button`
     &:hover {
 	  background-color: #6314BD;
    transition: 0.3s ease-in-out;
-  }
+    }
+   @media all and (max-width:300px) { 
+    & { 
+      font-size: 12px; 
+    } 
+   }
 `;
 
 const AgendaButton = styled.button`
@@ -179,7 +184,12 @@ const AgendaButton = styled.button`
     &:hover {
 	  background-color: #FF7E19;
     transition: 0.3s ease-in-out;
-  }
+    }
+    @media all and (max-width:300px) { 
+    & { 
+      font-size: 12px; 
+    } 
+   }
 `;
 
 const Modal = ({ open, close, selected }) => {
@@ -220,7 +230,7 @@ const Modal = ({ open, close, selected }) => {
 						<Description>
             {selected.description}
             <BottomButtons>
-                <a href={selected.link}>
+                <a href={selected.link} target="_blank">
                 <MoreInfoButton>Más información</MoreInfoButton>
                 </a>
                 <Link to='agenda'>
