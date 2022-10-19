@@ -23,6 +23,7 @@ header {
 	background-color: transparent;
 	color: var(--textColor);
 	top: 0;
+	width: fit-content;
 }
 
 nav a {

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from "styled-components";
 import Slider from "react-slick";
+import Modal from '../modal/Modal'
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import '../../../styles/slides.css'
 
 const Container = styled.div`
@@ -42,6 +42,8 @@ const CardTitle = styled.h1`
 `;
 
 function Slides() {
+	const [openModal, setOpenModal] = useState(false)
+	const [selected, setSelected] = useState(null);
 	const [slidesData, setSlidesData] = useState([]);
 
 	function randomizer(obj) {
@@ -64,6 +66,7 @@ function Slides() {
 				setSlidesData(slidesData => [...slidesData, theater]);
 				const dance = randomizer(res.data.dance);
 				setSlidesData(slidesData => [...slidesData, dance]);
+				console.log(res);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -116,22 +119,19 @@ function Slides() {
 				{slidesData.map((item) => (
 					<>
 						<CardTop key={'CardTop' + item}>
-							<Images src={item.image} alt={item.title} key={'Image' + item} />
+							<Images 
+								src={item.image} 
+								alt={item.title} key={'Image' + item} 
+								onClick={() => { setOpenModal(true); setSelected(item); }} />
 						</CardTop>
 						<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
+
 					</>
+
 				))}
 			</Slider>
+			<Modal open={openModal} onClose={() => setOpenModal(false)} selected={selected} />
 		</Container>
 	);
 }
 export default Slides
-
-
-/*or (let count = 0; count < Object.keys(res.data).length; count++) {
-	const cat = res.data[count];
-	const randomKeyValue = function (cat) {
-		var keys = Object.keys(cat);
-		return cat[keys[keys.length * Math.random() << 0]];
-	};
-	console.log(res.data[randomKeyValue])*/

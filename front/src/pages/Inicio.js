@@ -49,12 +49,18 @@ const Phrase = styled.p`
   font-size: 1em;
 `;
 
+const SlidesContainer = styled.div`
+  z-index: 5;
+`;
+
 const navBarStyles = {
   position: 'relative',
   display: 'flex',
   width: '100%',
   top: '1%',
-  zIndex: '3'
+  zIndex: '3',
+	width: 'fit-content'
+
 };
 
 const searchBarStyles = {
