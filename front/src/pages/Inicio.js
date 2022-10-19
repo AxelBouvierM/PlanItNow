@@ -58,7 +58,7 @@ const navBarStyles = {
   display: 'flex',
   width: '100%',
   top: '1%',
-  zIndex: '3',
+  zIndex: '5',
 	width: 'fit-content'
 
 };
