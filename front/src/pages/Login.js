@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 
 import { IconContext } from "react-icons";
-import { RiArrowRightLine, RiArrowLeftLine } from 'react-icons/ri'
+import { RiArrowRightLine, RiArrowLeftLine, RiErrorWarningLine } from 'react-icons/ri'
 
 import montaña2 from '../images/montaña2.jpg'
 
@@ -139,6 +139,7 @@ const ButtonStyle = styled.button`
 
 const Icon = styled.i`
   vertical-align: middle;
+  margin: 0 0.4em;
 `;
 
 const LoginText = styled.a`
@@ -153,18 +154,21 @@ const LoginText = styled.a`
 `;
 
 const ErrorWrapper = styled.div`
-  width: 100%;
+  width: 45%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
   margin-bottom: 2em;
+  background-color: rgba(230,0,0,0.8);
+
 `;
 
 const ErrorMessage = styled.p`
   font-size: 1em;
-  font-weight: 450;
-  color: red;
+  font-weight: 400;
+  color: white;
   text-transform: uppercase;
 `;
 
@@ -214,7 +218,7 @@ function Login() {
           <TextSpace>INICIAR SESIÓN</TextSpace>
           {error && (
             <ErrorWrapper>
-              <ErrorMessage>Usuario y/o contraseña incorrecta</ErrorMessage>
+              <ErrorMessage><Icon><RiErrorWarningLine /></Icon>Usuario y/o contraseña incorrecta</ErrorMessage>
             </ErrorWrapper>
           )}
 						<InputContainer>
