@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { NavBar } from '../components/header/NavBar'
 import { SearchBar } from '../components/body/searchBar/SearchBar'
-import Slides from '../components/body/Carousel/Slides';
+import Slides from '../components/body/carousel/Slides';
 
 import rambla from '../images/rambla6.jpg'
 import Footer from '../components/footer/Footer';
@@ -47,10 +47,6 @@ const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
   font-size: 1em;
-`;
-
-const SlidesContainer = styled.div`
-  z-index: 5;
 `;
 
 const navBarStyles = {

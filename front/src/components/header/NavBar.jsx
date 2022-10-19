@@ -8,22 +8,22 @@ import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiSettings2Line, RiL
 import '../../styles/navigation.css';
 
 export function NavBar() {
-	const [openedNavbar, setOpenedNavbar] = useState(false);
+	const [openedNavbar, setOpenedNavbar] = useState(true);
 	const navRef = useRef();
 
 	const showNavBar = () => {
 		setOpenedNavbar(!openedNavbar)
 		navRef.current.classList.toggle('responsive_nav')
 		if (openedNavbar) {
-			document.body.style.overflowY = 'hidden';
+			document.body.style.overflow = 'hidden';
 		} else {
-			document.body.style.overflowY = 'unset';
+			document.body.style.overflow = 'unset';
 		}
 	}
-
+	
   	return (
 	<header>
-				<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>
+		<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>
 			<Hamburger />
 		</button>
 		<nav ref={navRef}>

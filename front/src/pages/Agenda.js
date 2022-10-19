@@ -1,5 +1,13 @@
-const NoPage = () => {
-	return <h1>PAGINA AGENDA</h1>;
-};
+import React from 'react'
+import EventCalendar from '../components/body/calendar/EventCalendar'
+import { NavBar } from '../components/header/NavBar';
 
-export default NoPage;
+function Agenda() {
+	return (
+		<>
+			<NavBar />
+			<EventCalendar />
+	  	</>
+	);
+  }
+export default Agenda;
