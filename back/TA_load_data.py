@@ -7,61 +7,62 @@ import requests
 from selenium import webdriver
 from time import sleep
 
-DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace("\n","") #open and save the mysql pass into a variable 
+DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
 
-connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY) # create connection to the events database
-cursor = connection.cursor() # creates cursor object, object to be used to execute the queries to the db
+connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)  # create connection to the events database
+cursor = connection.cursor()  # creates cursor object, object to be used to execute the queries to the db
 
 """ List of all the categories to load in the databases """
-categories = {'theater' : 'https://tickantel.com.uy/inicio/buscar_categoria?2&cat_id=1', 
-       'music' : 'https://tickantel.com.uy/inicio/buscar_categoria?3&cat_id=2',
-       'sport' : 'https://tickantel.com.uy/inicio/buscar_categoria?4&cat_id=6', 
-       'dance' : 'https://tickantel.com.uy/inicio/buscar_categoria?6&cat_id=10',
-       'others' : 'https://tickantel.com.uy/inicio/buscar_categoria?5&cat_id=7',
-       }
-for category in categories: # traverse all the caregories 
+categories = {
+    'theater': 'https://tickantel.com.uy/inicio/buscar_categoria?2&cat_id=1',
+    'music': 'https://tickantel.com.uy/inicio/buscar_categoria?3&cat_id=2',
+    'sport': 'https://tickantel.com.uy/inicio/buscar_categoria?4&cat_id=6',
+    'dance': 'https://tickantel.com.uy/inicio/buscar_categoria?6&cat_id=10',
+    'others': 'https://tickantel.com.uy/inicio/buscar_categoria?5&cat_id=7',
+    }
+for category in categories:  # traverse all the caregories
     """Start the browser"""
-    chrome_options = webdriver.ChromeOptions() # Class for managing ChromeDriver specific options.
-    chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows 
-    driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/chromedriver', options=chrome_options) # Start the browser with the options previously set and the chrome driver
-    driver.get(categories[category]) # get information of the link
+    chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
+    chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows
+    driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
+    driver.get(categories[category])  # get information of the link
 
     """Create some variables to emulate the scroll"""
-    last_height = driver.execute_script('return document.body.scrollHeight') # Get scroll height
-    scrolls = 0 # Counter of the numbers of scrolls 
-    scroll_limit = 60 # Set up the limit of number of scroll loads
+    last_height = driver.execute_script('return document.body.scrollHeight')  # Get scroll height
+    scrolls = 0  # Counter of the numbers of scrolls
+    scroll_limit = 60  # Set up the limit of number of scroll loads
 
-    while True and scrolls < scroll_limit: # Loop to scroll until we reach the bottom of the page or limit of scrolls
-        driver.execute_script('window.scrollTo(0, document.body.scrollHeight)') # Scroll down to bottom
-        sleep(1) #sleep time for the page to load the scroll
+    while True and scrolls < scroll_limit:  # Loop to scroll until we reach the bottom of the page or limit of scrolls
+        driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')  # Scroll down to bottom
+        sleep(1)  # sleep time for the page to load the scroll
 
         # Calculate new scroll height and compare with last scroll height
         new_height = driver.execute_script('return document.body.scrollHeight')
-        if new_height == last_height: # If it happens the bottom of the page was reached and break the scroll loop
+        if new_height == last_height:  # If it happens the bottom of the page was reached and break the scroll loop
             break
         last_height = new_height
         scrolls += 1
 
-    html = driver.page_source # Get the source code of the current page
-    soup = BeautifulSoup(html, 'lxml') # Parses the html code 
-    results = soup.find('section', class_='resultados') # Get the section tag named resultados
-    show_elements = results.find_all('div', class_='item') # Get all the div tags called items that represents the list of all the events 
-    for show_element in show_elements: # traverse each event to get further information
+    html = driver.page_source  # Get the source code of the current page
+    soup = BeautifulSoup(html, 'lxml')  # Parses the html code
+    results = soup.find('section', class_='resultados')  # Get the section tag named resultados
+    show_elements = results.find_all('div', class_='item')  # Get all the div tags called items that represents the list of all the events
+    for show_element in show_elements:  # traverse each event to get further information
         image = show_element.img['src']
         link = 'https://tickantel.com.uy/inicio' + show_element.a['href'][1:]
         """Geting information of each event"""
-        html = requests.get(link) # Gets the html code of an specific event
-        soup = BeautifulSoup(html.content, 'lxml') # Parses the code
-        info_espectaculo = soup.find(id='espectaculo') # in this tag we got information about the Title and date of the event
+        html = requests.get(link)  # Gets the html code of an specific event
+        soup = BeautifulSoup(html.content, 'lxml')  # Parses the code
+        info_espectaculo = soup.find(id='espectaculo')  # in this tag we got information about the Title and date of the event
         since_date = 'Sin información'
         to_date = since_date
         if info_espectaculo is not None:
             try:
-                title= info_espectaculo.find('h1', class_='title').find('span', class_='span-block').text
+                title = info_espectaculo.find('h1', class_='title').find('span', class_='span-block').text
             except Exception:
                 title = 'Sin información'
             if title != 'Sin información':
-                span_list = (info_espectaculo.find('h1',class_='title').find_all('span'))
+                span_list = (info_espectaculo.find('h1', class_='title').find_all('span'))
                 if 'del' in span_list[0]:
                     since_date = span_list[1].text
                     to_date = span_list[3].text
@@ -82,8 +83,8 @@ for category in categories: # traverse all the caregories
                 if span_list != []:
                     if 'Precio de las entradas:' == span_list[0].text:
                         from_price = span_list[2].text
-                        to_price = span_list[3].text 
-                        price = 'Desde $' + from_price + ' hasta $' + to_price 
+                        to_price = span_list[3].text
+                        price = 'Desde $' + from_price + ' hasta $' + to_price
                     else:
                         from_price = span_list[0].text
                         to_price = from_price
@@ -102,7 +103,7 @@ for category in categories: # traverse all the caregories
             info_place = soup.find(id='lugar')
             place = 'Sin información'
             if info_place is not None:
-                place = info_place.div.text.replace('\n','')
+                place = info_place.div.text.replace('\n', '')
             if since_date == to_date:
                 date = to_date
             else:
@@ -117,8 +118,8 @@ for category in categories: # traverse all the caregories
             insert = f'INSERT INTO {category} ({category}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
             record = (title, image, link, place, date, price, description)
-            cursor.execute(insert, record) # Insert the data into the DB
-            connection.commit() # Save the changes
+            cursor.execute(insert, record)  # Insert the data into the DB
+            connection.commit()  # Save the changes
     print(f'All {category} events added to database')
 print(f'The Tick Antel script was exectued at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M")}')
 """Close the contection to te DB and the driver of selenium"""
