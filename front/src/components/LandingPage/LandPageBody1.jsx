@@ -1,66 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 const BodyContainer = styled.div`
-	display: flex;
-	position: absolute;
-	top: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: 2;
-`;
-
-const PhraseWrapper = styled.div`
-	display: flex;
-	position: relative;
-	width: 50%;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	padding: 0 2em 0 2em;
-`;
-
-const PhraseContainer = styled.div`
-	display: inline-block;
-	position: relative;
-	width: 100%;
-	max-height: 60%;
-`;
-
-const Title = styled.p`
-	width: 100%;
-	height: 100%;
-	color: white;
-	font-size: 2.4vw;
-	font-weight: 500;
-	padding: 0 1em 0.5em 1em;
-	text-transform: uppercase;
+  	display: block;
+  	position: absolute;
+  	width: 100vw;
+  	justify-content: center;
+	top: 50%;
+    transform: translateY(-50%);
+	padding: 0 5em;
+	z-index: 3;
+	@media all and (max-width:600px) {
+    	& {
+			padding: 0 1em;
+    	}
+  	}
 `;
 
 const Phrase = styled.p`
-	width: 100%;
-	height: 100%;
 	color: white;
-	font-size: 2.2vw;
-	font-weight: 350;
-	padding: 0 1em 0 1em;
+  	font-size: 3em;
+	margin-bottom: 0.5em;
+	@media all and (max-width:600px) {
+    	& {
+			text-align: center;
+			display: block;
+     		font-size: 1.6em;
+			margin: auto;
+			padding: 0.5em;
+    	}
+  	}
 `;
+
 
 function LandPageBody() {
   return (
 	<>
-	<BodyContainer>
-		  <PhraseWrapper>
-			  <PhraseContainer>
-					  <Title>Plan It Now!</Title>
-					  <Phrase>¿Querés conocer nuevos eventos? </Phrase>
-					  <Phrase>Únete ahora!</Phrase>
-			  </PhraseContainer>
-		  </PhraseWrapper>
-	</BodyContainer>
+		<BodyContainer>
+			<Phrase>¿Querés conocer nuevos eventos?</Phrase>
+			<Phrase>Únete ahora!</Phrase>
+		</BodyContainer>
 	</>
   )
 }
 
+	
 export default LandPageBody
