@@ -51,24 +51,24 @@ function Slides() {
 
 	useEffect(() => {
 		axios.get('/data')
-		.then((res) => {
-			const sport = randomizer(res.data.sport);
-			setSlidesData(slidesData => [...slidesData, sport]);
-			const party = randomizer(res.data.party);
-			setSlidesData(slidesData => [...slidesData, party]);
-			const others = randomizer(res.data.others);
-			setSlidesData(slidesData => [...slidesData, others]);
-			const music = randomizer(res.data.music);
-			setSlidesData(slidesData => [...slidesData, music]);
-			const theater = randomizer(res.data.theater);
-			setSlidesData(slidesData => [...slidesData, theater]);
-			const dance = randomizer(res.data.dance);
-			setSlidesData(slidesData => [...slidesData, dance]);
-		})
+			.then((res) => {
+				const sport = randomizer(res.data.sport);
+				setSlidesData(slidesData => [...slidesData, sport]);
+				const party = randomizer(res.data.party);
+				setSlidesData(slidesData => [...slidesData, party]);
+				const others = randomizer(res.data.others);
+				setSlidesData(slidesData => [...slidesData, others]);
+				const music = randomizer(res.data.music);
+				setSlidesData(slidesData => [...slidesData, music]);
+				const theater = randomizer(res.data.theater);
+				setSlidesData(slidesData => [...slidesData, theater]);
+				const dance = randomizer(res.data.dance);
+				setSlidesData(slidesData => [...slidesData, dance]);
+			})
 			.catch((err) => {
 				console.log(err);
 			});
-		}, []);
+	}, []);
 
 	const settings = {
 		focusOnSelect: true,
@@ -115,10 +115,10 @@ function Slides() {
 			<Slider {...settings} >
 				{slidesData.map((item) => (
 					<>
-					<CardTop key={'CardTop' + item}>
-						<Images src={item.image} alt={item.title} key={'Image' + item} />
-					</CardTop>
-					<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
+						<CardTop key={'CardTop' + item}>
+							<Images src={item.image} alt={item.title} key={'Image' + item} />
+						</CardTop>
+						<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
 					</>
 				))}
 			</Slider>
