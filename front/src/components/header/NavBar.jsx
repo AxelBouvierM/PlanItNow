@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRef } from 'react';
 import { Outlet, Link } from "react-router-dom";
 
@@ -8,14 +8,22 @@ import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiSettings2Line, RiL
 import '../../styles/navigation.css';
 
 export function NavBar() {
+	const [openedNavbar, setOpenedNavbar] = useState(false);
 	const navRef = useRef();
 
 	const showNavBar = () => {
+		setOpenedNavbar(!openedNavbar)
 		navRef.current.classList.toggle('responsive_nav')
+		if (openedNavbar) {
+			document.body.style.overflowY = 'hidden';
+		} else {
+			document.body.style.overflowY = 'unset';
+		}
 	}
+
   	return (
 	<header>
-		<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>
+				<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>
 			<Hamburger />
 		</button>
 		<nav ref={navRef}>
