@@ -147,14 +147,16 @@ const MoreInfoButton = styled.button`
     bottom:0;
     width: 50%;
     height: 100%;
-    background-color: #008CBA;
+    background-color: #8A3BE5;
     border: none;
     text-decoration: none;
     color: white;
     font-size: 16px;
     border-bottom-left-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
     &:hover {
-	  background-color: royalblue;
+	  background-color: #6314BD;
    transition: 0.3s ease-in-out;
   }
 `;
@@ -172,10 +174,11 @@ const AgendaButton = styled.button`
     color: white;
     font-size: 16px;
     border-bottom-right-radius: 25px;
+    font-weight: bold;
     cursor: pointer;
     &:hover {
-	  background-color: royalblue;
-   transition: 0.3s ease-in-out;
+	  background-color: #FF7E19;
+    transition: 0.3s ease-in-out;
   }
 `;
 
@@ -218,7 +221,7 @@ const Modal = ({ open, close, selected }) => {
             {selected.description}
             <BottomButtons>
                 <a href={selected.link}>
-                <MoreInfoButton>Mas información</MoreInfoButton>
+                <MoreInfoButton>Más información</MoreInfoButton>
                 </a>
                 <Link to='agenda'>
                   <AgendaButton>Agendar</AgendaButton>
