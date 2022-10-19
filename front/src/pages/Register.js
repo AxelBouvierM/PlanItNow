@@ -9,8 +9,6 @@ import { IconContext } from "react-icons";
 import { RiArrowLeftLine, RiArrowRightLine, RiErrorWarningLine } from 'react-icons/ri';
 import MoonLoader from 'react-spinners/MoonLoader';
 
-import '../styles/register.css'
-
 const Background = styled.div`
   border: 1px solid #000; 
   background-image: url(${montaña4});

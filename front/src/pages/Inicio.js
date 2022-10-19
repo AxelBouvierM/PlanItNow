@@ -69,8 +69,8 @@ function Inicio() {
   // a landpage
   return (
     <>
-    <TopSectionContainer>
-      <Background>
+      <TopSectionContainer>
+        <Background>
           <Content>
             <div className='navBar' style={navBarStyles}>
               <NavBar />
@@ -85,11 +85,11 @@ function Inicio() {
               <Slides />
             </div>
           </Content>
-      </Background>
-      <div>
-        <Footer />
-      </div>
-    </TopSectionContainer>
+        </Background>
+        <div>
+          <Footer />
+        </div>
+      </TopSectionContainer>
 
     </>
   );
