@@ -6,7 +6,7 @@ import mysql.connector
 from selenium import webdriver
 from time import sleep
 
-DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
+DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
 
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)  # create connection to the events database
 cursor = connection.cursor()  # creates cursor object, object to be used to execute the queries to the db
@@ -23,7 +23,7 @@ categories = {
 for category in categories:  # traverse all the caregories
     chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
     chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows
-    driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
+    driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/data_generation/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
     url = categories[category]
     page = 0  # Variable used to change the page and get more results of a category
     while True:  # Loop to change the page until we reach the last result

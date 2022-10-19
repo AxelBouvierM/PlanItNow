@@ -5,7 +5,7 @@ import datetime
 import mysql.connector
 from selenium import webdriver
 
-DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
+DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
 
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)  # create connection to the events database
 cursor = connection.cursor()  # creates cursor object, object to be used to execute the queries to the db
@@ -14,7 +14,7 @@ movie_elements = []  # List where the movie events are going to be loaded
 while movie_elements == []:  # Loop to try execute until we got some movie data
     chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
     chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows
-    driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
+    driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/data_generation/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
     driver.get('https://www.movie.com.uy/movies')  # get information of the link
     lxml = driver.page_source  # Get the source of the current page
     soup = BeautifulSoup(lxml, 'lxml')  # Parses the html code

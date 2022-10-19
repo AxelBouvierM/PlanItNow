@@ -6,8 +6,8 @@ import mysql.connector
 import requests
 from selenium import webdriver
 
-API_KEY = open('/home/planitnow_pin/PlanItNow/back/API_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
-DB_KEY = open('/home/planitnow_pin/PlanItNow/back/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
+API_KEY = open('/home/planitnow_pin/API_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
+DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
 
 connection = mysql.connector.connect(host='localhost', database='events', user='root', password=DB_KEY)  # create connection to the events database
 cursor = connection.cursor()  # creates cursor object, object to be used to execute the queries to the db
@@ -58,7 +58,7 @@ while True:  # loop to get more results until next_page is not None
         image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxheight=1600&photo_reference={photo_reference}&key={API_KEY}'
         chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
         chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows
-        driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
+        driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/data_generation/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
         driver.get(image_url)
         html = driver.page_source  # Get the source of the current page
         soup = BeautifulSoup(html, 'lxml')  # Parses the code
