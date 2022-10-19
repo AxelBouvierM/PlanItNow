@@ -13,7 +13,6 @@ const AllPagesFooter = styled.footer`
 	position: relative;
 	background-color: black;
 	padding: 1em 2em;
-	z-index: 4;
 `;
 
 const LogoContainer = styled.div`
@@ -31,13 +30,13 @@ const Logo = styled.img`
 const SocialContainer = styled.div`
 	display: flex;
 	position: relative;
+	gap: 0.5em;
 `;
 
 const SocialButtons = styled.button`
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
-	padding-right: 1em;
 	opacity: 0.8;
 	cursor: pointer;
 	background: none;
@@ -80,7 +79,7 @@ function Footer() {
 							style: { verticalAlign: 'middle' },
 							color: 'white',
 							className: 'facebook',
-							size: '2.5em',
+							size: '2em',
 							}}>
 									<FaFacebookSquare />
 						</IconContext.Provider>
@@ -94,7 +93,7 @@ function Footer() {
 							style: { verticalAlign: 'middle' },
 							color: 'white',
 							className: 'facebook',
-							size: '2.8em'
+							size: '2.2em'
 							}}>
 							<RiInstagramLine />
 						</IconContext.Provider>

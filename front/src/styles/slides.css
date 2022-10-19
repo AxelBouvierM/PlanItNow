@@ -1,12 +1,6 @@
 .slick-slide {
-    padding: 0 1em;
-  }
-  .openModalBtn {
-    width: 200px;
-    height: 40px;
-    border: none;
-    border-radius: 6px;
-    background-color: cornflowerblue;
-    color: white;
-    cursor: pointer;
-  }
+  padding: 0 1em;
+}
+/*.slick-prev:before,
+.slick-next:before {
+}*/

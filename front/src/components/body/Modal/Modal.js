@@ -4,10 +4,9 @@ import styled from "styled-components";
 
 
 const ModalContainer = styled.div`
-
-  max-height: 40rem;
+  max-height: 75vh;
   height: 100%;
-  max-width: 35rem;
+  max-width: 50vw;
   width: 100%;
   position: fixed;
   top: 50%;
@@ -17,6 +16,7 @@ const ModalContainer = styled.div`
   background-color: #ffffff;
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
+  transition: 1s ease-in-out;
 `;
 const Images = styled.img`
   width: 100%;
@@ -68,7 +68,7 @@ const Price = styled.h2`
 `
 const Category = styled.h2`
   margin-top: 0.3em;
-	font-size: 1.4em;
+	font-size: 0.8em;
 	font-weight: 300;
   text-align: left;
 `
@@ -87,13 +87,13 @@ const Modal = ({ open, onClose, selected }) => {
     <Overlay onClick={onClose}>
       <ModalContainer>
         <Top>
-         <Images src={selected.linkImg} alt="/"/>
+         <Images src={selected.image}/>
         </Top>
         <CloseBtn  onClick={onClose}>X</CloseBtn>
         <Content>
          <Title>{selected.title}</Title>
          <Price>{selected.price}</Price>
-         <Category>{selected.category}</Category>
+         <Category>{selected.description}</Category>
         </Content>
 
       </ModalContainer>
