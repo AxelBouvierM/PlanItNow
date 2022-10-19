@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Parallax } from 'react-parallax';
-
 
 import { NavBar } from '../components/header/NavBar'
 import { SearchBar } from '../components/body/searchBar/SearchBar'
@@ -48,7 +46,7 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
-  font-size: 1.2em;
+  font-size: 1em;
 `;
 
 const navBarStyles = {
