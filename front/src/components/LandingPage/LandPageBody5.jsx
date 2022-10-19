@@ -5,11 +5,10 @@ const BodyContainer = styled.div`
   	display: block;
   	position: absolute;
   	width: 100vw;
-  	justify-content: center;
-	top: 50%;
+	top: 43%;
     transform: translateY(-50%);
-	padding: 0 5em;
 	z-index: 3;
+	text-align: center;
 	@media all and (max-width:600px) {
     	& {
 			padding: 0 1em;
@@ -17,28 +16,20 @@ const BodyContainer = styled.div`
   	}
 `;
 
-const Phrase = styled.p`
+const Phrase = styled.div`
+	display: inline-block;
+	width: fit-content;
 	color: white;
+	margin-right: 2em;
   	font-size: 3em;
-	margin-bottom: 0.5em;
-	@media all and (max-width:600px) {
-    	& {
-			text-align: center;
-			display: block;
-     		font-size: 1.6em;
-			margin: auto;
-			padding: 0.5em;
-    	}
-  	}
+	font-weight: 500;
 `;
-
 
 function LandPageBody() {
   return (
 	<>
 		<BodyContainer>
-			<Phrase>¿Querés conocer nuevos eventos?</Phrase>
-			<Phrase>Únete ahora!</Phrase>
+			<Phrase>Nuestro equipo</Phrase>
 		</BodyContainer>
 	</>
   )

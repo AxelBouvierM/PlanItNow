@@ -38,9 +38,22 @@ const SocialButtons = styled.button`
 	position: relative;
 	vertical-align: middle;
 	opacity: 0.8;
+	margin-right: 0.2em;
 	cursor: pointer;
 	background: none;
 	border: none;
+`;
+
+const SocialButtons2 = styled.button`
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	opacity: 0.8;
+	margin-right: 0.2em;
+	cursor: pointer;
+	background: none;
+	border: none;
+	border-bottom: 1px solid white;
 `;
 
 const SocialIcon = styled.i`
@@ -50,7 +63,7 @@ const Line = styled.span`
 	display:block;
    	width: 100%;
 	margin-top: 1em;
-   	border-top: 1px solid #ccc
+   	border-top: 1px solid #ccc;
 `;
 
 const CopPhrase = styled.p`
@@ -72,6 +85,18 @@ function Footer() {
 			<Logo src={Icon} />
 		</LogoContainer>
 		<SocialContainer>
+			<SocialButtons2 type='button' onClick={goTop}>
+				<SocialIcon>
+					<IconContext.Provider value={{
+						style: { verticalAlign: 'middle' },
+						color: 'white',
+						className: 'facebook',
+						size: '2em'
+						}}>
+						<RiArrowDropUpLine />
+					</IconContext.Provider>
+				</SocialIcon>
+			</SocialButtons2>
 			<a href='https://www.facebook.com/'>
 				<SocialButtons type='button' >
 					<SocialIcon>
@@ -93,13 +118,14 @@ function Footer() {
 							style: { verticalAlign: 'middle' },
 							color: 'white',
 							className: 'facebook',
-							size: '2.2em'
+							size: '2.1em'
 							}}>
 							<RiInstagramLine />
 						</IconContext.Provider>
 					</SocialIcon>
 				</SocialButtons>
 			</a>
+					 
 		</SocialContainer>
 		<Line />
 		<CopPhrase>©2022 Plan It Now, Holberton School</CopPhrase>
@@ -110,15 +136,4 @@ function Footer() {
 export default Footer
 
 
-/* <SocialButtons type='button' onClick={goTop}>
-				<SocialIcon>
-					<IconContext.Provider value={{
-						style: { verticalAlign: 'middle' },
-						color: 'white',
-						className: 'facebook',
-						size: '3.5em'
-						}}>
-						<RiArrowDropUpLine />
-					</IconContext.Provider>
-				</SocialIcon>
-			</SocialButtons> */ 
+/* */ 

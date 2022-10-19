@@ -11,7 +11,7 @@ const HeaderContainer = styled.div`
   padding: 0 3em;
   top: 0;
   z-index: 3;
-  @media all and (max-width:37em) {
+  @media all and (max-width:600px) {
     & {
       padding: 0 1em;
     }
@@ -29,7 +29,7 @@ const Logo = styled.img`
 	width: 7em;
 	height: 7em;
 	opacity: 1;
-  @media all and (max-width:37em) {
+  @media all and (max-width:600px) {
     & {
     width: 5em;
     height: 5em;

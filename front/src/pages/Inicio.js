@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Parallax } from 'react-parallax';
-
 
 import { NavBar } from '../components/header/NavBar'
 import { SearchBar } from '../components/body/searchBar/SearchBar'
@@ -48,7 +46,11 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
-  font-size: 1.2em;
+  font-size: 1em;
+`;
+
+const SlidesContainer = styled.div`
+  z-index: 5;
 `;
 
 const navBarStyles = {
@@ -56,7 +58,9 @@ const navBarStyles = {
   display: 'flex',
   width: '100%',
   top: '1%',
-  zIndex: '3'
+  zIndex: '5',
+	width: 'fit-content'
+
 };
 
 const searchBarStyles = {
@@ -71,8 +75,8 @@ function Inicio() {
   // a landpage
   return (
     <>
-    <TopSectionContainer>
-      <Background>
+      <TopSectionContainer>
+        <Background>
           <Content>
             <div className='navBar' style={navBarStyles}>
               <NavBar />
@@ -87,11 +91,11 @@ function Inicio() {
               <Slides />
             </div>
           </Content>
-      </Background>
-      <div>
-        <Footer />
-      </div>
-    </TopSectionContainer>
+        </Background>
+        <div>
+          <Footer />
+        </div>
+      </TopSectionContainer>
 
     </>
   );

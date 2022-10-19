@@ -2,19 +2,29 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from "styled-components";
 import Slider from "react-slick";
+import Modal from '../modal/Modal'
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import '../../../styles/slides.css'
 
 const Container = styled.div`
-  max-height: 70vh;
-  max-width: 90vw;
-  margin: auto;
-  padding-top: 10em;
-  color: #fafafa;
-  text-align: center;
+  	max-height: 70vh;
+  	max-width: 90vw;
+  	margin: auto;
+  	padding-top: 10em;
+  	color: #fafafa;
+  	text-align: center;
+  	@media all and (max-width:600px) {
+    	& {
+     		padding-top: 5em;
+    	}
+	}
+	@media all and (max-width:300px) {
+    	& {
+     		padding-top: 3em;
+    	}
+  	}
 `;
 
 const CardTop = styled.div`
@@ -42,6 +52,8 @@ const CardTitle = styled.h1`
 `;
 
 function Slides() {
+	const [openModal, setOpenModal] = useState(false)
+	const [selected, setSelected] = useState(null);
 	const [slidesData, setSlidesData] = useState([]);
 
 	function randomizer(obj) {
@@ -51,24 +63,25 @@ function Slides() {
 
 	useEffect(() => {
 		axios.get('/data')
-		.then((res) => {
-			const sport = randomizer(res.data.sport);
-			setSlidesData(slidesData => [...slidesData, sport]);
-			const party = randomizer(res.data.party);
-			setSlidesData(slidesData => [...slidesData, party]);
-			const others = randomizer(res.data.others);
-			setSlidesData(slidesData => [...slidesData, others]);
-			const music = randomizer(res.data.music);
-			setSlidesData(slidesData => [...slidesData, music]);
-			const theater = randomizer(res.data.theater);
-			setSlidesData(slidesData => [...slidesData, theater]);
-			const dance = randomizer(res.data.dance);
-			setSlidesData(slidesData => [...slidesData, dance]);
-		})
+			.then((res) => {
+				const sport = randomizer(res.data.sport);
+				setSlidesData(slidesData => [...slidesData, sport]);
+				const party = randomizer(res.data.party);
+				setSlidesData(slidesData => [...slidesData, party]);
+				const others = randomizer(res.data.others);
+				setSlidesData(slidesData => [...slidesData, others]);
+				const music = randomizer(res.data.music);
+				setSlidesData(slidesData => [...slidesData, music]);
+				const theater = randomizer(res.data.theater);
+				setSlidesData(slidesData => [...slidesData, theater]);
+				const dance = randomizer(res.data.dance);
+				setSlidesData(slidesData => [...slidesData, dance]);
+				console.log(res);
+			})
 			.catch((err) => {
 				console.log(err);
 			});
-		}, []);
+	}, []);
 
 	const settings = {
 		focusOnSelect: true,
@@ -112,26 +125,23 @@ function Slides() {
 
 	return (
 		<Container>
-			<Slider {...settings} >
+			<Slider {...settings} style={{ zIndex: '3'}}>
 				{slidesData.map((item) => (
 					<>
-					<CardTop key={'CardTop' + item}>
-						<Images src={item.image} alt={item.title} key={'Image' + item} />
-					</CardTop>
-					<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
+						<CardTop key={'CardTop' + item}>
+							<Images 
+								src={item.image} 
+								alt={item.title} key={'Image' + item} 
+								onClick={() => {setOpenModal(true); setSelected(item);}} />
+						</CardTop>
+						<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
+
 					</>
+
 				))}
 			</Slider>
+			<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '4' }} />
 		</Container>
 	);
 }
 export default Slides
-
-
-/*or (let count = 0; count < Object.keys(res.data).length; count++) {
-	const cat = res.data[count];
-	const randomKeyValue = function (cat) {
-		var keys = Object.keys(cat);
-		return cat[keys[keys.length * Math.random() << 0]];
-	};
-	console.log(res.data[randomKeyValue])*/
