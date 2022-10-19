@@ -1,32 +1,52 @@
-import React from 'react';
+import { React } from 'react';
 import styled from "styled-components";
-import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { useDebounce } from '../../../hooks/debounceHook';
+import { Outlet, Link } from 'react-router-dom';
 
 import { IconContext } from "react-icons";
-import { RiCloseLine, RiCalendar2Fill, RiCalendarTodoLine } from 'react-icons/ri';
+import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine } from 'react-icons/ri';
 
 
-
+const Overlay = styled.div`
+    transition: all 400ms ease-in-out;
+`;
 const ModalContainer = styled.div`
+  display: block;
+  position: fixed;
   max-height: 85vh;
   height: 100%;
   max-width: 50vw;
   width: 100%;
-  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: inline-flex;
   background-color: #ffffff;
-  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 1);
   border-radius: 25px;
-  transition: 1s ease-in-out;
+  z-index: 4;
+  @media all and (max-width:1279px) {
+    	& {
+     	max-width: 90vw;
+			max-height: 85vh;
+    	}
+  	}
+  @media all and (max-width:300px) {
+    	& {
+     	max-width: 90vw;
+			max-height: 80vh;
+    	}
+  	}
 `;
+
+const Top = styled.div`
+  width:100%;
+  height: 50%;
+  object-fit: cover;
+  border-radius: 18px;
+`;
+
 const Images = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: fil;
   position: relative;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -43,120 +63,138 @@ const CloseBtn = styled.button`
 `;
 
 const Content = styled.div`
-  position: absolute;
+  display: block;
+  position: relative;
+  height: 50%;
   padding: 0.6em 1.2em;
 	font-size: 1.4em;
 	font-weight: 350;
   color: black;
   background-color: #F8F8FF;
-  width: 100%;
-  height: 50%;
-  top: 50%;
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
   z-index: 5;
-  overflow-y: auto;
+  @media all and (max-width:300px) {
+    	& {
+     	max-width: 90vw;
+			max-height: 80vh;
+    	}
+  	}
 `;
-const Top = styled.div`
-  width:100%;
-  height: 50%;
-  object-fit: cover;
-  border-radius: 18px;
+
+const Icon = styled.i`
+  vertical-align: middle;
+  margin: 0 0.4em 0 0;
 `;
-const Place = styled.h1`
+
+const InfoText = styled.p`
+	display: inline-block;
+	width: fit-content;
+	color: #000;
+  font-size: 1em;
+	font-weight: 350;
+`;
+
+const Date = styled.div`
+  display: flex;
+  position: relative;
+  width: fit-content;
+	z-index: 3;
+`;
+const Place = styled.div`
+  width: fit-content;
   margin-top: 0.3em;
 	font-size: 1em;
 	font-weight: 300;
   text-align: left;
-`
-const Price = styled.h2`
+`;
+
+const Price = styled.div`
   margin-top: 0.3em;
 	font-size: 1em;
 	font-weight: 300;
   text-align: left;
-`
-const Description = styled.h2`
-  margin-top: 0.3em;
+`;
+
+const Description = styled.p`
+  max-height: 50%;
+  margin-top: 0.5em;
 	font-size: 0.8em;
 	font-weight: 300;
   text-align: left;
-`
-const Date = styled.h2`
-width: fit-content;
-  margin-top: 0.3em;
-	font-size: 1em;
-	font-weight: 300;
-  text-align: left;
-`
-const Overlay = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-`
+  overflow-y: auto;
+`;
 
-const ButtonAgendar = styled.button`
+const BottomButtons = styled.div`
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2em;
+  border: none;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  margin-top: 1em;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+`;
+
+const MoreInfoButton = styled.button`
+    display: inline-block;
+    position:absolute; 
+    bottom:0;
+    width: 50%;
+    height: 100%;
     background-color: #008CBA;
     border: none;
-    right: 0;
-    bottom:0;
-    position: absolute;
     text-decoration: none;
     color: white;
-    display: inline-block;
     font-size: 16px;
-    width: 150px;
-    height: 30px;
-    box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
-    border-bottom-right-radius: 25px;
-    &:hover {
-	  background-color: royalblue;
-   transition: 0.3s ease-in-out;
-  }
-`
-const ButtonVerMas = styled.a`
-    background-color: #008CBA;
-    border: none;
-    left: 0;
-    bottom:0;
-    position: absolute;
-    text-decoration: none;
-    color: white;
-    display: inline-block;
-    font-size: 16px;
-    width: 150px;
-    height: 30px;
-    box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
     border-bottom-left-radius: 25px;
     &:hover {
 	  background-color: royalblue;
    transition: 0.3s ease-in-out;
   }
-`
-const Icon = styled.i`
-  vertical-align: middle;
-  top: 50%;
 `;
 
-const DateText = styled.i`
-  margin: 0.5em 0.5em;
+const AgendaButton = styled.button`
+    display: inline-block;
+    position:absolute; 
+    bottom:0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #FF9519;
+    border: none;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    border-bottom-right-radius: 25px;
+    cursor: pointer;
+    &:hover {
+	  background-color: royalblue;
+   transition: 0.3s ease-in-out;
+  }
 `;
 
-const Modal = ({ open, onClose, selected }) => {
-	if (!open) return null;
-	console.log();
-
-  const HandleClick = (event, message) => {
-    console.log(message);
+const Modal = ({ open, close, selected }) => {
+  if (open) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'unset';
+    return null;
   }
 
 	return (
-		<>
-			<Overlay onClick={onClose}>
+    <>
+			<Overlay>
 				<ModalContainer>
 					<Top>
 						<Images src={selected.image} />
 					</Top>
-					<CloseBtn onClick={onClose}>
+					<CloseBtn onClick={close}>
 						<IconContext.Provider value={{
 						style: { verticalAlign: 'middle' },
 						color: '#000000',
@@ -168,33 +206,26 @@ const Modal = ({ open, onClose, selected }) => {
 					</CloseBtn>
 					<Content>
             <Date>
-              <Icon>
-                <IconContext.Provider value={{
-                  style: { verticalAlign: 'middle' },
-                  color: '#000000',
-                  className: 'enter',
-                  size: '1.3em'
-                }}>
-                  <RiCalendarTodoLine />
-                </IconContext.Provider>
-              </Icon> 
-                <DateText>{selected.date}</DateText>
+              <InfoText><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
             </Date>
-						<Place>Lugar: {selected.place}</Place>
-						<Price>Precio: {selected.price}</Price>
-						<Description>Description: {selected.description}</Description>
-						<Link to="/agenda"><ButtonAgendar type="button"
-						>Agendar
-						</ButtonAgendar>
-						</Link>
-						<Outlet />
-            <ButtonVerMas
-              onClick={event => HandleClick(event, 'Hello')}
-              href={selected.link}
-              target="_blank"
-              rel="noreferrer">
-              Mas informacion
-            </ButtonVerMas>
+						<Place>
+              <InfoText><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
+            </Place>
+            <Price>
+              <InfoText><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
+            </Price>
+						<Description>
+            {selected.description}
+            <BottomButtons>
+                <a href={selected.link}>
+                <MoreInfoButton>Mas información</MoreInfoButton>
+                </a>
+                <Link to='agenda'>
+                  <AgendaButton>Agendar</AgendaButton>
+                </Link>
+                <Outlet />
+              </BottomButtons>
+            </Description>
 					</Content>
 				</ModalContainer>
 			</Overlay>

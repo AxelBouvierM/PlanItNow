@@ -9,12 +9,22 @@ import "slick-carousel/slick/slick-theme.css";
 import '../../../styles/slides.css'
 
 const Container = styled.div`
-  max-height: 70vh;
-  max-width: 90vw;
-  margin: auto;
-  padding-top: 10em;
-  color: #fafafa;
-  text-align: center;
+  	max-height: 70vh;
+  	max-width: 90vw;
+  	margin: auto;
+  	padding-top: 10em;
+  	color: #fafafa;
+  	text-align: center;
+  	@media all and (max-width:600px) {
+    	& {
+     		padding-top: 5em;
+    	}
+	}
+	@media all and (max-width:300px) {
+    	& {
+     		padding-top: 3em;
+    	}
+  	}
 `;
 
 const CardTop = styled.div`
@@ -115,14 +125,14 @@ function Slides() {
 
 	return (
 		<Container>
-			<Slider {...settings} >
+			<Slider {...settings} style={{ zIndex: '3'}}>
 				{slidesData.map((item) => (
 					<>
 						<CardTop key={'CardTop' + item}>
 							<Images 
 								src={item.image} 
 								alt={item.title} key={'Image' + item} 
-								onClick={() => { setOpenModal(true); setSelected(item); }} />
+								onClick={() => {setOpenModal(true); setSelected(item);}} />
 						</CardTop>
 						<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
 
@@ -130,7 +140,7 @@ function Slides() {
 
 				))}
 			</Slider>
-			<Modal open={openModal} onClose={() => setOpenModal(false)} selected={selected} />
+			<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '4' }} />
 		</Container>
 	);
 }
