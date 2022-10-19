@@ -1,13 +1,15 @@
-import { React, useState } from 'react'
-import styled from 'styled-components'
-import axios from 'axios'
+import { React, useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 
 import montaña4 from '../images/montaña4.jpg'
 
 import { IconContext } from "react-icons";
-import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri'
+import { RiArrowLeftLine, RiArrowRightLine, RiErrorWarningLine } from 'react-icons/ri';
 import MoonLoader from 'react-spinners/MoonLoader';
+
+import '../styles/register.css'
 
 const Background = styled.div`
   border: 1px solid #000; 
@@ -152,6 +154,7 @@ const ButtonStyle = styled.button`
 
 const Icon = styled.i`
   vertical-align: middle;
+  margin: 0 0.4em;
 `;
 
 const LoginText = styled.a`
@@ -175,21 +178,39 @@ const LoadingWrapper = styled.div`
 `;
 
 const ErrorWrapper = styled.div`
-  width: 100%;
+  width: 55%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
   margin-bottom: 2em;
+  background-color: rgba(230,0,0,0.8);
+
 `;
 
 const ErrorMessage = styled.p`
   font-size: 1em;
-  font-weight: 450;
-  color: red;
+  font-weight: 400;
+  color: white;
   text-transform: uppercase;
 `;
 
+const ReqContainer = styled.div`
+  display: inline-block;
+  font-size: 1em;
+  font-weight: 350;
+  color: white;
+  margin-bottom: 0.8em;
+`;
+
+const PassRequirement = styled.div`
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 350;
+  color: white;
+  margin-bottom: 0.8em;
+`;
 
 function Register() {
 	const [username, setUser] = useState('')
@@ -197,8 +218,28 @@ function Register() {
 	const [password, setPass] = useState('')
   const [isLoading, setLoading] = useState(false);
   const [LoginRedirect, setLoginRedirect] = useState(false)
-  const [UserError, setUserError] = useState(false);
+  const [Error, setError] = useState('');
+
+  const [numberCheck, setNumbersCheck] = useState(false);
+  const [upperCheck, setUpperCheck] = useState(false);
+  const [lengthCheck, setLengthCheck] = useState(false);
+  const [passDetails, showPassDetails] = useState(false);
+
   const navigate = useNavigate();
+
+  function checkForNumbers(string){
+    const matches = string.match(/\d+/g);
+    if (matches != null) setNumbersCheck(true);
+  };
+
+  function checkForUpperCase(string){
+    const matches = string.match(/[A-Z]/);
+    if (matches != null) setUpperCheck(true);
+  };
+
+  function checkForLength(string) {
+    if (string.length >= 6) setLengthCheck(true)
+  };
 
 	async function SendFormInput(event) {
 		event.preventDefault()
@@ -220,17 +261,28 @@ function Register() {
       console.log("Error: ", err);
     });
 
-    console.log(res);
     if (res.data.response.status === 'Ok') {
       // crear msj de Cuenta creada correctamente y redireccion segundos despues.
       setLoginRedirect(true);
-    } else {
+    } else if (res.data.response.status === 'User already exists') {
+      setError('Este nombre de usuario ya esta en uso');
+    } else if (res.data.response.status === 'Mail already exists') {
       setLoginRedirect(false);
-      setUserError(true);
+      setError('Ya existe una cuenta asociada con este correo');
+    }  else {
+      setError('Ha ocurrido un error, vuelve a intentarlo');
     }
     setLoading(false);
   };
-  
+
+  const onClickButton = () => {
+    if (passDetails) {
+      showPassDetails(false)
+    } else {
+      showPassDetails(true)
+    }
+  }
+
   if (LoginRedirect) navigate('/login');
 
 	return (
@@ -245,37 +297,50 @@ function Register() {
         <RegisterContainer>
           <FormContainer onSubmit={SendFormInput}>
             <TextSpace>REGÍSTRATE</TextSpace>
-            {UserError && (
+            {Error && (
               <ErrorWrapper>
-                <ErrorMessage>Ha ocurrido un error, Verifique los datos ingresados.</ErrorMessage>
+                <ErrorMessage><Icon><RiErrorWarningLine /></Icon>{Error}</ErrorMessage>
               </ErrorWrapper>
             )}
             <InputContainer>
-            <Input
-              type="text"
-              placeholder="Usuario"
-              value={username}
-              onChange={(event) => setUser(event.target.value)}
-              required>
-            </Input>
+              <Input
+                type="text"
+                placeholder="Usuario"
+                value={username}
+                onChange={(event) => setUser(event.target.value)}
+                required>
+              </Input>
             </InputContainer>
             <InputContainer>
-            <Input
-              type="text"
-              placeholder="E-mail"
-              value={mail}
-              onChange={(event) => setMail(event.target.value)}
-              required>
-            </Input>
+              <Input
+                type="text"
+                placeholder="Email"
+                value={mail}
+                onChange={(event) => setMail(event.target.value)}
+                required>
+              </Input>
             </InputContainer>
             <InputContainer>
               <Input
               type="password"
               placeholder="Contraseña"
-              onChange={(event) => setPass(event.target.value)} 
+              onChange={(event) => {
+                checkForNumbers(event.target.value);
+                checkForUpperCase(event.target.value);
+                checkForLength(event.target.value);
+                if (numberCheck && upperCheck && lengthCheck) setPass(event.target.value)
+                }}
               required>
               </Input>
+              <input type='button' onClick={onClickButton}></input>
             </InputContainer>
+            {passDetails && (
+              <ReqContainer>
+                <PassRequirement>
+                  <p>La contraseña debe tener al menos 6 caracteres, 1 número y 1 mayúscula.</p>
+                </PassRequirement>
+              </ReqContainer>
+              )}
             <DataContainer>
               <ButtonStyle type="submit">
                 <Icon>
