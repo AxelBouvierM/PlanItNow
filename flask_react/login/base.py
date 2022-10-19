@@ -26,6 +26,7 @@ app.config['MYSQL_DB'] = 'login'
 # Inicializando MySQL
 mysql = MySQL(app)
 
+
 # Ruta para confirmacion de usuario existente (permitir ingreso)
 @app.route('/login/auth', methods=['POST'])
 def loginAuth():
@@ -40,7 +41,7 @@ def loginAuth():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         pwd = cursor.fetchone()
-        
+
         if pwd:
             # Codificando password en utf-8, para comprobar igualdad con encriptacion
             p = password.encode('utf-8')
@@ -66,7 +67,8 @@ def loginAuth():
             resp = make_response(jsonify(response={"status": "Invalid Credentials"}))
             return resp
 
-# Ruta para chequear existencia de cookies    
+
+# Ruta para chequear existencia de cookies
 @app.route('/login/check', methods=['GET'])
 def loginCheck():
     app.config['MYSQL_DB'] = 'login'
@@ -85,7 +87,8 @@ def loginCheck():
         pass
     return jsonify(response={"status": "User not logged in"})
 
-# Ruta para registrar un nuevo usuario  
+
+# Ruta para registrar un nuevo usuario
 @app.route('/register', methods=['POST'])
 def loginRegister():
     app.config['MYSQL_DB'] = 'login'
@@ -96,8 +99,6 @@ def loginRegister():
     msg = ''
     # Chequeo que los tres campos no esten vacios
     if username is not None and password is not None and email is not None:
-        # Mensaje de error en caso de falla
-        
 
         # Chequeo si es un usuario existente
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -106,7 +107,7 @@ def loginRegister():
 
         cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         mail = cursor.fetchone()
-        
+
         if user:
             msg = 'User already exists'
         elif mail:
@@ -120,7 +121,7 @@ def loginRegister():
             msg = 'Please complete all the data'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
-            
+
             # Generando ID random
             UserID = str(uuid.uuid4())
 
@@ -138,6 +139,7 @@ def loginRegister():
     return jsonify(response={"status": msg})
     # return jsonify(response={"status": msg})
 
+
 # Ruta para deslogear usuario, eliminacion de la cookie
 @app.route('/logout', methods=['GET'])
 def loginLogout():
@@ -145,6 +147,7 @@ def loginLogout():
     # Eliminacion de la cookie
     resp.delete_cookie("cookie")
     return resp
+
 
 @app.route('/newPWD', methods=['POST'])
 def newPWD():
@@ -174,6 +177,7 @@ def newPWD():
         else:
             return jsonify(response={"status": "Old password invalid"})
 
+
 @app.route('/data/<category>', methods=['POST', 'GET'])
 def data(category):
     app.config['MYSQL_DB'] = 'events'
@@ -181,20 +185,21 @@ def data(category):
     categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum', 'entertainment']
     info = {}
     if category in categories:
-        
+
         insert = f"SELECT * FROM {category}"
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(insert)
         # Fetch one record and return result
         data = cursor.fetchall()
-        
+
         id = category + 'ID'
-        
+
         for elements in data:
             info[elements[id]] = elements
     else:
         info['error'] = "Invalid category"
     return info
+
 
 @app.route('/data', methods=['GET'])
 def dataAll():
@@ -242,6 +247,7 @@ def schedule():
     else:
         return jsonify(response={"status": "The event could not be scheduled"})
 
+
 @app.route('/calendar', methods=['GET'])
 def calendar():
     existCookies = request.cookies.get('cookie')
@@ -269,4 +275,4 @@ def calendar():
 
 if __name__ == "__main__":
     """ Main Function """
-app.run(host='0.0.0.0', port=5000, debug=True)
+app.run(host='0.0.0.0', port=5000)
