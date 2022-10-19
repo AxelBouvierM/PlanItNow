@@ -184,7 +184,7 @@ def newPWD():
 def data(category):
     app.config['MYSQL_DB'] = 'events'
 
-    categories = ['music', 'theater', 'sport', 'dance', 'others', 'party']
+    categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum', 'entertainment']
     info = {}
     if category in categories:
 
@@ -206,7 +206,7 @@ def data(category):
 @app.route('/data', methods=['GET'])
 def dataAll():
     app.config['MYSQL_DB'] = 'events'
-    categories = ['music', 'restaurant', 'theater', 'movie', 'brewery', 'coffee']
+    categories = ['music', 'theater', 'sport', 'dance', 'others', 'party']
 
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
