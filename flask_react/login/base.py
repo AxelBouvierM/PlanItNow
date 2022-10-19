@@ -204,7 +204,7 @@ def data(category):
 @app.route('/data', methods=['GET'])
 def dataAll():
     app.config['MYSQL_DB'] = 'events'
-    categories = ['music', 'restaurant', 'theater', 'movie', 'brewery', 'coffee']
+    categories = ['music', 'theater', 'sport', 'party', 'others', 'dance']
 
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
