@@ -184,7 +184,7 @@ def newPWD():
 def data(category):
     app.config['MYSQL_DB'] = 'events'
 
-    categories = ['music', 'restaurant', 'theater', 'sport', 'dance', 'others', 'movie', 'party', 'brewery', 'coffee', 'museum', 'entertainment']
+    categories = ['music', 'theater', 'sport', 'dance', 'others', 'party']
     info = {}
     if category in categories:
 
