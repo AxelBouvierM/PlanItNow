@@ -9,6 +9,7 @@ import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine 
 const Overlay = styled.div`
     transition: all 400ms ease-in-out;
 `;
+
 const ModalContainer = styled.div`
   display: block;
   position: fixed;
@@ -137,7 +138,7 @@ const BottomButtons = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 2em;
+  height: 4em;
   border: none;
   text-decoration: none;
   color: white;
@@ -199,12 +200,7 @@ const AgendaButton = styled.button`
 `;
 
 const Modal = ({ open, close, selected }) => {
-  if (open) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = 'unset';
-    return null;
-  }
+  if (!open) return null;
 
 	return (
     <>
@@ -251,5 +247,4 @@ const Modal = ({ open, close, selected }) => {
 		</>
 	);
 };
-
 export default Modal;
