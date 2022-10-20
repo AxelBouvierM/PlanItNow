@@ -87,7 +87,7 @@ function LandPageHeader() {
         <Link to="/registrarse">
           <AccountButton type="button"><ButtonTitle>Registrarse</ButtonTitle></AccountButton>
         </Link>
-        <Link to="/entrar">
+        <Link to="/ingresar">
           <AccountButton type="button"><ButtonTitle>Iniciar sesión</ButtonTitle></AccountButton>
         </Link>
         <Outlet />

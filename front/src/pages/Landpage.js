@@ -7,7 +7,7 @@ import LandPageBody2 from '../components/LandingPage/LandPageBody2'
 import LandPageBody3 from '../components/LandingPage/LandPageBody3'
 import LandPageBody4 from '../components/LandingPage/LandPageBody4'
 
-import Footer from '../components/footer/Footer'
+import { Footer } from '../components/footer/Footer'
 import landpageBg1 from '../images/landpageBg1.jpg'
 import landpageBg2 from '../images/landpageBg2.jpg'
 import landpageBg3 from '../images/landpageBg3.jpg'
