@@ -83,7 +83,6 @@ export function Slides() {
 	}, []);
 
 	const settings = {
-		focusOnSelect: true,
 		className: 'center',
 		centerMode: true,
 		infinite: true,
