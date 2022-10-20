@@ -51,7 +51,7 @@ const CardTitle = styled.h1`
 	text-transform: uppercase;
 `;
 
-function Slides() {
+export function Slides() {
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
 	const [slidesData, setSlidesData] = useState([]);
@@ -142,4 +142,3 @@ function Slides() {
 		</Container>
 	);
 }
-export default Slides

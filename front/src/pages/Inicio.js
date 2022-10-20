@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components';
 
+import rambla from '../images/rambla6.jpg'
 import { NavBar } from '../components/header/NavBar'
 import { SearchBar } from '../components/body/searchBar/SearchBar'
-import Slides from '../components/body/carousel/HomeSlides';
-
-import rambla from '../images/rambla6.jpg'
-import Footer from '../components/footer/Footer';
-
+import { Footer } from '../components/footer/Footer';
+import { Slides } from '../components/body/carousel/HomeSlides';
 
 const TopSectionContainer = styled.div`
   width: 100vw;
