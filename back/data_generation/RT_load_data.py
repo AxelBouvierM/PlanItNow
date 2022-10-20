@@ -75,7 +75,7 @@ for category in categories:  # traverse all the caregories
                     check_price = ''
                 iterations += 1
                 try:
-                    price = purchase_info.find(id='comboTicket').text[1:].replace('(', '').replace(') ', '\n').replace('Elige tu entrada  ', '')
+                    price = purchase_info.find(id='comboTicket').text[1:].replace('(', '').replace(') ', ' - ').replace('Elige tu entrada  ', '')[:-2]
                 except Exception:
                     price = 'Sin información'
                 if iterations == 3:
