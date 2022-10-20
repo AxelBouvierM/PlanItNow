@@ -5,7 +5,7 @@ import { NavBar } from '../components/header/NavBar'
 import Slides from '../components/body/carousel/CatSlides';
 
 import rambla from '../images/rambla6.jpg'
-import Footer from '../components/footer/Footer';
+import { Footer } from '../components/footer/Footer';
 
 const TopSectionContainer = styled.div`
   width: 100vw;
