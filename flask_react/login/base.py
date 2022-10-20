@@ -257,15 +257,21 @@ def calendar():
         app.config['MYSQL_DB'] = 'events'
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM schedule WHERE userID = %s', (existCookies.get('UserID'),))
-        schedule = cursor.fetchone()
+        scheduleAll = cursor.fetchall()
 
-        if schedule:
-            category = schedule.get('category')
-            id = category + 'ID'
-            insert = f'SELECT * FROM {category} WHERE title = %s'
-            cursor.execute(insert, (schedule.get('event'),))
-            event = cursor.fetchone()
-            data = {"event": event, "schedule": schedule}
+        if scheduleAll:
+            dic = {}
+            for schedule in scheduleAll:
+                category = schedule.get('category')
+                id = category + 'ID'
+                insert = f'SELECT * FROM {category} WHERE title = %s'
+                cursor.execute(insert, (schedule.get('event'),))
+                event = cursor.fetchone()
+                dic[schedule.get('date')] = event
+            dic2 = {}
+            for info in scheduleAll:
+                dic2[info.get('date')] = info
+            data = {"event": dic, "schedule": dic2}
             return (data)
         else:
             return jsonify(response={"status": "There are no scheduled events"})
@@ -275,4 +281,4 @@ def calendar():
 
 if __name__ == "__main__":
     """ Main Function """
-app.run(host='0.0.0.0', port=5000)
+app.run(host='0.0.0.0', port=5000, debug=True)
