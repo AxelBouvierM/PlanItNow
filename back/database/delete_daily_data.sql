@@ -1,5 +1,5 @@
 -- TRUNCATE old data to insert new
--- cat TRUNCATE_data.sql | mysql -hlocalhost -uroot -p (to run the script)
+-- cat delete_daily_data.sql | mysql -hlocalhost -uroot -p (to run the script)
 
 USE events;
 TRUNCATE music;
