@@ -4,6 +4,7 @@ import { NavBar } from '../../components/header/NavBar'
 import { Footer } from '../../components/footer/Footer'
 import categoriesBg from '../../images/montaña2.jpg'
 import { SearchBar } from '../../components/body/searchBar/SearchBar'
+import {Categorias} from '../../components/body/searchBar/SearchCategories'
 import Modal from '../../components/body/modal/Modal'
 import styled from 'styled-components';
 
@@ -141,7 +142,7 @@ function Music() {
 						</NavBarContainer>
 						<Phrase>Cine</Phrase>
 						<SearchBarStyles>
-							<SearchBar />
+							<SearchBar data={Categorias} />
 						</SearchBarStyles>
 						<DataContainer>
 							{data.map((item) => (
