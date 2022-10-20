@@ -76,7 +76,6 @@ function Slides() {
 				setSlidesData(slidesData => [...slidesData, theater]);
 				const dance = randomizer(res.data.dance);
 				setSlidesData(slidesData => [...slidesData, dance]);
-				console.log(res);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -137,7 +136,6 @@ function Slides() {
 						<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
 
 					</>
-
 				))}
 			</Slider>
 			<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '4' }} />
