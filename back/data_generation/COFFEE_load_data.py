@@ -44,19 +44,20 @@ while True:  # loop to get more results until next_page is not None
         else:
             price += 'Sin información'
         place_id = place.get('place_id')  # ID to get further information of the coffee
-        url = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&key={API_KEY}'  # url google API with the details of a coffee
+        url = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&language=es-419&key={API_KEY}'  # url google API with the details of a coffee
         response = requests.get(url)
         results = response.json().get('result')
         phone_number = results.get('international_phone_number')  # Data to add to description
-        description = f'Telefono: {phone_number}\n'
+        description = f'Telefono: {phone_number}'
         open_days = results.get('opening_hours')
         if open_days is not None:
             open_days = open_days.get('weekday_text')  # Data to add to description
+            description += ' - Horario: '
             for day in open_days:
-                description += day + '\n'
+                description += day.replace(': ', ' ').replace('–', ' a ') + ' - '
             description = description[:-1]
         link = results.get('website')
-        image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxheight=1600&photo_reference={photo_reference}&key={API_KEY}'
+        image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxheight=1600&photo_reference={photo_reference}&language=es-419&key={API_KEY}'
         chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
         chrome_options.add_argument('headless')  # Set headles option to start Chrome in the "background" without any visual output or windows
         driver = webdriver.Chrome('/home/planitnow_pin/PlanItNow/back/data_generation/chromedriver', options=chrome_options)  # Start the browser with the options previously set and the chrome driver
@@ -81,6 +82,7 @@ while True:  # loop to get more results until next_page is not None
             if elements[element] is None:
                 elements[element] = 'Sin información'
             re.sub(' +', ' ', element) # Regular expression to replace more than one space.
+        print(description)
         """Create the query to insert data into the database"""
         insert = """INSERT INTO coffee (coffeeID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place_location'], elements['date'], elements['price'], elements['description'])
