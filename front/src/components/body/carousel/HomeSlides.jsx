@@ -92,6 +92,7 @@ export function Slides() {
 		speed: 400,
 		lazyLoad: true,
 		swipeToSlide: true,
+		autoplay: true,
 		responsive: [
 			{
 				breakpoint: 767,

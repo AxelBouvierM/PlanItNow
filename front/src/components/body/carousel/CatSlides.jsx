@@ -56,8 +56,8 @@ function Slides() {
 	const [redirectTo, setRedirectTo] = useState('');
 	const navigate = useNavigate();
 
-	const categories = ['musica', 'restaurant', 'teatros', 'deportes', 'bailes', 'otros', 
-	'cines', 'fiestas', 'cervecerias', 'cafeterias', 'museos', 'entretenimiento'];
+	const categories = ['musica', 'restaurant', 'teatro', 'deporte', 'danza', 'otros', 
+	'cine', 'fiesta', 'cerveceria', 'cafeteria', 'museo', 'entretenimiento'];
 	
 	useEffect(() => {
 		CategoriesData.sort(function () {
@@ -66,7 +66,6 @@ function Slides() {
 	});
 
 	const settings = {
-		focusOnSelect: true,
 		className: 'center',
 		centerMode: true,
 		infinite: true,
@@ -74,7 +73,7 @@ function Slides() {
 		slidesToShow: 3,
 		speed: 400,
 		lazyLoad: true,
-		swipeToSlide: true,
+		autoplay: true,
 		responsive: [
 			{
 				breakpoint: 767,
