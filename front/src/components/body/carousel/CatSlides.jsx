@@ -105,7 +105,7 @@ function Slides() {
 		],
 	};
 	
-	if (redirect && categories.includes(redirectTo)) navigate('/categories/' + redirectTo);
+	if (redirect && categories.includes(redirectTo)) navigate('/categorias/' + redirectTo);
 
 	return (
 		<Container>
