@@ -30,7 +30,7 @@ export function NavBar() {
 			<Link to="/agenda"><i><RiCalendar2Line /></i><span>Agenda</span></Link>
 			<Link to="/categorias"><i><RiLayout2Line /></i><span>Categorías</span></Link>
 			<Link to="/perfil"><i><RiAccountCircleLine /></i><span>Perfil</span></Link>
-			<Link to="/entrar"><i><RiLogoutBoxRLine /></i><span>Cerrar sesión</span></Link>
+			<Link to="/ingresar"><i><RiLogoutBoxRLine /></i><span>Cerrar sesión</span></Link>
 		</nav>
 		<Outlet />
 	</header>
