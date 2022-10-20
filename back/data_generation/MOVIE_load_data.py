@@ -1,8 +1,11 @@
 """ Script to extract data about movies from movie """
 
+from babel.dates import format_date
 from bs4 import BeautifulSoup
+import calendar
 import datetime
 import mysql.connector
+import re
 from selenium import webdriver
 
 DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
@@ -79,14 +82,33 @@ while movie_elements == []:  # Loop to try execute until we got some movie data
         except Exception:
             since_date = 'Sin información'
         to_date = date_list[len(date_list) - 1]
+        # Change date in long format
+        try:
+                since_date = datetime.datetime.strptime(since_date, '%d/%m/%Y')
+                since_date = format_date(since_date, format='long', locale='es')
+                to_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+                to_date = format_date(to_date, format='long', locale='es')
+        except Exception:
+                continue
         if since_date == to_date:
             date = to_date
         else:
             date = f'Del {since_date} al {to_date}'
         price = 'Sin información visitar link de la pelicula'
+        elements = {
+            'title': title,
+            'image': image,
+            'link': link,
+            'place': place,
+            'date': date,
+            'price': price,
+            'description': description,
+            }
+        for element in elements:
+            re.sub(' +', ' ', element) # Regular expression to replace more than one space
         """Create the query to insert data into the database"""
         insert = """INSERT INTO movie (movieID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
-        record = (title, image, link, place, date, price, description)
+        record = (elements['title'], elements['image'], elements['link'], elements['place'], elements['date'], elements['price'], elements['description'])
         cursor.execute(insert, record)  # Insert the data into the DB
         connection.commit()  # Save the changes
 print(f'The movie script was exectued at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M")}')

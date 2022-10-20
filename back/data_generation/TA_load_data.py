@@ -1,8 +1,10 @@
 """ Script to extract data about events from tick antel """
 
+from babel.dates import format_date
 from bs4 import BeautifulSoup
 import datetime
 import mysql.connector
+import re
 import requests
 from selenium import webdriver
 from time import sleep
@@ -102,6 +104,14 @@ for category in categories:  # traverse all the caregories
                 description = 'Sin información'
             info_place = soup.find(id='lugar')
             place = 'Sin información'
+            # Change date in long format
+            try:
+                since_date = datetime.datetime.strptime(since_date, '%d/%m/%Y')
+                since_date = format_date(since_date, format='long', locale='es')
+                to_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+                to_date = format_date(to_date, format='long', locale='es')
+            except Exception:
+                continue
             if info_place is not None:
                 place = info_place.div.text.replace('\n', '')
             if since_date == to_date:
@@ -112,12 +122,21 @@ for category in categories:  # traverse all the caregories
                 price = f'$ {to_price}'
             else:
                 price = f'Desde $ {from_price} hasta $ {to_price}'
-            if '/' not in date:
-                continue
+            elements = {
+                'title': title,
+                'image': image,
+                'link': link,
+                'place': place,
+                'date': date,
+                'price': price,
+                'description': description,
+            }
+            for element in elements:
+                re.sub(' +', ' ', element) # Regular expression to replace more than one space
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category} ({category}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
-            record = (title, image, link, place, date, price, description)
+            record = (elements['title'], elements['image'], elements['link'], elements['place'], elements['date'], elements['price'], elements['description'])
             cursor.execute(insert, record)  # Insert the data into the DB
             connection.commit()  # Save the changes
     print(f'All {category} events added to database')
