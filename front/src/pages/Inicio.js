@@ -3,11 +3,10 @@ import styled from 'styled-components';
 
 import { NavBar } from '../components/header/NavBar'
 import { SearchBar } from '../components/body/searchBar/SearchBar'
-import Slides from '../components/body/carousel/Slides';
+import Slides from '../components/body/carousel/HomeSlides';
 
 import rambla from '../images/rambla6.jpg'
 import Footer from '../components/footer/Footer';
-import { FaFileExcel } from 'react-icons/fa';
 
 
 const TopSectionContainer = styled.div`
@@ -52,11 +51,9 @@ const Phrase = styled.p`
 const navBarStyles = {
   position: 'relative',
   display: 'flex',
-  width: '100%',
   top: '1%',
   zIndex: '5',
 	width: 'fit-content'
-
 };
 
 const searchBarStyles = {

@@ -23,13 +23,13 @@ const ModalContainer = styled.div`
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 1);
   border-radius: 25px;
   z-index: 4;
-  @media all and (max-width:1279px) {
+  @media screen and (max-width:1279px) {
     	& {
      	max-width: 90vw;
 			max-height: 85vh;
     	}
   	}
-  @media all and (max-width:300px) {
+  @media screen and (max-width:300px) {
     	& {
      	max-width: 90vw;
 			max-height: 80vh;
@@ -87,9 +87,14 @@ const InfoText = styled.p`
 	color: #000;
   font-size: 1em;
 	font-weight: 350;
-  @media all and (max-width:300px) { 
+  @media all and (max-width:405px) { 
     & { 
       font-size: 0.7em; 
+    } 
+  }
+  @media all and (max-width:300px) { 
+    & { 
+      font-size: 0.5em; 
     } 
   }
 `;
@@ -145,6 +150,7 @@ const MoreInfoButton = styled.button`
     display: inline-block;
     position:absolute; 
     bottom:0;
+    left: 0;
     width: 50%;
     height: 100%;
     background-color: #8A3BE5;
@@ -159,7 +165,7 @@ const MoreInfoButton = styled.button`
 	  background-color: #6314BD;
    transition: 0.3s ease-in-out;
     }
-   @media all and (max-width:300px) { 
+   @media all and (max-width:400px) { 
     & { 
       font-size: 12px; 
     } 
@@ -185,7 +191,7 @@ const AgendaButton = styled.button`
 	  background-color: #FF7E19;
     transition: 0.3s ease-in-out;
     }
-    @media all and (max-width:300px) { 
+    @media all and (max-width:400px) { 
     & { 
       font-size: 12px; 
     } 
@@ -229,16 +235,16 @@ const Modal = ({ open, close, selected }) => {
             </Price>
 						<Description>
             {selected.description}
-            <BottomButtons>
-                <a href={selected.link} target="_blank">
-                <MoreInfoButton>Más información</MoreInfoButton>
-                </a>
-                <Link to='agenda'>
-                  <AgendaButton>Agendar</AgendaButton>
-                </Link>
-                <Outlet />
-              </BottomButtons>
             </Description>
+            <BottomButtons>
+              <a href={selected.link} target="_blank" rel="noreferrer">
+                <MoreInfoButton>Más información</MoreInfoButton>
+              </a>
+              <Link to='agenda'>
+                <AgendaButton>Agendar</AgendaButton>
+              </Link>
+              <Outlet />
+            </BottomButtons>
 					</Content>
 				</ModalContainer>
 			</Overlay>

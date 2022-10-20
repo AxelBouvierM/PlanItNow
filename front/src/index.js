@@ -8,10 +8,10 @@ import Home from './pages/Inicio'
 import ErrorPage from './pages/NoPage'
 import Agenda from './pages/Agenda'
 import Profile from './pages/Profile'
-import Configuracion from './pages/Configuracion'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Categories from './pages/Categories'
+import Music from './pages/categories/Music'
 
 import './index.css';
 
@@ -20,15 +20,24 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Landpage />} />
-        <Route path='/landpage' element={<Landpage />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/home' element={<Home />} />
+        <Route path='/entrar' element={<Login />} />
+        <Route path='/registrarse' element={<Register />} />
+        <Route path='/inicio' element={<Home />} />
         <Route path='/agenda' element={<Agenda />} />
-        <Route path='/categories' element={<Categories />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/configuracion' element={<Configuracion />} />
-        <Route path='/register' element={<Register />} />
+        <Route path='/categorias' element={<Categories />} />
+        <Route path='/categorias/musica' element={<Music />} />
+        <Route path='/categorias/restaurant' element={<Music />} />
+        <Route path='/categorias/teatros' element={<Music />} />
+        <Route path='/categorias/deportes' element={<Music />} />
+        <Route path='/categorias/bailes' element={<Music />} />
+        <Route path='/categorias/otros' element={<Music />} />
+        <Route path='/categorias/cines' element={<Music />} />
+        <Route path='/categorias/fiestas' element={<Music />} />
+        <Route path='/categorias/cervecerias' element={<Music />} />
+        <Route path='/categorias/cafeterias' element={<Music />} />
+        <Route path='/categorias/museos' element={<Music />} />
+        <Route path='/categorias/entretenimiento' element={<Music />} />
+        <Route path='/perfil' element={<Profile />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

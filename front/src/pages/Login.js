@@ -173,10 +173,10 @@ const ErrorMessage = styled.p`
 `;
 
 function Login() {
-	const [username, setUser] = useState('')
-	const [password, setPass] = useState('')
-	const [giveAccess, setAccess] = useState(false)
-  const [error, setError] = useState(false)
+	const [username, setUser] = useState('');
+	const [password, setPass] = useState('');
+	const [giveAccess, setAccess] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
 	function SendFormInput(event) {
@@ -204,8 +204,7 @@ function Login() {
 				console.log(err);
 			});
 	};
-
-  if (giveAccess) navigate('/home');
+  if (giveAccess) navigate('/inicio');
 
 	return (
 		<Background>

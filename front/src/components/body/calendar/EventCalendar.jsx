@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import esLocale from '@fullcalendar/core/locales/es'

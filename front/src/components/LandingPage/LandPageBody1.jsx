@@ -32,7 +32,6 @@ const Phrase = styled.p`
   	}
 `;
 
-
 function LandPageBody() {
   return (
 	<>

@@ -281,7 +281,7 @@ function Register() {
     }
   }
 
-  if (LoginRedirect) navigate('/login');
+  if (LoginRedirect) navigate('/entrar');
 
 	return (
 		<Background>

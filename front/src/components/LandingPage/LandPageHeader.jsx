@@ -84,10 +84,10 @@ function LandPageHeader() {
         <Logo src={testLogo} />
       </LogoContainer>
       <ButtonsContainer>
-        <Link to="/register">
+        <Link to="/registrarse">
           <AccountButton type="button"><ButtonTitle>Registrarse</ButtonTitle></AccountButton>
         </Link>
-        <Link to="/login">
+        <Link to="/entrar">
           <AccountButton type="button"><ButtonTitle>Iniciar sesión</ButtonTitle></AccountButton>
         </Link>
         <Outlet />
