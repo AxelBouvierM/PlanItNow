@@ -72,7 +72,7 @@ const CopPhrase = styled.p`
 	opacity: 0.8;
 `;
 
-function Footer() {
+export function Footer() {
 	
 	function goTop() {
 		document.body.scrollTop = 0; // for safari
@@ -132,8 +132,3 @@ function Footer() {
 	</AllPagesFooter>
   )
 }
-
-export default Footer
-
-
-/* */ 
