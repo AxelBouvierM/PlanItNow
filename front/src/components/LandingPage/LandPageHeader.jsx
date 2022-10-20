@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Outlet, Link } from 'react-router-dom';
 
-import testLogo from '../../images/testLogo.png'
+import testLogo from '../../images/pinLogoApp.png'
 
 const HeaderContainer = styled.div`
 	display: flex;
@@ -27,7 +27,6 @@ const LogoContainer = styled.div`
 
 const Logo = styled.img`
 	width: 7em;
-	height: 7em;
 	opacity: 1;
   @media all and (max-width:600px) {
     & {

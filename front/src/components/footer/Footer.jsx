@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Icon from '../../images/testLogo.png'
+import Icon from '../../images/pinLogoApp.png'
 import { IconContext } from "react-icons";
 import { RiInstagramLine, RiArrowDropUpLine } from 'react-icons/ri'
 import { FaFacebookSquare } from 'react-icons/fa'
