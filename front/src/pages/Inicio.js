@@ -6,6 +6,7 @@ import { NavBar } from '../components/header/NavBar'
 import { SearchBar } from '../components/body/searchBar/SearchBar'
 import { Footer } from '../components/footer/Footer';
 import { Slides } from '../components/body/carousel/HomeSlides';
+import { Categorias } from '../components/body/searchBar/SearchCategories'
 
 const TopSectionContainer = styled.div`
   width: 100vw;
@@ -51,7 +52,7 @@ const navBarStyles = {
   display: 'flex',
   top: '1%',
   zIndex: '5',
-	width: 'fit-content'
+  width: 'fit-content'
 };
 
 const searchBarStyles = {
@@ -76,7 +77,7 @@ function Inicio() {
               <Phrase>- Dejá que Montevideo te guíe -</Phrase>
             </PhraseContainer>
             <div className='searchBar' style={searchBarStyles}>
-              <SearchBar />
+              <SearchBar data={Categorias} />
             </div>
             <div>
               <Slides />
