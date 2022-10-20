@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 import datetime
 import mysql.connector
+import re
 import requests
 from selenium import webdriver
 
@@ -66,7 +67,7 @@ while True:  # loop to get more results until next_page is not None
             image = soup.img['src']  # Get the link of the photo
         except Exception:
             continue
-        date = 'No aplica'
+        date = 'Tu eliges cuando'
         elements = {
             'title': title,
             'image': image,
@@ -79,6 +80,7 @@ while True:  # loop to get more results until next_page is not None
         for element in elements:  # loop to set those attributes that we couldn´t get information
             if elements[element] is None:
                 elements[element] = 'Sin información'
+            re.sub(' +', ' ', element) # Regular expression to replace more than one space.
         """Create the query to insert data into the database"""
         insert = """INSERT INTO coffee (coffeeID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place_location'], elements['date'], elements['price'], elements['description'])

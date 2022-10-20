@@ -22,7 +22,7 @@ DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open
 # Conexion con la Base de Datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_PASSWORD'] = DB_KEY
 app.config['MYSQL_DB'] = 'login'
 
 # Inicializando MySQL
@@ -206,7 +206,7 @@ def data(category):
 @app.route('/data', methods=['GET'])
 def dataAll():
     app.config['MYSQL_DB'] = 'events'
-    categories = ['music', 'theater', 'sport', 'party', 'others', 'dance']
+    categories = ['music', 'theater', 'sport', 'dance', 'others', 'party']
 
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 

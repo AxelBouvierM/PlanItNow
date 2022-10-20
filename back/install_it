@@ -23,3 +23,4 @@ sudo apt install libmysqlclient-dev
 sudo pip install flask-login
 sudo pip install flask-mysqldb
 sudo pip install flask-WTF
+sudo pip install Babel

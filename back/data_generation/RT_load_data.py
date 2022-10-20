@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 import datetime
 import mysql.connector
+import re
 from selenium import webdriver
 from time import sleep
 
@@ -75,7 +76,7 @@ for category in categories:  # traverse all the caregories
                     check_price = ''
                 iterations += 1
                 try:
-                    price = purchase_info.find(id='comboTicket').text[1:].replace('(', '').replace(') ', '\n').replace('Elige tu entrada  ', '')
+                    price = purchase_info.find(id='comboTicket').text[1:].replace('(', '').replace(') ', ' - ').replace('Elige tu entrada  ', '')[:-2]
                 except Exception:
                     price = 'Sin información'
                 if iterations == 3:
@@ -84,10 +85,21 @@ for category in categories:  # traverse all the caregories
             category_id = category
             if category_id == 'sport2':  # Rename the category to save it in the same DB category
                 category_id = 'sport'
+            elements = {
+                'title': title,
+                'image': image,
+                'link': link,
+                'place': place,
+                'date': date,
+                'price': price,
+                'description': description,
+            }
+            for element in elements:
+                re.sub(' +', ' ', element) # Regular expression to replace more than one space
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category_id} ({category_id}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
-            record = (title, image, link, place, date, price, description)
+            record = (elements['title'], elements['image'], elements['link'], elements['place'], elements['date'], elements['price'], elements['description'])
             cursor.execute(insert, record)  # Insert the data into the DB
             connection.commit()  # Save the changes
         page += 1
