@@ -83,7 +83,7 @@ while True:  # loop to get more results until next_page is not None
         for element in elements:  # loop to set those attributes that we couldn´t get information
             if elements[element] is None:
                 elements[element] = 'Sin información'
-            re.sub(' +', ' ', element) # Regular expression to replace more than one space.
+            re.sub(' +', ' ', element)  # Regular expression to replace more than one space.
         """Create the query to insert data into the database"""
         insert = """INSERT INTO restaurant (restaurantID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place_location'], elements['date'], elements['price'], elements['description'])
