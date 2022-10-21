@@ -15,11 +15,12 @@
 
 header {
 	display: flex;
-	position: sticky;
+	position: relative;
 	align-items: center;
 	justify-content: space-between;
-	height: 80px;
-	padding: 0 2rem;
+	height: fit-content;
+	width: auto;
+	padding: 1rem;
 	background-color: transparent;
 	color: var(--textColor);
 	top: 0;
@@ -28,16 +29,11 @@ header {
 
 nav a {
 	width: fit-content;
-	margin: 0 0 0 3rem;
+	margin: 0 0 0 2em;
 	color: var(--textColor);
 	text-decoration: none;
 	font-family: 'Fira Sans', sans-serif;
 	transition: 0.2s ease-in-out;
-}
-
-nav a:hover{
-	color: var(--secondaryColor);
-	transform: translateX(8px);
 }
 
 header .nav-btn {
@@ -67,8 +63,8 @@ header nav {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	gap: 2rem;
-	background-color: rgba(0, 0, 0, 0.80);
+	gap: 1.5em;
+	background-color: rgba(0, 0, 0, 0.90);
 	transition: 0.8s;
 	transform: translateX(-100vw);
 	z-index: 2;
@@ -82,12 +78,6 @@ nav .nav-close-btn {
 	position: absolute;
 	top: 1rem;
 	right: 2rem;
-}
-
-nav i {
-	justify-content: center;
-	margin: 0 1rem 0 0;
-	font-size: 1.3rem;
 }
 
 nav a span {
