@@ -9,8 +9,6 @@ import Modal from '../../components/body/modal/Modal'
 import styled from 'styled-components';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
-/*import '../../styles/responsiveLayoutMargin'*/
-
 const TopSectionContainer = styled.div`
   display: block;
   position: relative;
@@ -129,8 +127,6 @@ function Music() {
 				console.log(err)
 			});
 	}, [])
-
-
 	return (
 		<>
 			<TopSectionContainer>
@@ -158,7 +154,6 @@ function Music() {
 						<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '7' }} />
 					</Content>
 				</Background>
-
 			</TopSectionContainer>
 			<Footer style={{ FooterStyle }} />
 		</>
