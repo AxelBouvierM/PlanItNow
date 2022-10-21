@@ -143,7 +143,7 @@ const Price = styled.div`
 const Description = styled.div`
   display: block;
   position: relative;
-  max-height: calc(42.5vh * 0.4);
+  max-height: calc(42.5vh * 0.4 );
   height: 100%;
   margin: 0 1em 4em 1em;
 	font-size: 0.7em;
@@ -245,7 +245,7 @@ const Modal = ({ open, close, selected }) => {
               style: { verticalAlign: 'middle' },
               color: '#000000',
               className: 'enter',
-              size: '2em'
+              size: '2em',
             }}>
               <RiCloseLine />
             </IconContext.Provider>
