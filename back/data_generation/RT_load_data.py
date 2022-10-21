@@ -65,7 +65,7 @@ for category in categories:  # traverse all the caregories
                 except Exception:
                     description = 'Sin información'
                 try:
-                    date = description_list[0].text
+                    date = description_list[0].text.replace(' -', ':').replace('hs', 'hs -')[:-1]
                 except Exception:
                     date = 'Sin información'
                 soup = BeautifulSoup(html, 'lxml')
@@ -95,7 +95,7 @@ for category in categories:  # traverse all the caregories
                 'description': description,
             }
             for element in elements:
-                re.sub(' +', ' ', element) # Regular expression to replace more than one space
+                re.sub(' +', ' ', element)  # Regular expression to replace more than one space
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category_id} ({category_id}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'

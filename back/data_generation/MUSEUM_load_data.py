@@ -48,7 +48,9 @@ while True:  # loop to get more results until next_page is not None
         response = requests.get(url)
         results = response.json().get('result')
         phone_number = results.get('international_phone_number')  # Data to add to description
-        description = f'Telefono: {phone_number}'
+        description = ''
+        if phone_number is not None:
+            description = f'Telefono: {phone_number}'
         open_days = results.get('opening_hours')
         if open_days is not None:
             open_days = open_days.get('weekday_text')  # Data to add to description
@@ -81,7 +83,7 @@ while True:  # loop to get more results until next_page is not None
         for element in elements:  # loop to set those attributes that we couldn´t get information
             if elements[element] is None:
                 elements[element] = 'Sin información'
-            re.sub(' +', ' ', element) # Regular expression to replace more than one space.
+            re.sub(' +', ' ', element)  # Regular expression to replace more than one space.
         """Create the query to insert data into the database"""
         insert = """INSERT INTO museum (museumID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place_location'], elements['date'], elements['price'], elements['description'])

@@ -132,7 +132,7 @@ for category in categories:  # traverse all the caregories
                 'description': description,
             }
             for element in elements:
-                re.sub(' +', ' ', element) # Regular expression to replace more than one space
+                re.sub(' +', ' ', element)  # Regular expression to replace more than one space
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category} ({category}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
