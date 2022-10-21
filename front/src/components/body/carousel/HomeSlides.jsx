@@ -130,11 +130,10 @@ export function Slides() {
 						<CardTop key={'CardTop' + item}>
 							<Images 
 								src={item.image} 
-								alt={item.title} key={'Image' + item} 
+								alt={item.title} key={item.title.toString()}
 								onClick={() => {setOpenModal(true); setSelected(item);}} />
 						</CardTop>
-						<CardTitle key={'CardTitle' + item}>{item.title}</CardTitle>
-
+						<CardTitle key={item.title.toString()}>{item.title}</CardTitle>
 					</>
 				))}
 			</Slider>

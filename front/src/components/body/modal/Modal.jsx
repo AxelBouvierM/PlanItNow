@@ -20,7 +20,7 @@ const ModalContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #ffffff;
+  background-color: #F8F8FF;
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 1);
   border-radius: 25px;
   z-index: 4;
@@ -40,17 +40,22 @@ const ModalContainer = styled.div`
 
 const Top = styled.div`
   width:100%;
-  height: 50%;
+  height: auto;
+  max-height: 50%;
   object-fit: cover;
   border-radius: 18px;
+  justify-content: center;
+  
 `;
 
 const Images = styled.img`
   width: 100%;
-  height: 100%;
-  position: relative;
+  display: flex;
+  max-height: 85vh;
+  margin-top: auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  justify-content: center;
 `;
 
 const CloseBtn = styled.button`
@@ -66,12 +71,12 @@ const CloseBtn = styled.button`
 const Content = styled.div`
   display: block;
   position: relative;
-  height: 50%;
+  min-height: 50%;
   padding: 0.6em 1.2em;
 	font-size: 1.4em;
 	font-weight: 350;
-  color: black;
   background-color: #F8F8FF;
+  color: black;
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
   z-index: 5;

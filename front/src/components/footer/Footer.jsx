@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Icon from '../../images/pinLogoApp.png'
+import Icon from '../../images/pinLogoEstirado.png'
 import { IconContext } from "react-icons";
 import { RiInstagramLine, RiArrowDropUpLine } from 'react-icons/ri'
 import { FaFacebookSquare } from 'react-icons/fa'
@@ -16,15 +16,15 @@ const AllPagesFooter = styled.footer`
 `;
 
 const LogoContainer = styled.div`
-	width: fit-content;
 	display: flex;
 	position: relative;
+	padding-bottom: 0.6em;
 `;
 
 const Logo = styled.img`
-	width: 7em;
-	height: 7em;
-	opacity: 0.8;
+	max-width: 7em;
+	width: 20%;
+	opacity: 0.7;
 `;
 
 const SocialContainer = styled.div`

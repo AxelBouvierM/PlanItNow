@@ -1,5 +1,7 @@
 import React from 'react'
 import { Route, BrowserRouter, Routes } from "react-router-dom";
+import Favicon from 'react-favicon';
+import icon from './images/favicon.ico';
 
 import Landpage from './pages/Landpage'
 import Home from './pages/Inicio'
@@ -23,6 +25,8 @@ import Restaurant from './pages/categories/Restaurant'
 import Teatro from './pages/categories/Teatro'
 
 const createRoutes = () => (
+	<>
+	  <Favicon url={icon}></Favicon>
 	  <BrowserRouter>
 		<Routes>
 		<Route index element={<Landpage />} />
@@ -47,6 +51,7 @@ const createRoutes = () => (
 		<Route path='*' element={<ErrorPage />} />
 		</Routes>
 	  </BrowserRouter>
+	</>
   );
 
 export default createRoutes

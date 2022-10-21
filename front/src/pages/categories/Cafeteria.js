@@ -7,6 +7,9 @@ import { SearchBar } from '../../components/body/searchBar/SearchBar'
 import {Categorias} from '../../components/body/searchBar/SearchCategories'
 import Modal from '../../components/body/modal/Modal'
 import styled from 'styled-components';
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+
+/*import '../../styles/responsiveLayoutMargin'*/
 
 const TopSectionContainer = styled.div`
   display: block;
@@ -73,8 +76,22 @@ const NavBarContainer = styled.div`
 	position: relative;
 	top: 1%;
 	z-index: 5;
-	width: 100%;
+	width: fit-content;
 	height: fit-content;
+`;
+
+const LayoutMargin = styled.div`
+	margin: 0 5em;
+	@media all and (max-width:400px) {
+    	& {
+			margin: 0 1em;
+    	}
+  	}
+	@media all and (max-width:800px) and (min-width: 401px) {
+    	& {
+			margin: 0 3em;
+    	}
+  	}
 `;
 
 const SearchBarStyles = styled.div`
@@ -82,25 +99,6 @@ const SearchBarStyles = styled.div`
   	justify-content: center;
   	margin: 1em 0 4.8em;
  	z-index: 2;
-`;
-
-const DataContainer = styled.div`
-	display: grid;
-	width: 100%;
-	grid-template-columns: [col] 30% [col] 30% [col] 30%;
-	grid-gap: 1em;
-	justify-content: center;
-	margin: 2em 0;
-	@media all and (max-width:850px) and (min-width:400px) {
-    	& {
-			grid-template-columns: [col] 45% [col] 45%;
-    	}
-  	}
-	@media all and (max-width:400px) {
-    	& {
-			grid-template-columns: [col] 90%;
-    	}
-  	}
 `;
 
 const Images = styled.img`
@@ -132,6 +130,7 @@ function Music() {
 			});
 	}, [])
 
+
 	return (
 		<>
 			<TopSectionContainer>
@@ -144,14 +143,19 @@ function Music() {
 						<SearchBarStyles>
 							<SearchBar data={Categorias} />
 						</SearchBarStyles>
-						<DataContainer>
-							{data.map((item) => (
-								<>
-									<Images src={item.image} alt={item.title} key={'Image' + item} onClick={() => { setOpenModal(true); setSelected(item); }} />
-								</>
-							))}
-							<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '4' }} />
-						</DataContainer>
+						<LayoutMargin>
+							<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+								<Masonry gutter='2.5em'>
+									{data.map((item) => (
+												<Images src={item.image} alt={item.title} 
+												key={item.image.toString()}
+												onClick={() => { setOpenModal(true); setSelected(item); }} />
+											))
+									}
+								</Masonry>
+							</ResponsiveMasonry>
+						</LayoutMargin>							
+						<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '7' }} />
 					</Content>
 				</Background>
 

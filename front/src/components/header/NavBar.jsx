@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { Outlet, Link } from "react-router-dom";
-
+import styled from 'styled-components';
 import { Fade as Hamburger } from 'hamburger-react'
+
+import icon from '../../images/pinLogoEstirado.png'
 import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiLogoutBoxRLine, RiLayout2Line } from 'react-icons/ri';
 
 import '../../styles/navigation.css';
+
+const LogoContainer = styled.div`
+	display: flex;
+	position: relative;
+	margin-left: 1.2em;
+`;
+
+const Logo = styled.img`
+	max-width: 15em;
+	width: 50%;
+	opacity: 1;
+	&:hover {
+		transform: translateX(1em);
+		transition: 0.6s ease-in-out;
+	}
+`;
 
 export function NavBar() {
 	const [openedNavbar, setOpenedNavbar] = useState(true);
@@ -33,6 +51,7 @@ export function NavBar() {
 			<Link to="/ingresar"><i><RiLogoutBoxRLine /></i><span>Cerrar sesión</span></Link>
 		</nav>
 		<Outlet />
+		<LogoContainer><Logo src={icon}></Logo></LogoContainer>
 	</header>
   )
 }
