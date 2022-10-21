@@ -56,7 +56,7 @@ while movie_elements == []:  # Loop to try execute until we got some movie data
         except Exception:
             duration = 'Sin información'
         try:
-            place = movie_element.ul.text.replace('\n', '').replace('Movie', ', Movie')[2:]
+            place = movie_element.ul.text.replace('\n', '').replace('Movie', ' - Movie')[3:]
         except Exception:
             duration = 'Sin información'
         if 'PROXIMAS' in place:
