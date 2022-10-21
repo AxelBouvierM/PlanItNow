@@ -1,0 +1,71 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:5000",
+  "dependencies": {
+    "@fullcalendar/core": "^5.11.3",
+    "@fullcalendar/daygrid": "^5.11.3",
+    "@fullcalendar/react": "^5.11.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "framer-motion": "^7.4.0",
+    "hamburger-react": "^2.5.0",
+    "react": "^18.2.0",
+    "react-blur": "^1.1.1",
+    "react-click-outside-hook": "^1.1.1",
+    "react-dom": "^18.2.0",
+    "react-favicon": "^1.0.1",
+    "react-icons": "^4.4.0",
+    "react-moment": "^1.1.2",
+    "react-parallax": "^3.5.1",
+    "react-password-checklist": "^1.4.2",
+    "react-responsive": "^9.0.0",
+    "react-responsive-masonry": "^2.1.6",
+    "react-scripts": "5.0.1",
+    "react-scroll-parallax": "^3.3.1",
+    "react-slick": "^0.29.0",
+    "react-spinners": "^0.13.4",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^5.3.6",
+    "use-fit-text": "^2.4.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start-backend": "cd ../back && flask run --no-debugger",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "babelMacros": {
+    "twin": {
+      "styled": "styled-components",
+      "config": "./tailwind.config.js",
+      "format": "auto"
+    }
+  },
+  "devDependencies": {
+    "react-router-dom": "^6.4.1"
+  }
+}
