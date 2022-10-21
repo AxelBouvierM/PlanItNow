@@ -48,7 +48,9 @@ while True:
         response = requests.get(url)
         results = response.json().get('result')
         phone_number = results.get('international_phone_number')  # Data to add to description
-        description = f'Telefono: {phone_number}'
+        description = ''
+        if phone_number is not None:
+            description = f'Telefono: {phone_number}'
         open_days = results.get('opening_hours')
         if open_days is not None:
             open_days = open_days.get('weekday_text')  # Data to add to description
