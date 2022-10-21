@@ -135,7 +135,7 @@ function Music() {
 						<NavBarContainer>
 							<NavBar />
 						</NavBarContainer>
-						<Phrase>Cafeterías</Phrase>
+						<Phrase>Fiestas</Phrase>
 						<SearchBarStyles>
 							<SearchBar data={Categorias} />
 						</SearchBarStyles>
