@@ -1,6 +1,7 @@
 import { React } from 'react';
 import styled from "styled-components";
 import { Outlet, Link } from 'react-router-dom';
+import useFitText from "use-fit-text";
 
 import { IconContext } from "react-icons";
 import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine } from 'react-icons/ri';
@@ -51,11 +52,16 @@ const Top = styled.div`
 const Images = styled.img`
   width: 100%;
   display: flex;
-  max-height: 85vh;
+  max-height: 80vh;
   margin-top: auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   justify-content: center;
+  @media screen and (max-width:1279px) {
+    	& {
+			max-height: 75vh;
+    	}
+  	}
 `;
 
 const CloseBtn = styled.button`
@@ -71,8 +77,8 @@ const CloseBtn = styled.button`
 const Content = styled.div`
   display: block;
   position: relative;
-  min-height: 50%;
-  padding: 0.6em 1.2em;
+  max-height: calc(85vh * 0.50);
+  height: 100%;
 	font-size: 1.4em;
 	font-weight: 350;
   background-color: #F8F8FF;
@@ -80,6 +86,11 @@ const Content = styled.div`
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
   z-index: 5;
+  @media screen and (max-width:300px) {
+    	& {
+			max-height: calc(80vh * 0.50);
+    	}
+  	}
 `;
 
 const Icon = styled.i`
@@ -91,7 +102,7 @@ const InfoText = styled.p`
 	display: inline-block;
 	width: fit-content;
 	color: #000;
-  font-size: 1em;
+  font-size: 0.8em;
 	font-weight: 350;
   @media all and (max-width:405px) { 
     & { 
@@ -110,30 +121,32 @@ const Date = styled.div`
   position: relative;
   width: fit-content;
 	z-index: 3;
+  padding: 1em 1em 0 1em;
 `;
 const Place = styled.div`
   width: fit-content;
-  margin-top: 0.3em;
 	font-size: 1em;
 	font-weight: 300;
   text-align: left;
+  padding: 0 1em;
 `;
 
 const Price = styled.div`
-  margin-top: 0.3em;
 	font-size: 1em;
 	font-weight: 300;
   text-align: left;
+  padding: 0 1em;
 `;
 
 const Description = styled.p`
-  display: flex;
+  display: block;
   position: relative;
-  max-height: 50%;
-  margin-top: 0.5em;
+  width: 100%;
+  max-height: calc(42.5vh * 0.34);
+  height: 100%;
+  padding: 0 1em 1em 1em;
 	font-size: 0.8em;
 	font-weight: 300;
-  text-align: left;
   overflow-y: auto;
 `;
 
@@ -150,6 +163,7 @@ const BottomButtons = styled.div`
   font-size: 16px;
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
+  z-index: 6;
 `;
 
 const MoreInfoButton = styled.button`
@@ -205,6 +219,7 @@ const AgendaButton = styled.button`
 `;
 
 const Modal = ({ open, close, selected }) => {
+  const { fontSize, ref } = useFitText();
   if (!open) return null;
 
 	return (
@@ -214,6 +229,15 @@ const Modal = ({ open, close, selected }) => {
 					<Top>
 						<Images src={selected.image} />
 					</Top>
+          <BottomButtons>
+            <a href={selected.link} target="_blank" rel="noreferrer">
+              <MoreInfoButton>Más información</MoreInfoButton>
+            </a>
+            <Link to='agenda'>
+              <AgendaButton>Agendar</AgendaButton>
+            </Link>
+            <Outlet />
+          </BottomButtons>
 					<CloseBtn onClick={close}>
 						<IconContext.Provider value={{
 						style: { verticalAlign: 'middle' },
@@ -226,26 +250,17 @@ const Modal = ({ open, close, selected }) => {
 					</CloseBtn>
 					<Content>
             <Date>
-              <InfoText><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
+              <InfoText ref={ref}><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
             </Date>
 						<Place>
-              <InfoText><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
+              <InfoText ref={ref}><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
             </Place>
             <Price>
-              <InfoText><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
+              <InfoText ref={ref}><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
             </Price>
-						<Description>
+            <Description ref={ref}>
             {selected.description}
             </Description>
-            <BottomButtons>
-              <a href={selected.link} target="_blank" rel="noreferrer">
-                <MoreInfoButton>Más información</MoreInfoButton>
-              </a>
-              <Link to='agenda'>
-                <AgendaButton>Agendar</AgendaButton>
-              </Link>
-              <Outlet />
-            </BottomButtons>
 					</Content>
 				</ModalContainer>
 			</Overlay>
