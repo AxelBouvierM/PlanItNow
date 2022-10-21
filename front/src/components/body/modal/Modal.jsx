@@ -4,7 +4,7 @@ import { Outlet, Link } from 'react-router-dom';
 import useFitText from "use-fit-text";
 
 import { IconContext } from "react-icons";
-import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine } from 'react-icons/ri';
+import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine, RiCalendarCheckLine, RiInformationLine } from 'react-icons/ri';
 
 
 const Overlay = styled.div`
@@ -86,6 +86,8 @@ const Content = styled.div`
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
   z-index: 5;
+  overflow-y: auto;
+
   @media screen and (max-width:300px) {
     	& {
 			max-height: calc(80vh * 0.50);
@@ -138,16 +140,15 @@ const Price = styled.div`
   padding: 0 1em;
 `;
 
-const Description = styled.p`
+const Description = styled.div`
   display: block;
   position: relative;
-  width: 100%;
-  max-height: calc(42.5vh * 0.34);
+  max-height: calc(42.5vh * 0.4);
   height: 100%;
-  padding: 0 1em 1em 1em;
-	font-size: 0.8em;
+  margin: 0 1em 4em 1em;
+	font-size: 0.7em;
 	font-weight: 300;
-  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const BottomButtons = styled.div`
@@ -156,7 +157,8 @@ const BottomButtons = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4em;
+  max-height: 3.7em;
+  height: 100%;
   border: none;
   text-decoration: none;
   color: white;
@@ -194,7 +196,7 @@ const MoreInfoButton = styled.button`
 
 const AgendaButton = styled.button`
     display: inline-block;
-    position:absolute; 
+    position: absolute; 
     bottom:0;
     right: 0;
     width: 50%;
@@ -222,49 +224,49 @@ const Modal = ({ open, close, selected }) => {
   const { fontSize, ref } = useFitText();
   if (!open) return null;
 
-	return (
+  return (
     <>
-			<Overlay>
-				<ModalContainer>
-					<Top>
-						<Images src={selected.image} />
-					</Top>
+      <Overlay>
+        <ModalContainer>
+          <Top>
+            <Images src={selected.image} />
+          </Top>
           <BottomButtons>
             <a href={selected.link} target="_blank" rel="noreferrer">
-              <MoreInfoButton>Más información</MoreInfoButton>
+              <MoreInfoButton><Icon><RiInformationLine /></Icon>Más información</MoreInfoButton>
             </a>
             <Link to='agenda'>
-              <AgendaButton>Agendar</AgendaButton>
+              <AgendaButton><Icon><RiCalendarCheckLine /></Icon>Agendar</AgendaButton>
             </Link>
             <Outlet />
           </BottomButtons>
-					<CloseBtn onClick={close}>
-						<IconContext.Provider value={{
-						style: { verticalAlign: 'middle' },
-						color: '#000000',
-						className: 'enter',
-						size: '2em'
-						}}>
-							<RiCloseLine />
-						</IconContext.Provider>
-					</CloseBtn>
-					<Content>
+          <CloseBtn onClick={close}>
+            <IconContext.Provider value={{
+              style: { verticalAlign: 'middle' },
+              color: '#000000',
+              className: 'enter',
+              size: '2em'
+            }}>
+              <RiCloseLine />
+            </IconContext.Provider>
+          </CloseBtn>
+          <Content>
             <Date>
-              <InfoText ref={ref}><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
+              <InfoText><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
             </Date>
-						<Place>
-              <InfoText ref={ref}><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
+            <Place>
+              <InfoText><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
             </Place>
             <Price>
-              <InfoText ref={ref}><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
+              <InfoText><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
             </Price>
-            <Description ref={ref}>
-            {selected.description}
+            <Description>
+              {selected.description}
             </Description>
-					</Content>
-				</ModalContainer>
-			</Overlay>
-		</>
-	);
+          </Content>
+        </ModalContainer>
+      </Overlay>
+    </>
+  );
 };
 export default Modal;
