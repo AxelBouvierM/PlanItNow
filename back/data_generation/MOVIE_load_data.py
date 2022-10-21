@@ -84,12 +84,12 @@ while movie_elements == []:  # Loop to try execute until we got some movie data
         to_date = date_list[len(date_list) - 1]
         # Change date in long format
         try:
-                since_date = datetime.datetime.strptime(since_date, '%d/%m/%Y')
-                since_date = format_date(since_date, format='long', locale='es')
-                to_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
-                to_date = format_date(to_date, format='long', locale='es')
+            since_date = datetime.datetime.strptime(since_date, '%d/%m/%Y')
+            since_date = format_date(since_date, format='long', locale='es')
+            to_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+            to_date = format_date(to_date, format='long', locale='es')
         except Exception:
-                continue
+            continue
         if since_date == to_date:
             date = to_date
         else:
@@ -105,7 +105,7 @@ while movie_elements == []:  # Loop to try execute until we got some movie data
             'description': description,
             }
         for element in elements:
-            re.sub(' +', ' ', element) # Regular expression to replace more than one space
+            re.sub(' +', ' ', element)  # Regular expression to replace more than one space
         """Create the query to insert data into the database"""
         insert = """INSERT INTO movie (movieID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place'], elements['date'], elements['price'], elements['description'])
