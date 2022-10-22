@@ -1,16 +1,12 @@
-import React from 'react';
+import React from 'react'
 import styled from 'styled-components';
-import { Parallax } from 'react-parallax';
-
-
-import { NavBar } from '../components/header/NavBar'
-import { SearchBar } from '../components/body/searchBar/SearchBar'
-import Slides from '../components/body/Carousel/Slides';
 
 import rambla from '../images/rambla6.jpg'
-import Footer from '../components/footer/Footer';
-import { FaFileExcel } from 'react-icons/fa';
-
+import { NavBar } from '../components/header/NavBar'
+import { SearchBar } from '../components/body/searchBar/SearchBar'
+import { Footer } from '../components/footer/Footer';
+import { Slides } from '../components/body/carousel/HomeSlides';
+import { Categorias } from '../components/body/searchBar/SearchCategories'
 
 const TopSectionContainer = styled.div`
   width: 100vw;
@@ -48,15 +44,15 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
-  font-size: 1.2em;
+  font-size: 1em;
 `;
 
 const navBarStyles = {
   position: 'relative',
   display: 'flex',
-  width: '100%',
   top: '1%',
-  zIndex: '3'
+  zIndex: '5',
+  width: 'fit-content'
 };
 
 const searchBarStyles = {
@@ -71,8 +67,8 @@ function Inicio() {
   // a landpage
   return (
     <>
-    <TopSectionContainer>
-      <Background>
+      <TopSectionContainer>
+        <Background>
           <Content>
             <div className='navBar' style={navBarStyles}>
               <NavBar />
@@ -81,17 +77,17 @@ function Inicio() {
               <Phrase>- Dejá que Montevideo te guíe -</Phrase>
             </PhraseContainer>
             <div className='searchBar' style={searchBarStyles}>
-              <SearchBar />
+              <SearchBar data={Categorias} />
             </div>
             <div>
               <Slides />
             </div>
           </Content>
-      </Background>
-      <div>
-        <Footer />
-      </div>
-    </TopSectionContainer>
+        </Background>
+        <div>
+          <Footer />
+        </div>
+      </TopSectionContainer>
 
     </>
   );

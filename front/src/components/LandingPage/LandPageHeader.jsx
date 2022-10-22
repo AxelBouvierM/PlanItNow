@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Outlet, Link } from 'react-router-dom';
 
-import testLogo from '../../images/testLogo.png'
+import testLogo from '../../images/pinLogoApp.png'
 
 const HeaderContainer = styled.div`
 	display: flex;
@@ -11,7 +11,7 @@ const HeaderContainer = styled.div`
   padding: 0 3em;
   top: 0;
   z-index: 3;
-  @media all and (max-width:37em) {
+  @media all and (max-width:600px) {
     & {
       padding: 0 1em;
     }
@@ -27,9 +27,8 @@ const LogoContainer = styled.div`
 
 const Logo = styled.img`
 	width: 7em;
-	height: 7em;
 	opacity: 1;
-  @media all and (max-width:37em) {
+  @media all and (max-width:600px) {
     & {
     width: 5em;
     height: 5em;
@@ -84,10 +83,10 @@ function LandPageHeader() {
         <Logo src={testLogo} />
       </LogoContainer>
       <ButtonsContainer>
-        <Link to="/register">
+        <Link to="/registrarse">
           <AccountButton type="button"><ButtonTitle>Registrarse</ButtonTitle></AccountButton>
         </Link>
-        <Link to="/login">
+        <Link to="/ingresar">
           <AccountButton type="button"><ButtonTitle>Iniciar sesión</ButtonTitle></AccountButton>
         </Link>
         <Outlet />

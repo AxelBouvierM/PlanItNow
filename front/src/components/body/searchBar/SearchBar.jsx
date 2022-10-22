@@ -1,14 +1,19 @@
-import React, { useState, useEffect, useRef, } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from "react";
 import styled from 'styled-components';
 import { IoClose, IoSearch } from 'react-icons/io5';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useClickOutside } from 'react-click-outside-hook';
-import MoonLoader from 'react-spinners/MoonLoader';
-import { useDebounce } from '../../../hooks/debounceHook';
-import axios from 'axios';
-import { TvShow } from '../searchResults/tvShow';
-// "&" SELECTOR REFERENCES TO THE PREVIOUS COMPONENT
+import { useNavigate } from 'react-router-dom';
+
+// lens, input and x container
+const SearchInputContainer = styled.div`
+  width: 100%;
+  min-height: 4em;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 2px 25px 10px 25px;
+`;
 
 // before click searchbar container
 const SearchBarContainer = styled(motion.div)`
@@ -25,19 +30,15 @@ const SearchBarContainer = styled(motion.div)`
   margin: 0 1em 0 1em;
 `;
 
-// lens, input and x container
-const SearchInputContainer = styled.div`
-  width: 100%;
-  min-height: 4em;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 2px 25px 10px 25px;
+const SearchIcon = styled.span`
+  color: #bebebe;
+  font-size: 28px;
+  margin-left: 10px;
+  margin-top: 10px;
+  vertical-align: middle;
 `;
-
-// input tag handler (| color)
 const SearchInput = styled.input`
-  width: 100%;
+  width: 90%;
   height: 100%;
   outline: none;
   border: none;
@@ -46,6 +47,8 @@ const SearchInput = styled.input`
   font-weight: 500;
   border-radius: 6px;
   background-color: transparent;
+  margin-top: -95px;
+  margin-left: 20px;
   &:focus {
     outline: none;
     &::placeholder {
@@ -60,75 +63,6 @@ const SearchInput = styled.input`
   }
 `;
 
-// lens icon
-const SearchIcon = styled.span`
-  color: #bebebe;
-  font-size: 27px;
-  margin-right: 10px;
-  margin-top: 6px;
-  vertical-align: middle;
-`;
-
-// x on click button
-const CloseIcon = styled(motion.span)`
-  color: #bebebe;
-  font-size: 23px;
-  vertical-align: middle;
-  transition: all 400ms ease-in-out;
-  cursor: pointer;
-  &:hover {
-    color: #dfdfdf;
-  }
-`;
-
-// search results container
-const SearchContent = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  padding: 2px 25px;
-  flex-direction: column;
-  overflow-y: auto;
-  //backdrop-filter: blur(10px);
-`;
-
-// loading icon when search takes time
-const LoadingWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-
-// Button properties
-const Button = styled.button`
-  background-color: transparent;  
-  padding: 10px 15px;
-  border-radius: 10px;
-  outline: 0;
-  text-transform: uppercase;
-  margin: auto;
-  cursor: pointer;
-  font-size: 20px;
-  border-color: #fafafa;
-  border: solid;
-  color: #bebebe;
-`;
-
-
-// displayed container text
-const WarningMessage = styled.span`
-  color: #a1a1a1;
-  border-radius: 10;
-  font-size: 14px;
-  display: flex;
-  align-self: center;
-  justify-self: center;
-`;
-
-// containers properties
 const containerVariants = {
     expanded: {
         height: "20em",
@@ -138,97 +72,101 @@ const containerVariants = {
         height: "3.8em",
     },
 };
+const CloseIcon = styled(motion.span)`
+  color: #bebebe;
+  font-size: 2em;
+  vertical-align: middle;
+  margin-top: -95px;
+  transition: all 400ms ease-in-out;
+  cursor: pointer;
+`;
+const SearchContent = styled.div`
+  position:absolute;
+  margin-top: 2em;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 2px 25px;
+  flex-direction: column;
+  font-size: 23px;
+  color: #bebebe;
+  //backdrop-filter: blur(10px);
+`;
 
-// dict that defines the searchbar open transition
+const DataItem = styled.a`
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color:white;
+    cursor: pointer;
+`
+
+const Resultado = styled.p`
+  &:hover {
+    background-color: lightgrey;
+    width: 100%;
+  }
+`
+const Button = styled.button`
+  background-color: transparent;  
+  padding: 10px 15px;
+  border-radius: 10px;
+  outline: 0;
+  text-transform: uppercase;
+  margin: auto;
+  cursor: pointer;
+  font-size: 20px;
+  border-color: white;
+  color: #bebebe;
+`;
+
 const containerTransition = { type: "spring", damping: 22, stiffness: 100 };
 
-export function SearchBar({ props }) {
-
-
-    // const [a, b] = useState(...) destructuring explanation:
-    // a = variable name
-    // b = function to update the current variable
-    // ... = sets the variable value to ...
+export function SearchBar({ placeholder, data }) {
+    const [filteredData, setFilteredData] = useState([]);
+    const [wordEntered, setWordEntered] = useState("");
     const [isExpanded, setExpanded] = useState(false);
-    const [parentRef, isClickedOutside] = useClickOutside();
     const inputRef = useRef();
-    const [searchQuery, setSearchQuery] = useState("");
+    const [parentRef, isClickedOutside] = useClickOutside();
     const [isLoading, setLoading] = useState(false);
-    const [tvShows, setTvShows] = useState([]);
-    const [noTvShows, setNoTvShows] = useState(false);
 
-    const isEmpty = !tvShows || tvShows.length === 0;
-
-    //use to navigate to another route
+    const isEmpty = !wordEntered;
     let navigate = useNavigate();
 
-    // no results handler 
-    // Probando algo de buscar libros
-    
-    const changeHandler = (searchResult) => {
-        searchResult.preventDefault();
-        if (searchResult.target.value.trim() === "") setNoTvShows(false);
-
-        setSearchQuery(searchResult.target.value);
-    };
-
-    // expand container
     const expandContainer = () => {
         setExpanded(true);
+        setLoading(false);
     };
 
-    // shrink container
     const collapseContainer = () => {
         setExpanded(false);
-        setSearchQuery("");
-        setLoading(false);
-        setNoTvShows(false);
-        setTvShows([]);
         // in case there are results displayed this condition cleans it up
         if (inputRef.current) inputRef.current.value = "";
     };
 
-    // collapse container when clicking outside
     useEffect(() => {
         if (isClickedOutside) collapseContainer();
     }, [isClickedOutside]);
 
-    // encodes the special characters incuded in the search such as !, spaces or &.
-    const prepareSearchQuery = (query) => {
-        const url = `http://api.tvmaze.com/search/shows?q=${query}`;
-
-        return encodeURI(url);
-    };
-
-    // search process
-    const searchTvShow = async () => {
-        if (!searchQuery || searchQuery.trim() === "") return;
-
-        setLoading(true);
-        setNoTvShows(false);
-
-        const URL = prepareSearchQuery(searchQuery);
-
-        // request for remote data and waits for it response.
-        const response = await axios.get(URL).catch((err) => {
-            console.log("Error: ", err);
+    const handleFilter = (event) => {
+        const searchWord = event.target.value;
+        setWordEntered(searchWord);
+        const newFilter = data.filter((value) => {
+            return value.categories.toLowerCase().includes(searchWord.toLowerCase());
         });
 
-        // no results error handler
-        if (response) {
-            console.log("Response: ", response.data);
-            if (response.data && response.data.length === 0) setNoTvShows(true);
-
-            setTvShows(response.data);
+        if (searchWord === "") {
+            setFilteredData([]);
+        } else {
+            setFilteredData(newFilter);
         }
-
-        setLoading(false);
     };
 
-    // looks for updates on search results every 500 seconds
-    // Hook that helps to limit how many times a component is re-rendered,
-    // it has an internal timer to execute the callback function every <2nd param> seconds
-    useDebounce(searchQuery, 500, searchTvShow);
+    /*const clearInput = () => {
+      setFilteredData([]);
+      setWordEntered("");
+    };*/
 
     return (
         <SearchBarContainer
@@ -237,16 +175,16 @@ export function SearchBar({ props }) {
             transition={containerTransition}
             ref={parentRef}
         >
+            <SearchIcon>
+                <IoSearch />
+            </SearchIcon>
             <SearchInputContainer>
-                <SearchIcon>
-                    <IoSearch />
-                </SearchIcon>
                 <SearchInput
-                    placeholder="Buscar categorías"
-                    onFocus={expandContainer}
+                    value={wordEntered}
                     ref={inputRef}
-                    value={searchQuery}
-                    onChange={changeHandler}
+                    onFocus={expandContainer}
+                    onChange={handleFilter}
+                    placeholder="Buscar categorías"
                 />
                 <AnimatePresence>
                     {isExpanded && (
@@ -265,36 +203,24 @@ export function SearchBar({ props }) {
             </SearchInputContainer>
             {isExpanded && (
                 <SearchContent>
-                    {isLoading && (
-                        <LoadingWrapper>
-                            <MoonLoader loading color="#000" size={20} />
-                        </LoadingWrapper>
-                    )}
-                    {!isLoading && isEmpty && !noTvShows && (
+                    {!isLoading && isEmpty && (
                         <Button
-                          onClick={() => {
-                            navigate("/categories");
-                          }}
+                            onClick={() => {
+                                navigate("/categorias");
+                            }}
                         >
                             Categories
-                        </Button>                    
+                        </Button>
                     )}
-                    {!isLoading && noTvShows && (
-                        <LoadingWrapper>
-                            <WarningMessage>No Tv Shows or Series found!</WarningMessage>
-                        </LoadingWrapper>
-                    )}
-                    {!isLoading && !isEmpty && (
+                    {filteredData.length !== 0 && (
                         <>
-                            {tvShows.map(({ show }) => (
-                                <TvShow
-                                    key={show.id}
-                                    thumbnailSrc={show.image && show.image.medium}
-                                    name={show.name}
-                                    rating={show.rating && show.rating.average}
-                                />
-                                
-                            ))}
+                            {filteredData.map((value, key) => {
+                                return (
+                                    <DataItem onClick={() => { navigate(value.route); }}>
+                                        <Resultado>{value.categories} </Resultado>
+                                    </DataItem>
+                                );
+                            })}
                         </>
                     )}
                 </SearchContent>
