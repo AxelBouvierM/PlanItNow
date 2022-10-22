@@ -23,6 +23,7 @@ header {
 	background-color: transparent;
 	color: var(--textColor);
 	top: 0;
+	width: fit-content;
 }
 
 nav a {
@@ -67,7 +68,7 @@ header nav {
 	flex-direction: column;
 	justify-content: center;
 	gap: 2rem;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.80);
 	transition: 0.8s;
 	transform: translateX(-100vw);
 	z-index: 2;
