@@ -278,7 +278,26 @@ def calendar():
     else:
         return ("User not logged in")
 
+@app.route('/user', methods=['GET'])
+def user():
+    app.config['MYSQL_DB'] = 'login'
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+
+    if existCookies:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE userID = %s', (existCookies.get('UserID'),))
+        scheduleAll = cursor.fetchone()
+
+        if scheduleAll:
+            dic = {"user": scheduleAll}
+            return dic
+        else:
+            return jsonify(response={"status": "Not Found"})
+    else:
+        return jsonify(response={"status": "Not Found"})
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
