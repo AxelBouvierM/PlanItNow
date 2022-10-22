@@ -17,11 +17,10 @@ app = Flask(__name__)
 # Clave de sesión Flask (para poder crear una cookie con la información de la sesión)
 app.secret_key = 'PIN_key'
 
-DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
 # Conexion con la Base de Datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = DB_KEY
+app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'login'
 
 # Inicializando MySQL
@@ -120,6 +119,8 @@ def loginRegister():
             msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
             msg = 'Please complete all the data'
+        elif len(username) < 6:
+            msg = 'Invalid user'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
 
@@ -279,7 +280,26 @@ def calendar():
     else:
         return ("User not logged in")
 
+@app.route('/user', methods=['GET'])
+def user():
+    app.config['MYSQL_DB'] = 'login'
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+
+    if existCookies:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE userID = %s', (existCookies.get('UserID'),))
+        scheduleAll = cursor.fetchone()
+
+        if scheduleAll:
+            dic = {"user": scheduleAll}
+            return dic
+        else:
+            return jsonify(response={"status": "Not Found"})
+    else:
+        return jsonify(response={"status": "Not Found"})
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run()
+    app.run(host='0.0.0.0', port=5000, debug=True)
