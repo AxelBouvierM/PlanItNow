@@ -119,6 +119,8 @@ def loginRegister():
             msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
             msg = 'Please complete all the data'
+        elif len(username) < 6:
+            msg = 'Invalid user'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
 
