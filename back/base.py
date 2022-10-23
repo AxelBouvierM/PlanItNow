@@ -40,7 +40,7 @@ def loginAuth():
     if username is not None and password is not None:
         # Inicio de sesion MySQL, obtenemos la informacion del usuario. Almacenada en la DB
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s OR email = %s', (username, username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s OR email = %s', (username,username,))
         pwd = cursor.fetchone()
 
         if pwd:
@@ -303,4 +303,4 @@ def user():
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run()
