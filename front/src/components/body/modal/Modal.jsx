@@ -1,59 +1,35 @@
 import { React } from 'react';
 import styled from "styled-components";
 import { Outlet, Link } from 'react-router-dom';
-import useFitText from "use-fit-text";
 
 import { IconContext } from "react-icons";
-import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine, RiCalendarCheckLine, RiInformationLine } from 'react-icons/ri';
+import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine, RiCalendarCheckLine, RiInformationLine, RiText } from 'react-icons/ri';
 
-
-const Overlay = styled.div`
-    transition: all 400ms ease-in-out;
-`;
 
 const ModalContainer = styled.div`
   display: block;
   position: fixed;
-  max-height: 85vh;
-  height: 100%;
-  max-width: 50vw;
-  width: 100%;
+  border: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #F8F8FF;
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 1);
-  border-radius: 25px;
+  border-radius: 20px;
   z-index: 4;
-  @media screen and (max-width:1279px) {
-    	& {
-     	max-width: 90vw;
-			max-height: 85vh;
-    	}
-  	}
-  @media screen and (max-width:300px) {
-    	& {
-     	max-width: 90vw;
-			max-height: 80vh;
-    	}
-  	}
 `;
 
 const Top = styled.div`
-  width:100%;
-  height: auto;
-  max-height: 50%;
+  display: block;
+  position: relative;
+  max-height: 40vh;
   object-fit: cover;
-  border-radius: 18px;
   justify-content: center;
-  
+  overflow: hidden;
 `;
 
 const Images = styled.img`
   width: 100%;
-  display: flex;
-  max-height: 80vh;
-  margin-top: auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   justify-content: center;
@@ -70,180 +46,127 @@ const CloseBtn = styled.button`
   top: 8px;
   border-radius: 20px;
   right: 1em;
-  color: black;
+  color: #000;
+  background-color: #fafafa;
   cursor: pointer;
+  z-index: 10;
 `;
 
 const Content = styled.div`
   display: block;
   position: relative;
-  max-height: calc(85vh * 0.50);
-  height: 100%;
-	font-size: 1.4em;
+  max-height: calc(80vh * 0.50);
+	font-size: 1em;
 	font-weight: 350;
+  text-align: left;
   background-color: #F8F8FF;
   color: black;
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
   z-index: 5;
-  overflow-y: auto;
-
-  @media screen and (max-width:300px) {
-    	& {
-			max-height: calc(80vh * 0.50);
-    	}
-  	}
+  overflow: auto;
+  padding: 1em;
 `;
 
 const Icon = styled.i`
   vertical-align: middle;
-  margin: 0 0.4em 0 0;
+  margin: 0.1em 0.4em 0 0;
 `;
 
 const InfoText = styled.p`
-	display: inline-block;
+	display: block;
 	width: fit-content;
 	color: #000;
-  font-size: 0.8em;
-	font-weight: 350;
-  @media all and (max-width:405px) { 
-    & { 
-      font-size: 0.7em; 
-    } 
-  }
-  @media all and (max-width:300px) { 
-    & { 
-      font-size: 0.5em; 
-    } 
-  }
+  font-size: 1em;
+	font-weight: 550;
 `;
 
-const Date = styled.div`
-  display: flex;
-  position: relative;
+const EventContainer = styled.div`
   width: fit-content;
-	z-index: 3;
-  padding: 1em 1em 0 1em;
-`;
-const Place = styled.div`
-  width: fit-content;
-	font-size: 1em;
-	font-weight: 300;
   text-align: left;
-  padding: 0 1em;
+  padding: 0.2em 0;
 `;
 
-const Price = styled.div`
-	font-size: 1em;
+const EventData = styled.div`
+  height: 50%;
+  width: fit-content;
 	font-weight: 300;
   text-align: left;
-  padding: 0 1em;
 `;
 
 const Description = styled.div`
-  display: block;
-  position: relative;
-  max-height: calc(42.5vh * 0.4 );
-  height: 100%;
-  margin: 0 1em 4em 1em;
-	font-size: 0.7em;
+  height: 50%;
+  width: fit-content;
 	font-weight: 300;
-  overflow-x: hidden;
+  text-align: left;
 `;
 
-const BottomButtons = styled.div`
-  display: block;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+const Buttons = styled.div`
+  display: flex;
+  position: relative;
   width: 100%;
-  max-height: 3.7em;
-  height: 100%;
-  border: none;
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-  border-bottom-right-radius: 25px;
-  border-bottom-left-radius: 25px;
-  z-index: 6;
+  height: 3.7em;
 `;
 
-const MoreInfoButton = styled.button`
-    display: inline-block;
-    position:absolute; 
-    bottom:0;
-    left: 0;
-    width: 50%;
-    height: 100%;
-    background-color: #8A3BE5;
-    border: none;
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    border-bottom-left-radius: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    &:hover {
-	  background-color: #6314BD;
-   transition: 0.3s ease-in-out;
-    }
-   @media all and (max-width:400px) { 
-    & { 
-      font-size: 12px; 
-    } 
-   }
+const MoreInfoButton = styled.a`
+  display: flex;
+  position: relative;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-bottom-left-radius: 20px;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:350;
+  color:#fafafa;
+  background-color: #9D239D;
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    color:#000;
+    background-color: #fafafa;
+  }
 `;
 
-const AgendaButton = styled.button`
-    display: inline-block;
-    position: absolute; 
-    bottom:0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    background-color: #FF9519;
-    border: none;
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    border-bottom-right-radius: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    &:hover {
-	  background-color: #FF7E19;
-    transition: 0.3s ease-in-out;
-    }
-    @media all and (max-width:400px) { 
-    & { 
-      font-size: 12px; 
-    } 
-   }
+const AgendaButton = styled.a`
+  display: flex;
+  position: relative;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-bottom-right-radius: 20px;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight: 350;
+  color:#fafafa;
+  background-color: #5F326E;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    color:#000;
+    background-color: #fafafa;
+    transition: 0.2s ease-in-out;
+  }
 `;
 
 const Modal = ({ open, close, selected }) => {
-  const { fontSize, ref } = useFitText();
   if (!open) return null;
 
   return (
     <>
-      <Overlay>
         <ModalContainer>
           <Top>
             <Images src={selected.image} />
           </Top>
-          <BottomButtons>
-            <a href={selected.link} target="_blank" rel="noreferrer">
-              <MoreInfoButton><Icon><RiInformationLine /></Icon>Más información</MoreInfoButton>
-            </a>
-            <Link to='agenda'>
-              <AgendaButton><Icon><RiCalendarCheckLine /></Icon>Agendar</AgendaButton>
-            </Link>
-            <Outlet />
-          </BottomButtons>
           <CloseBtn onClick={close}>
             <IconContext.Provider value={{
               style: { verticalAlign: 'middle' },
-              color: '#000000',
               className: 'enter',
               size: '2em',
             }}>
@@ -251,21 +174,22 @@ const Modal = ({ open, close, selected }) => {
             </IconContext.Provider>
           </CloseBtn>
           <Content>
-            <Date>
-              <InfoText><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
-            </Date>
-            <Place>
-              <InfoText><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
-            </Place>
-            <Price>
-              <InfoText><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
-            </Price>
-            <Description>
-              {selected.description}
-            </Description>
+            <EventContainer>
+              <EventData>
+                <InfoText><Icon><RiText /></Icon>{selected.title}</InfoText>
+                <InfoText><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
+                <InfoText><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
+                <InfoText><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
+              </EventData>
+              <Description>{selected.description}</Description>
+            </EventContainer>
           </Content>
+          <Buttons>
+            <MoreInfoButton href={selected.link} target="_blank" rel="noreferrer"><Icon><RiInformationLine /></Icon>Más información</MoreInfoButton>
+              <AgendaButton><Icon><RiCalendarCheckLine /></Icon>Agendar</AgendaButton>
+            <Outlet />
+          </Buttons>
         </ModalContainer>
-      </Overlay>
     </>
   );
 };
