@@ -8,6 +8,8 @@ import { IconContext } from "react-icons";
 import { RiArrowLeftLine, RiArrowRightLine, RiErrorWarningLine, RiCheckLine } from 'react-icons/ri';
 import MoonLoader from 'react-spinners/MoonLoader';
 
+import logo from '../images/pinLogoEstirado.png'
+
 const Background = styled.div`
   border: 1px solid #000; 
   background-image: url(${registerBg});
@@ -17,31 +19,57 @@ const Background = styled.div`
   height: 100vh;
 `;
 
-const PageContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
+const LogoContainer = styled.div`
+	display: flex;
+	position: fixed;
+  bottom: 0;
+  opacity: 0.7;
+	margin: 3rem 3rem;
 `;
 
-const InfoContainer = styled.div`
+const Logo = styled.img`
+	max-width: 10em;
+	max-height: 10em;
+	height: fit-content;
+	opacity: 1;
+	transition: 0.6s ease-in-out;
+	&:hover {
+		transform: translateX(1em);
+		transition: 0.6s ease-in-out;
+	}
+`;
+
+const GoBackContainer = styled.a`
   display: flex;
-  width: 55%;
-  height: 100%;
+	position: absolute;
+	width: 100vw;
+  padding: 3rem;
+`;
+
+const Text = styled.p`
+	display: flex;
+	position: fixed;
+  width: 40%;
+  bottom: 8%;
+  color: #fafafa;
+  font-size: 2.5em;
+	margin: 3rem 3rem;;
 `;
 
 const GoBackButton = styled.a`
   display:inline-block;
-  margin: 3rem 3rem;
   padding:0.35em 1.2em;
   border:0.1em solid #FFFFFF;
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
   font-family:'Roboto',sans-serif;
-  font-size: 0.9em;
-  font-weight:350;
+  font-weight:300;
   color:#FFFFFF;
+  text-align:center;
   transition: all 0.2s;
+  background-color: transparent;
+  font-size: 0.9em;
   cursor: pointer;
   &:hover {
     color:#000000;
@@ -217,7 +245,6 @@ function Register() {
   const [redirect, setRedirect] = useState(false);
   const [nicePassword, setNicePassword] = useState(false);
   const [correctRegister, setCorrectRegister] = useState(false);
-
   const navigate = useNavigate();
 
   function checkPassRequirements(string) {
@@ -283,77 +310,77 @@ function Register() {
 
 	return (
 		<Background>
-      <PageContainer>
-        <InfoContainer>
-          <Link to="/">
-            <GoBackButton type="button"><Icon style={{ verticalAlign: 'middle', marginBottom: '0.2em' }}><RiArrowLeftLine /></Icon>Volver</GoBackButton>
-          </Link>
-          <Outlet />
-        </InfoContainer>
-        <RegisterContainer>
-          <FormContainer onSubmit={SendFormInput}>
-            <TextSpace>REGÍSTRATE</TextSpace>
-            {Error && (
-              <ErrorWrapper>
-                <ErrorMessage><Icon><RiErrorWarningLine /></Icon>{Error}</ErrorMessage>
-              </ErrorWrapper>
-            )}
-            <InputContainer>
-              <Input
-                type="text"
-                placeholder="Usuario"
-                value={username}
-                onChange={(event) => setUser(event.target.value)}
-                required>
-              </Input>
-            </InputContainer>
-            <InputContainer>
-              <Input
-                type="text"
-                placeholder="Email"
-                value={mail}
-                onChange={(event) => setMail(event.target.value)}
-                required>
-              </Input>
-            </InputContainer>
-            <InputContainer>
-              <Input
-              type="password"
-              placeholder="Contraseña"
-              onChange={(event) => {
-                checkPassRequirements(event.target.value)
-                if (nicePassword) setPass(event.target.value)
-                }}
+      <GoBackContainer>
+        <Link to="/" className='linkStyle'>
+          <GoBackButton type="button" className='button-hover'><Icon><RiArrowLeftLine style={{ verticalAlign: 'middle', marginBottom: '0.2em' }} /></Icon>Volver</GoBackButton>
+        </Link>
+        <Outlet />
+      </GoBackContainer>
+      <LogoContainer><Logo src={logo}></Logo></LogoContainer>
+      <Text>Accede a todo lo que Montevideo tiene para tí</Text>
+      <RegisterContainer>
+        <FormContainer onSubmit={SendFormInput}>
+          <TextSpace>REGÍSTRATE</TextSpace>
+          {Error && (
+            <ErrorWrapper>
+              <ErrorMessage><Icon><RiErrorWarningLine /></Icon>{Error}</ErrorMessage>
+            </ErrorWrapper>
+          )}
+          <InputContainer>
+            <Input
+              type="text"
+              placeholder="Usuario"
+              value={username}
+              onChange={(event) => setUser(event.target.value)}
               required>
-              </Input>
-            </InputContainer>
-            {passError && !correctRegister && (<PassReq><Icon><RiErrorWarningLine /></Icon>{passError}</PassReq>)}
-            {correctRegister && <Registered><Icon><RiCheckLine /></Icon>Te has registrado correctamente!</Registered>}
-            <DataContainer>
-              <ButtonStyle type="submit">
-                <Icon>
-                  <IconContext.Provider value={{
-                    style: { verticalAlign: 'middle' },
-                    className: 'enter',
-                    size: '1.4em'
-                  }}>
-                    <RiArrowRightLine />
-                  </IconContext.Provider>
-                </Icon>
-              </ButtonStyle>
-              <Link to="/login">
-                <LoginText>¿Ya tienes una cuenta?</LoginText>
-              </Link>
-              <Outlet />
-              {isLoading && (
-                <LoadingWrapper>
-                  <MoonLoader loading color="white" size={20} />
-                </LoadingWrapper>
-              )}
-            </DataContainer>
-          </FormContainer>
-        </RegisterContainer>
-      </PageContainer>
+            </Input>
+          </InputContainer>
+          <InputContainer>
+            <Input
+              type="text"
+              placeholder="Email"
+              value={mail}
+              onChange={(event) => setMail(event.target.value)}
+              required>
+            </Input>
+          </InputContainer>
+          <InputContainer>
+            <Input
+            type="password"
+            placeholder="Contraseña"
+            onChange={(event) => {
+              checkPassRequirements(event.target.value)
+              if (nicePassword) setPass(event.target.value)
+              }}
+            required>
+            </Input>
+          </InputContainer>
+          {passError && !correctRegister && (<PassReq><Icon><RiErrorWarningLine /></Icon>{passError}</PassReq>)}
+          {correctRegister && <Registered><Icon><RiCheckLine /></Icon>Te has registrado correctamente!</Registered>}
+          <DataContainer>
+            <ButtonStyle type="submit">
+              <Icon>
+                <IconContext.Provider value={{
+                  style: { verticalAlign: 'middle' },
+                  className: 'enter',
+                  size: '1.4em'
+                }}>
+                  <RiArrowRightLine />
+                </IconContext.Provider>
+              </Icon>
+            </ButtonStyle>
+            <Link to="/ingresar">
+              <LoginText>¿Ya tienes una cuenta?</LoginText>
+            </Link>
+            <Outlet />
+            {isLoading && (
+              <LoadingWrapper>
+                <MoonLoader loading color="white" size={20} />
+              </LoadingWrapper>
+            )}
+          </DataContainer>
+        </FormContainer>
+      </RegisterContainer>
 		</Background>
 	);
 }

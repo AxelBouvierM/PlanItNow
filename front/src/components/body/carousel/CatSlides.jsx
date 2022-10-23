@@ -9,10 +9,13 @@ import "slick-carousel/slick/slick-theme.css";
 import '../../../styles/slides.css'
 
 const Container = styled.div`
+	position: relative;
+	align-items: center;
+	justify-content: center;
   	max-height: 70vh;
   	max-width: 90vw;
+	padding-top: 2em;
   	margin: auto;
-  	padding-top: 5em;
   	color: #fafafa;
   	text-align: center;
   	@media all and (max-width:600px) {

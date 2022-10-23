@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
@@ -11,8 +11,10 @@ import '../../styles/navigation.css';
 
 const LogoContainer = styled.div`
 	display: flex;
-	position: relative;
-	margin-left: 1.2em;
+	position: fixed;
+	margin-left: 3.5em;
+	margin-top: 2em;
+	z-index: 2;
 `;
 
 const Logo = styled.img`
@@ -20,6 +22,7 @@ const Logo = styled.img`
 	max-height: 1em;
 	height: fit-content;
 	opacity: 1;
+	transition: 0.6s ease-in-out;
 	&:hover {
 		transform: translateX(1em);
 		transition: 0.6s ease-in-out;
@@ -27,7 +30,7 @@ const Logo = styled.img`
 `;
 
 const ButtonStyle = styled.button`
-	width: fit-content;
+  width: fit-content;
   display: inline-block;
   margin: 0 1.5em;
   padding:0.35em 1.2em;
@@ -48,7 +51,33 @@ const ButtonStyle = styled.button`
 	}
 `;
 
+const LogOutButtonStyle = styled.button`
+  display: inline-block;
+  position: fixed;
+  bottom: 2em;
+  width: fit-content;
+  height: 2.5em;
+  margin: 0 2em;
+  padding:0.35em 1.2em;
+  border: none;
+  border-bottom: 0.1em solid #FFFFFF;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  font-size: 1em;
+  color:#FFFFFF;
+  transition: all 0.3s;
+  background-color: transparent;
+  cursor: pointer;
+  &:hover {
+    color: #000;
+    background-color: crimson;
+	}
+`;
+
 const Phrase = styled.p`
+	width: fit-content;
 	display: inline-block;
 	transition: 0.3s ease-in-out;
 	color: #fafafa;
@@ -56,40 +85,30 @@ const Phrase = styled.p`
 	&:hover {
 		transform:translateX(1em);
 		transition: 0.2s ease-in-out;
-		color: #fafafa;
+		color: #000;
 		font-weight: 1000;
 	}
 `;
 
 export function NavBar() {
-	const [openedNavbar, setOpenedNavbar] = useState(true);
 	const [cookie, unsetCookie] = useState(false);
 	const [redirect, setRedirect] = useState(false);
-
 	const navigate = useNavigate();
 	const navRef = useRef();
 
 	const showNavBar = () => {
-		setOpenedNavbar(!openedNavbar);
 		navRef.current.classList.toggle('responsive_nav')
-		if (openedNavbar) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'unset';
-		}
 	}
 
-	useEffect(() => {
-		if (cookie) {
-			axios.get('/logout')
-				.then((res) => {
-					if (res.data === 'status: Ok') setRedirect(true);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-	}, []);
+	if (cookie) {
+		axios.get('/logout')
+			.then((res) => {
+				if (res.data.response.status === 'Ok') setRedirect(true);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
 	if (redirect) navigate('/ingresar');
 
@@ -99,11 +118,11 @@ export function NavBar() {
 			<Hamburger />
 		</button>
 		<nav ref={navRef}>
-			<Link to="/inicio"><Phrase><ButtonStyle><RiHome2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Inicio</Phrase></Link>
-			<Link to="/agenda"><Phrase><ButtonStyle><RiCalendar2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Agenda</Phrase></Link>
-			<Link to="/categorias"><Phrase><ButtonStyle><RiLayout2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Categorías</Phrase></Link>
-			<Link to="/perfil"><Phrase><ButtonStyle><RiAccountCircleLine style={{ verticalAlign: 'middle' }} /></ButtonStyle>Perfil</Phrase></Link>
-			<Phrase><ButtonStyle onClick={() => unsetCookie(true)}><RiLogoutBoxRLine style={{ verticalAlign: 'middle' }} /></ButtonStyle>Cerrar sesión</Phrase>
+			<Phrase><Link to="/inicio" style={{ color: '#fafafa', textDecoration: 'none' }}><ButtonStyle><RiHome2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Inicio</Link></Phrase>
+			<Phrase><Link to="/agenda" style={{ color: '#fafafa', textDecoration: 'none' }}><ButtonStyle><RiCalendar2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Agenda</Link></Phrase>
+			<Phrase><Link to="/categorias" style={{ color: '#fafafa', textDecoration: 'none' }}><ButtonStyle><RiLayout2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Categorías</Link></Phrase>
+			<Phrase><Link to="/perfil" style={{ color: '#fafafa', textDecoration:'none' }}><ButtonStyle><RiAccountCircleLine style={{ verticalAlign: 'middle' }} /></ButtonStyle>Perfil</Link></Phrase>
+			<LogOutButtonStyle onClick={() => unsetCookie(true)}><RiLogoutBoxRLine style={{ verticalAlign: 'middle', marginRight: '1em' }} />Cerrar sesión</LogOutButtonStyle>
 		</nav>
 		<Outlet />
 		<LogoContainer><Logo src={icon}></Logo></LogoContainer>

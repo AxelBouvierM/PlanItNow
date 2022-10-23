@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { NavBar } from '../../components/header/NavBar'
 import { Footer } from '../../components/footer/Footer'
-import categoriesBg from '../../images/montaña2.jpg'
 import { SearchBar } from '../../components/body/searchBar/SearchBar'
 import { Categorias } from '../../components/body/searchBar/SearchCategories'
 import Modal from '../../components/body/modal/Modal'
@@ -19,7 +19,6 @@ const Background = styled.div`
   position: relative;
   flex-wrap: wrap;
   background-color: black;
-  /*background-image: url(${categoriesBg});*/
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -116,7 +115,16 @@ function Music() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
+	const navigate = useNavigate();
 
+	axios.get('/login/check')
+		.then((res) => {
+			if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+		
 	useEffect(() => {
 		axios.get('/data/movie')
 			.then((res) => {
