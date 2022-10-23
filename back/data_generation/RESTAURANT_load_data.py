@@ -57,7 +57,7 @@ while True:  # loop to get more results until next_page is not None
             description += ' - Horario: '
             for day in open_days:
                 description += day.replace(': ', ' ').replace('–', ' a ') + ' - '
-            description = description[:-3]
+            description = description[:-1]
         link = results.get('website')
         image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxheight=1600&photo_reference={photo_reference}&language=es-419&key={API_KEY}'  # url google API to get the photo of a restaurant
         chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
