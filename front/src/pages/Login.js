@@ -219,7 +219,7 @@ function Login() {
 							<Input
 								type="text"
 								className="loginInput"
-								placeholder="Usuario/email"
+								placeholder="Usuario / Email"
 								value={username}
 								onChange={(event) => setUser(event.target.value)}
 								required>

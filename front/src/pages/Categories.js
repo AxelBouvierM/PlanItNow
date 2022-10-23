@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 import { NavBar } from '../components/header/NavBar'
 import Slides from '../components/body/carousel/CatSlides';
@@ -56,8 +58,16 @@ const navBarStyles = {
 };
 
 function Inicio() {
-  // metodo get para chequear si el user esta logeado (endpoint /login/check), si no esta logeado redireccionar
-  // a landpage
+  const navigate = useNavigate();
+
+  axios.get('/login/check')
+    .then((res) => {
+      if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   return (
     <>
       <TopSectionContainer>

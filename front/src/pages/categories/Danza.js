@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { NavBar } from '../../components/header/NavBar'
 import { Footer } from '../../components/footer/Footer'
 import categoriesBg from '../../images/montaña2.jpg'
@@ -116,7 +117,16 @@ function Music() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
+	const navigate = useNavigate();
 
+	axios.get('/login/check')
+		.then((res) => {
+			if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+		
 	useEffect(() => {
 		axios.get('/data/dance')
 			.then((res) => {

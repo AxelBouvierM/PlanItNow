@@ -217,7 +217,6 @@ function Register() {
   const [redirect, setRedirect] = useState(false);
   const [nicePassword, setNicePassword] = useState(false);
   const [correctRegister, setCorrectRegister] = useState(false);
-
   const navigate = useNavigate();
 
   function checkPassRequirements(string) {
@@ -341,7 +340,7 @@ function Register() {
                   </IconContext.Provider>
                 </Icon>
               </ButtonStyle>
-              <Link to="/login">
+              <Link to="/ingresar">
                 <LoginText>¿Ya tienes una cuenta?</LoginText>
               </Link>
               <Outlet />
