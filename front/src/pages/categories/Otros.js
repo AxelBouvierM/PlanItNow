@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { NavBar } from '../../components/header/NavBar'
 import { Footer } from '../../components/footer/Footer'
-import categoriesBg from '../../images/montaña2.jpg'
 import { SearchBar } from '../../components/body/searchBar/SearchBar'
 import { Categorias } from '../../components/body/searchBar/SearchCategories'
 import Modal from '../../components/body/modal/Modal'
@@ -20,7 +19,6 @@ const Background = styled.div`
   position: relative;
   flex-wrap: wrap;
   background-color: black;
-  /*background-image: url(${categoriesBg});*/
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
