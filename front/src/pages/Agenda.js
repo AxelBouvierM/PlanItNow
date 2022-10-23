@@ -5,13 +5,15 @@ import EventCalendar from '../components/body/calendar/EventCalendar';
 import { NavBar } from '../components/header/NavBar';
 import { Footer } from '../components/footer/Footer'
 import styled from 'styled-components';
-/*import bg from '../images/rambla6.jpg'*/
+import bg from '../images/rambla6.jpg'
 
 const Background = styled.div`
   position: absolute;
-  background: rgb(131,58,180);
-  background-image: radial-gradient( circle farthest-corner at 1% 1%,  rgba(131,58,180,1) 0.1%, rgba(0,0,0,1) 98.2% );
-	width: 100%;
+  background-image: url(${bg});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
   height: 100%;
 `;
 

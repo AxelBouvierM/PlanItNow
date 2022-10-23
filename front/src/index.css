@@ -50,8 +50,8 @@ code {
 }
 
 .fc-scrollgrid-sync-inner {
-  backdrop-filter: blur(15px);
-  background-color: rgba(0, 0, 0, 0.60);
+  backdrop-filter: blur(20px);
+  background-color: rgba(256, 256, 256, 0.25);
 }
 
 .fc .fc-daygrid-day.fc-day-today {
@@ -63,13 +63,13 @@ code {
   border: none;
 }
 .fc-event-title-container {
-  background-color: #fafafa;
-  color: #000;
+  background-color: #981AC1;
+  color: #fafafa;
   transition: 0.2s ease-in-out;
   cursor: default;
 }
 .fc-event-title-container:hover {
-  background-color: #981AC1;
+  background-color: #000;
   color: #fafafa;
   transition: 0.2s ease-in-out;
 }
