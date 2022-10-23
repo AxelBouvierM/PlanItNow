@@ -57,7 +57,7 @@ while True:
             description += ' - Horario: '
             for day in open_days:
                 description += day.replace(': ', ' ').replace('–', ' a ') + ' - '
-            description = description[:-1]
+            description = description[:-3]
         link = results.get('website')
         image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxheight=1600&photo_reference={photo_reference}&language=es-419&key={API_KEY}'
         chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
