@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 
 import { IconContext } from "react-icons";
-import { RiArrowRightLine, RiArrowLeftLine, RiErrorWarningLine, RiHeavyShowersFill } from 'react-icons/ri'
+import { RiArrowRightLine, RiArrowLeftLine, RiErrorWarningLine } from 'react-icons/ri'
 
 import loginBg from '../images/loginBg.jpg'
 import logo from '../images/pinLogoEstirado.png'
