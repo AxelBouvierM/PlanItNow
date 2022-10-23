@@ -1,10 +1,8 @@
 import { React } from 'react';
 import styled from "styled-components";
-import { Outlet, Link } from 'react-router-dom';
 
 import { IconContext } from "react-icons";
 import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine, RiCalendarCheckLine, RiInformationLine, RiText } from 'react-icons/ri';
-
 
 const ModalContainer = styled.div`
   display: block;
@@ -187,7 +185,6 @@ const Modal = ({ open, close, selected }) => {
           <Buttons>
             <MoreInfoButton href={selected.link} target="_blank" rel="noreferrer"><Icon><RiInformationLine /></Icon>Más información</MoreInfoButton>
               <AgendaButton><Icon><RiCalendarCheckLine /></Icon>Agendar</AgendaButton>
-            <Outlet />
           </Buttons>
         </ModalContainer>
     </>
