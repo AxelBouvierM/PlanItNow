@@ -24,7 +24,7 @@ const LogoContainer = styled.div`
 	position: fixed;
   bottom: 0;
   opacity: 0.7;
-	margin: 3rem 3rem;;
+	margin: 3rem 3rem;
 `;
 
 const Logo = styled.img`
@@ -55,7 +55,6 @@ const Text = styled.p`
   font-size: 2.5em;
 	margin: 3rem 3rem;;
 `;
-
 
 const GoBackButton = styled.a`
   display:inline-block;
@@ -318,7 +317,7 @@ function Register() {
         <Outlet />
       </GoBackContainer>
       <LogoContainer><Logo src={logo}></Logo></LogoContainer>
-      <Text>¡Crea tu cuenta para conocer nuevos lugares!</Text>
+      <Text>Accede a todo lo que Montevideo tiene para tí</Text>
       <RegisterContainer>
         <FormContainer onSubmit={SendFormInput}>
           <TextSpace>REGÍSTRATE</TextSpace>
