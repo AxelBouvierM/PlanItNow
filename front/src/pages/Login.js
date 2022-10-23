@@ -4,9 +4,10 @@ import axios from 'axios'
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 
 import { IconContext } from "react-icons";
-import { RiArrowRightLine, RiArrowLeftLine, RiErrorWarningLine } from 'react-icons/ri'
+import { RiArrowRightLine, RiArrowLeftLine, RiErrorWarningLine, RiHeavyShowersFill } from 'react-icons/ri'
 
 import loginBg from '../images/loginBg.jpg'
+import logo from '../images/pinLogoEstirado.png'
 
 const Background = styled.div`
   border: 1px solid #000; 
@@ -18,19 +19,57 @@ const Background = styled.div`
   height: 100vh;
 `;
 
+const LogoContainer = styled.div`
+	display: flex;
+	position: fixed;
+  bottom: 0;
+  opacity: 0.7;
+	margin: 3rem 3rem;;
+`;
+
+const Logo = styled.img`
+	max-width: 10em;
+	max-height: 10em;
+	height: fit-content;
+	opacity: 1;
+	transition: 0.6s ease-in-out;
+	&:hover {
+		transform: translateX(1em);
+		transition: 0.6s ease-in-out;
+	}
+`;
+
+const Text = styled.p`
+	display: flex;
+	position: fixed;
+  width: 45%;
+  bottom: 8%;
+  color: #fafafa;
+  font-size: 2.5em;
+	margin: 3rem 3rem;;
+`;
+
+const GoBackContainer = styled.a`
+  display: flex;
+	position: absolute;
+	width: 100vw;
+  padding: 3rem;
+`;
+
 const GoBackButton = styled.a`
   display:inline-block;
-  margin: 3rem 3rem;
   padding:0.35em 1.2em;
   border:0.1em solid #FFFFFF;
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
   font-family:'Roboto',sans-serif;
-  font-size: 0.9em;
-  font-weight:350;
+  font-weight:300;
   color:#FFFFFF;
+  text-align:center;
   transition: all 0.2s;
+  background-color: transparent;
+  font-size: 0.9em;
   cursor: pointer;
   &:hover {
     color:#000000;
@@ -203,10 +242,14 @@ function Login() {
 
 	return (
 		<Background>
-				<Link to="/">
-        <GoBackButton type="button"><Icon><RiArrowLeftLine style={{ verticalAlign: 'middle', marginBottom: '0.2em' }} /></Icon>Volver</GoBackButton>
-				</Link>
-				<Outlet />
+      <GoBackContainer>
+        <Link to="/" className='linkStyle'>
+          <GoBackButton type="button" className='button-hover'><Icon><RiArrowLeftLine style={{ verticalAlign: 'middle', marginBottom: '0.2em' }} /></Icon>Volver</GoBackButton>
+        </Link>
+        <Outlet />
+      </GoBackContainer>
+      <Text>¡Que bueno verte aquí!</Text>
+      <LogoContainer><Logo src={logo}></Logo></LogoContainer>
 			<LoginContainer>
 				<FormContainer onSubmit={SendFormInput}>
           <TextSpace>INICIAR SESIÓN</TextSpace>
