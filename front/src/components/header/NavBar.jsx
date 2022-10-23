@@ -75,7 +75,6 @@ const LogOutButtonStyle = styled.button`
 	}
 `;
 
-
 const Phrase = styled.p`
 	width: fit-content;
 	display: inline-block;
