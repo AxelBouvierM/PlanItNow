@@ -26,7 +26,7 @@ header {
 }
 
 header .nav-btn {
-	position: relative;
+	position: fixed;
 	cursor: pointer;
 	background: transparent;
 	border: none;
@@ -35,6 +35,7 @@ header .nav-btn {
 	visibility: hidden;
 	opacity: 0;
 	font-size: 1.8rem;
+	margin-top: 1em;
 	z-index: 3;
 }
 
@@ -64,9 +65,7 @@ header .responsive_nav {
 }
 
 nav .nav-close-btn {
-	position: absolute;
-	top: 1rem;
-	right: 2rem;
+	position: fixed;
 }
 
 nav button span {
