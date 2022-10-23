@@ -14,6 +14,7 @@ const LogoContainer = styled.div`
 	position: fixed;
 	margin-left: 3.5em;
 	margin-top: 2em;
+	z-index: 2;
 `;
 
 const Logo = styled.img`
