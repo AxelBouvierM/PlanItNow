@@ -251,6 +251,7 @@ function Register() {
     const intMatch = string.match(/\d+/g);
     const upperMatch = string.match(/[A-Z]/);
 
+    setNicePassword(false);
     if (string.length >= 6 && intMatch != null && upperMatch != null) {
       setPassError(null);
       setNicePassword(true);
@@ -290,8 +291,8 @@ function Register() {
 
     if (res.data.response.status === 'Ok') {
       setCorrectRegister(true);
-      setTimeout(() => setRedirect(true), 1500)
-
+      /*const timer = setTimeout(() => setRedirect(true), 1500)
+      clearTimeout(timer);*/
     } else if (res.data.response.status === 'User already exists') {
       setError('Este nombre de usuario ya esta en uso');
     } else if (res.data.response.status === 'Mail already exists') {
@@ -299,7 +300,7 @@ function Register() {
     } else if (res.data.response.status === 'Invalid user') {
       setError('El nombre de usuario debe tener al menos 6 caracteres');
     } else if (res.data.response.status === 'Please complete all the data') {
-      setError('La contraseña no cumple los requisitos');
+      setError('Debes completar todos los campos');
     } else {
       setError('Ha ocurrido un error, vuelve a intentarlo');
     }
