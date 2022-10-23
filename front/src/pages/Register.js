@@ -291,8 +291,8 @@ function Register() {
 
     if (res.data.response.status === 'Ok') {
       setCorrectRegister(true);
-      /*const timer = setTimeout(() => setRedirect(true), 1500)
-      clearTimeout(timer);*/
+      const timer = setTimeout(() => setRedirect(true), 1500)
+      clearTimeout(timer);
     } else if (res.data.response.status === 'User already exists') {
       setError('Este nombre de usuario ya esta en uso');
     } else if (res.data.response.status === 'Mail already exists') {
