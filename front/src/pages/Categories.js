@@ -38,7 +38,7 @@ const PhraseContainer = styled.div`
   display: flex;
   position: relative;
   width: 100%;
-  margin-top: 1.5em;
+  margin-top: 8em;
   justify-content: center;
 `;
 
@@ -77,7 +77,7 @@ function Inicio() {
               <NavBar />
             </div>
             <PhraseContainer>
-              <Phrase>- Conoce Montevideo -</Phrase>
+              <Phrase>- Conocé más sobre tu ciudad -</Phrase>
             </PhraseContainer>
             <div>
               <Slides style={{}}/>
