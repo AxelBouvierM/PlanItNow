@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Fade as Hamburger } from 'hamburger-react'
 
 import icon from '../../images/pinLogoEstirado.png'
+import { IconContext } from 'react-icons';
 import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiLogoutBoxRLine, RiLayout2Line } from 'react-icons/ri';
 
 import '../../styles/navigation.css';
@@ -17,11 +18,41 @@ const LogoContainer = styled.div`
 
 const Logo = styled.img`
 	max-width: 15em;
-	width: 50%;
+	max-height: 1em;
+	height: fit-content;
 	opacity: 1;
 	&:hover {
 		transform: translateX(1em);
 		transition: 0.6s ease-in-out;
+	}
+`;
+
+const ButtonStyle = styled.a`
+  display: inline-block;
+  margin: 0 1em 0 0;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-radius: 20px;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  font-size: 1.2em;
+  color:#FFFFFF;
+  transition: all 0.2s;
+  &:hover {
+    color:#000000;
+    background-color: #fafafa;
+	}
+`;
+
+const Phrase = styled.p`
+	display: inline-block;
+	transition: 0.2s ease-in-out;
+	&:hover {
+		transform:translateX(1em);
+		transition: 0.2s ease-in-out;
+
 	}
 `;
 
@@ -44,11 +75,11 @@ export function NavBar() {
 			<Hamburger />
 		</button>
 		<nav ref={navRef}>
-			<Link to="/inicio"><i><RiHome2Line /></i><span>Inicio</span></Link>
-			<Link to="/agenda"><i><RiCalendar2Line /></i><span>Agenda</span></Link>
-			<Link to="/categorias"><i><RiLayout2Line /></i><span>Categorías</span></Link>
-			<Link to="/perfil"><i><RiAccountCircleLine /></i><span>Perfil</span></Link>
-			<Link to="/ingresar"><i><RiLogoutBoxRLine /></i><span>Cerrar sesión</span></Link>
+					<Link to="/inicio"><ButtonStyle><RiHome2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Inicio</Phrase></Link>
+					<Link to="/agenda"><ButtonStyle><RiCalendar2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Agenda</Phrase></Link>
+					<Link to="/categorias"><ButtonStyle><RiLayout2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Categorías</Phrase></Link>
+					<Link to="/perfil"><ButtonStyle><RiAccountCircleLine style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Perfil</Phrase></Link>
+					<Link to="/ingresar"><ButtonStyle><RiLogoutBoxRLine style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Cerrar sesión</Phrase></Link>
 		</nav>
 		<Outlet />
 		<LogoContainer><Logo src={icon}></Logo></LogoContainer>
