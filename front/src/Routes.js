@@ -26,7 +26,8 @@ import Teatro from './pages/categories/Teatro'
 
 const createRoutes = () => (
 	<>
-	  <Favicon url={icon}></Favicon>
+	<Favicon url={icon}></Favicon>
+	<React.StrictMode>
 	  <BrowserRouter>
 		<Routes>
 		<Route index element={<Landpage />} />
@@ -51,6 +52,7 @@ const createRoutes = () => (
 		<Route path='*' element={<ErrorPage />} />
 		</Routes>
 	  </BrowserRouter>
+	</React.StrictMode>
 	</>
   );
 
