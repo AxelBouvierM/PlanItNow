@@ -117,7 +117,7 @@ function Slides() {
 								alt={item.title} key={item.image.toString()}
 								onClick={() => { setRedirectTo(item.title); setRedirect(true) }} />
 						</CardTop>
-						<CardTitle key={item.title.toString()}></CardTitle>
+						<CardTitle key={item.title.toString()}>{item.title}</CardTitle>
 					</>
 				))}
 			</Slider>
