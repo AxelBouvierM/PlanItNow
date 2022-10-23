@@ -7,8 +7,6 @@
 }
 
 :root {
-	--mainColor: #29335c;
-	--mainColorLight: #495998;
 	--secondaryColor: #c62bdb;
 	--textColor: #fafafa;
 }
@@ -25,15 +23,6 @@ header {
 	color: var(--textColor);
 	top: 0;
 	width: fit-content;
-}
-
-nav a {
-	width: fit-content;
-	margin: 0 0 0 2em;
-	color: var(--textColor);
-	text-decoration: none;
-	font-family: 'Fira Sans', sans-serif;
-	transition: 0.2s ease-in-out;
 }
 
 header .nav-btn {
@@ -80,7 +69,7 @@ nav .nav-close-btn {
 	right: 2rem;
 }
 
-nav a span {
+nav button span {
 	text-transform: uppercase;
 	font-size: 1.5rem;
 }

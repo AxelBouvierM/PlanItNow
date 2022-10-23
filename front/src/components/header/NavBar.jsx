@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { useRef } from 'react';
-import { Outlet, Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { Fade as Hamburger } from 'hamburger-react'
 
 import icon from '../../images/pinLogoEstirado.png'
-import { IconContext } from 'react-icons';
 import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiLogoutBoxRLine, RiLayout2Line } from 'react-icons/ri';
 
 import '../../styles/navigation.css';
@@ -27,19 +26,22 @@ const Logo = styled.img`
 	}
 `;
 
-const ButtonStyle = styled.a`
+const ButtonStyle = styled.button`
+	width: fit-content;
   display: inline-block;
-  margin: 0 1em 0 0;
+  margin: 0 1.5em;
   padding:0.35em 1.2em;
-  border:0.1em solid #FFFFFF;
-  border-radius: 20px;
+  border: none;
+  border-bottom: 0.1em solid #FFFFFF;
   box-sizing: border-box;
   text-decoration:none;
   font-family:'Roboto',sans-serif;
   font-weight:300;
   font-size: 1.2em;
   color:#FFFFFF;
-  transition: all 0.2s;
+  transition: all 0.3s;
+  background-color: transparent;
+  cursor: pointer;
   &:hover {
     color:#000000;
     background-color: #fafafa;
@@ -48,16 +50,23 @@ const ButtonStyle = styled.a`
 
 const Phrase = styled.p`
 	display: inline-block;
-	transition: 0.2s ease-in-out;
+	transition: 0.3s ease-in-out;
+	color: #fafafa;
+	cursor: pointer;
 	&:hover {
 		transform:translateX(1em);
 		transition: 0.2s ease-in-out;
-
+		color: #fafafa;
+		font-weight: 1000;
 	}
 `;
 
 export function NavBar() {
 	const [openedNavbar, setOpenedNavbar] = useState(true);
+	const [cookie, unsetCookie] = useState(false);
+	const [redirect, setRedirect] = useState(false);
+
+	const navigate = useNavigate();
 	const navRef = useRef();
 
 	const showNavBar = () => {
@@ -69,17 +78,32 @@ export function NavBar() {
 			document.body.style.overflow = 'unset';
 		}
 	}
+
+	useEffect(() => {
+		if (cookie) {
+			axios.get('/logout')
+				.then((res) => {
+					if (res.data === 'status: Ok') setRedirect(true);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, []);
+
+	if (redirect) navigate('/ingresar');
+
   	return (
 	<header>
 		<button type="button" id="openButton" className='nav-btn' onClick={showNavBar}>
 			<Hamburger />
 		</button>
 		<nav ref={navRef}>
-					<Link to="/inicio"><ButtonStyle><RiHome2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Inicio</Phrase></Link>
-					<Link to="/agenda"><ButtonStyle><RiCalendar2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Agenda</Phrase></Link>
-					<Link to="/categorias"><ButtonStyle><RiLayout2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Categorías</Phrase></Link>
-					<Link to="/perfil"><ButtonStyle><RiAccountCircleLine style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Perfil</Phrase></Link>
-					<Link to="/ingresar"><ButtonStyle><RiLogoutBoxRLine style={{ verticalAlign: 'middle' }} /></ButtonStyle><Phrase className='phrase'>Cerrar sesión</Phrase></Link>
+			<Link to="/inicio"><Phrase><ButtonStyle><RiHome2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Inicio</Phrase></Link>
+			<Link to="/agenda"><Phrase><ButtonStyle><RiCalendar2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Agenda</Phrase></Link>
+			<Link to="/categorias"><Phrase><ButtonStyle><RiLayout2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Categorías</Phrase></Link>
+			<Link to="/perfil"><Phrase><ButtonStyle><RiAccountCircleLine style={{ verticalAlign: 'middle' }} /></ButtonStyle>Perfil</Phrase></Link>
+			<Phrase><ButtonStyle onClick={() => unsetCookie(true)}><RiLogoutBoxRLine style={{ verticalAlign: 'middle' }} /></ButtonStyle>Cerrar sesión</Phrase>
 		</nav>
 		<Outlet />
 		<LogoContainer><Logo src={icon}></Logo></LogoContainer>

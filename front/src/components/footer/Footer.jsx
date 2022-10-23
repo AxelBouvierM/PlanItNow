@@ -97,7 +97,7 @@ export function Footer() {
 					</IconContext.Provider>
 				</SocialIcon>
 			</SocialButtons2>
-			<a href='https://www.facebook.com/'>
+			<a href='https://www.facebook.com/' target="_blank" rel="noreferrer">
 				<SocialButtons type='button' >
 					<SocialIcon>
 						<IconContext.Provider value={{
@@ -111,7 +111,7 @@ export function Footer() {
 					</SocialIcon>
 				</SocialButtons>
 			</a>
-			<a href='https://www.instagram.com/'>
+			<a href='https://www.instagram.com/planitnow_' target="_blank" rel="noreferrer">
 				<SocialButtons type='button'>
 					<SocialIcon>
 						<IconContext.Provider value={{
