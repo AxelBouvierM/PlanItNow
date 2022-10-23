@@ -120,6 +120,8 @@ def loginRegister():
             msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
             msg = 'Please complete all the data'
+        elif len(username) < 6:
+            msg = 'Invalid user'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
 
@@ -149,9 +151,6 @@ def loginLogout():
     resp.delete_cookie("cookie")
     return resp
 
-@app.route('/favicon.ico', methods=['GET'])
-def favicon():
-    return jsonify(response={"status": "Ok"})
 
 @app.route('/newPWD', methods=['POST'])
 def newPWD():
@@ -282,7 +281,26 @@ def calendar():
     else:
         return ("User not logged in")
 
+@app.route('/user', methods=['GET'])
+def user():
+    app.config['MYSQL_DB'] = 'login'
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+
+    if existCookies:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE userID = %s', (existCookies.get('UserID'),))
+        scheduleAll = cursor.fetchone()
+
+        if scheduleAll:
+            dic = {"user": scheduleAll}
+            return dic
+        else:
+            return jsonify(response={"status": "Not Found"})
+    else:
+        return jsonify(response={"status": "Not Found"})
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
