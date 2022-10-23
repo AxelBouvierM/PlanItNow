@@ -44,11 +44,11 @@ const ButtonsContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-left: auto;
+  gap: 1em;
 `;
 
-const AccountButton = styled.a`
+const AccountButton = styled.button`
   display:inline-block;
-  margin: 0 1em;
   padding:0.35em 1.2em;
   border:0.1em solid #FFFFFF;
   border-radius:0.12em;
@@ -59,6 +59,9 @@ const AccountButton = styled.a`
   color:#FFFFFF;
   text-align:center;
   transition: all 0.2s;
+  background-color: transparent;
+  font-size: 0.9em;
+  cursor: pointer;
   &:hover {
     color:#000000;
     background-color: #fafafa;
@@ -71,11 +74,6 @@ const AccountButton = styled.a`
 }
 `;
 
-const ButtonTitle = styled.span`
-	z-index: 1;
-  position: relative;
-`;
-
 function LandPageHeader() {
   return (
     <HeaderContainer>
@@ -83,11 +81,8 @@ function LandPageHeader() {
         <Logo src={testLogo} />
       </LogoContainer>
       <ButtonsContainer>
-        <Link to="/registrarse">
-          <AccountButton type="button"><ButtonTitle>Registrarse</ButtonTitle></AccountButton>
-        </Link>
         <Link to="/ingresar">
-          <AccountButton type="button"><ButtonTitle>Iniciar sesión</ButtonTitle></AccountButton>
+          <AccountButton type="button">Iniciar sesión</AccountButton>
         </Link>
         <Outlet />
       </ButtonsContainer>

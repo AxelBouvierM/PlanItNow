@@ -6,11 +6,12 @@ import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { IconContext } from "react-icons";
 import { RiArrowRightLine, RiArrowLeftLine, RiErrorWarningLine } from 'react-icons/ri'
 
-import montaña2 from '../images/montaña2.jpg'
+import loginBg from '../images/loginBg.jpg'
+import logo from '../images/pinLogoEstirado.png'
 
 const Background = styled.div`
   border: 1px solid #000; 
-  background-image: url(${montaña2});
+  background-image: url(${loginBg});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -18,27 +19,81 @@ const Background = styled.div`
   height: 100vh;
 `;
 
-const GoBackButton = styled.button`
-  width: 6em;
-  height: 2.5em;
-  display: flex;
-  align-items: center;
-  position: absolute;
-  margin-top: 2em;
-  margin-left: 2em;
-  gap: 0.5em;
-  border: none;
-  border-bottom: solid 3px;
-  border-color: #fafafa;
+const LogoContainer = styled.div`
+	display: flex;
+	position: fixed;
+  bottom: 0;
+  opacity: 0.7;
+	margin: 3rem 3rem;;
+`;
+
+const Logo = styled.img`
+	max-width: 10em;
+	max-height: 10em;
+	height: fit-content;
+	opacity: 1;
+	transition: 0.6s ease-in-out;
+	&:hover {
+		transform: translateX(1em);
+		transition: 0.6s ease-in-out;
+	}
+`;
+
+const Text = styled.p`
+	display: flex;
+	position: fixed;
+  width: 45%;
+  bottom: 8%;
   color: #fafafa;
+  font-size: 2.5em;
+	margin: 3rem 3rem;;
+`;
+
+const GoBackContainer = styled.a`
+  display: flex;
+	position: absolute;
+	width: 100vw;
+  padding: 3rem;
+`;
+
+const GoBackButton = styled.a`
+  display:inline-block;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#FFFFFF;
+  text-align:center;
+  transition: all 0.2s;
   background-color: transparent;
-  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.20);
-  backdrop-filter: blur(15px);
-  justify-content: center;
+  font-size: 0.9em;
   cursor: pointer;
   &:hover {
-	background-color: royalblue;
-  transition: 0.3s ease-in-out;
+    color:#000000;
+    background-color: #fafafa;
+  }
+`;
+
+const ButtonStyle = styled.button`
+  display:inline-block;
+  margin: 1em 1em;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:350;
+  color:#FFFFFF;
+  background-color: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    color:#000000;
+    background-color: #fafafa;
   }
 `;
 
@@ -115,60 +170,39 @@ const DataContainer = styled.div`
   gap: 2em;
 `;
 
-const ButtonStyle = styled.button`
-  width: 2.5em;
-  height: 2.5em;
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background-color: transparent;
-  border-radius: 20px;
-  border: none;
-  border-color: #fafafa;
-  color: white;
-  font-size: 16px;
-  vertical-align: middle;
-  margin-right: 1.5em;
-  cursor: pointer;
-  &:hover {
-	background-color: royalblue;
-  transition: 0.3s ease-in-out;
-  }
-`;
-
 const Icon = styled.i`
   vertical-align: middle;
-  margin: 0 0.4em;
+  margin: 0.4em;
 `;
 
 const LoginText = styled.a`
-  color: #fafafa;
+  color: #D8D8D8;
   display: inline-block;
   vertical-align: middle;
   font-size: 0.8em;
-  &:hover {
-	color: royalblue;
   transition: 0.3s ease-in-out;
+  &:hover {
+	color: white;
+  transition: 0.5s ease-in-out;
   }
 `;
 
 const ErrorWrapper = styled.div`
-  width: 45%;
+  width: 50%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
   margin-bottom: 2em;
-  background-color: rgba(230,0,0,0.8);
-
+  background-color: rgba(230,0,0,0.5);
+  text-align: center;
 `;
 
 const ErrorMessage = styled.p`
-  font-size: 1em;
-  font-weight: 400;
+  font-size: 0.9em;
+  font-weight: 350;
   color: white;
+  padding: 0.3em;
   text-transform: uppercase;
 `;
 
@@ -208,10 +242,14 @@ function Login() {
 
 	return (
 		<Background>
-				<Link to="/">
-					<GoBackButton type="button"><RiArrowLeftLine />Volver</GoBackButton>
-				</Link>
-				<Outlet />
+      <GoBackContainer>
+        <Link to="/" className='linkStyle'>
+          <GoBackButton type="button" className='button-hover'><Icon><RiArrowLeftLine style={{ verticalAlign: 'middle', marginBottom: '0.2em' }} /></Icon>Volver</GoBackButton>
+        </Link>
+        <Outlet />
+      </GoBackContainer>
+      <Text>¡Que bueno verte aquí!</Text>
+      <LogoContainer><Logo src={logo}></Logo></LogoContainer>
 			<LoginContainer>
 				<FormContainer onSubmit={SendFormInput}>
           <TextSpace>INICIAR SESIÓN</TextSpace>
@@ -224,7 +262,7 @@ function Login() {
 							<Input
 								type="text"
 								className="loginInput"
-								placeholder="Usuario"
+								placeholder="Usuario / Email"
 								value={username}
 								onChange={(event) => setUser(event.target.value)}
 								required>
@@ -242,17 +280,16 @@ function Login() {
 						</InputContainer>
             <DataContainer>
               <ButtonStyle type="submit">
-                <Icon>
+               <Icon>
                   <IconContext.Provider value={{ 
                       style: { verticalAlign: 'middle' }, 
-                      color: '#fafafa', 
                       className: 'enter', 
-                      size: '2em' }}>
+                      size: '1.4em' }}>
                     <RiArrowRightLine />
                   </IconContext.Provider>
                 </Icon>
               </ButtonStyle>
-              <Link to="/register">
+              <Link to="/registrarse">
                 <LoginText>Crear cuenta nueva</LoginText>
               </Link>
               <Outlet />
