@@ -20,19 +20,12 @@ const Background = styled.div`
   padding-bottom: 3em;
 `;
 
-const MobileLoginContainer = styled.div`
-  display: flex;
-  position: relative;
-  width: 80%;
-  height: fit-content;
-  background-color: transparent;
-  align-items: center;
-  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.20);
-  backdrop-filter: blur(15px);
-  justify-content: center;
-  border-radius: 20px;
-  margin: auto;
-  padding: 1em;
+const ContentContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
 `;
 
 const AppLogo = styled.img`
@@ -71,23 +64,31 @@ const GoBackButton = styled.a`
   }
 `;
 
-const ButtonStyle = styled.button`
-  display:inline-block;
-  margin: 1em 1em;
-  padding:0.35em 1.2em;
-  border:0.1em solid #FFFFFF;
-  border-radius:0.12em;
-  box-sizing: border-box;
-  text-decoration:none;
-  font-family:'Roboto',sans-serif;
-  font-weight:350;
-  color:#FFFFFF;
+const MobileLoginContainer = styled.div`
+  display: flex;
+  position: relative;
+  width: 85%;
+  max-height: 85vh;
+  height: fit-content;
   background-color: transparent;
-  transition: all 0.2s;
-  cursor: pointer;
+  align-items: center;
+  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.20);
+  backdrop-filter: blur(15px);
+  justify-content: center;
+  border-radius: 20px;
+  margin: auto;
+  padding: 1em;
+`;
+
+const Title = styled.a`
+  color: #fafafa;
+  display: block;
+  font-size: 2em;
+  transition: 0.3s ease-in-out;
+  margin-bottom: 1em;
   &:hover {
-    color:#000000;
-    background-color: #fafafa;
+	color: white;
+  transition: 0.5s ease-in-out;
   }
 `;
 
@@ -141,6 +142,26 @@ const DataContainer = styled.div`
   gap: 2em;
 `;
 
+const ButtonStyle = styled.button`
+  display:inline-block;
+  margin: 1em 1em;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:350;
+  color:#FFFFFF;
+  background-color: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    color:#000000;
+    background-color: #fafafa;
+  }
+`;
+
 const Icon = styled.i`
   vertical-align: middle;
   margin: 0.4em;
@@ -152,18 +173,6 @@ const LoginText = styled.a`
   vertical-align: middle;
   font-size: 0.8em;
   transition: 0.3s ease-in-out;
-  &:hover {
-	color: white;
-  transition: 0.5s ease-in-out;
-  }
-`;
-
-const Title = styled.a`
-  color: #fafafa;
-  display: block;
-  font-size: 2em;
-  transition: 0.3s ease-in-out;
-  margin-bottom: 1em;
   &:hover {
 	color: white;
   transition: 0.5s ease-in-out;
@@ -240,57 +249,59 @@ function MobileLogin() {
 			  </Link>
 			  <Outlet />
 		  </GoBackContainer>
-		  <MobileLoginContainer>
-			  <FormContainer onSubmit={SendFormInput}>
-				  <AppLogo src={appLogo} />
-				  <Title>INICIAR SESIÓN</Title>
-				  {error && (
-					  <ErrorWrapper>
-						  <ErrorMessage><Icon><RiErrorWarningLine /></Icon>Usuario y/o contraseña incorrecta</ErrorMessage>
-					  </ErrorWrapper>
-				  )}
-				  <InputContainer>
-					  <Input
-						  key="user"
-						  type="text"
-						  className="loginInput"
-						  placeholder="Usuario / Email"
-						  value={username}
-						  onChange={(event) => setUser(event.target.value)}
-						  required>
-					  </Input>
-				  </InputContainer>
-				  <InputContainer>
-					  <Input
-						  key="password"
-						  autoFocus="autoFocus"
-						  type="password"
-						  className="loginInput"
-						  placeholder="Contraseña"
-						  value={password}
-						  onChange={(event) => setPass(event.target.value)}
-						  required>
-					  </Input>
-				  </InputContainer>
-				  <DataContainer>
-					  <ButtonStyle type="submit">
-						  <Icon>
-							  <IconContext.Provider value={{
-								  style: { verticalAlign: 'middle' },
-								  className: 'enter',
-								  size: '1.4em'
-							  }}>
-								  <RiArrowRightLine />
-							  </IconContext.Provider>
-						  </Icon>
-					  </ButtonStyle>
-				  </DataContainer>
-				  <Link to="/registrarse">
-					  <LoginText>Crear cuenta nueva</LoginText>
-				  </Link>
-				  <Outlet />
-			  </FormContainer>
-		  </MobileLoginContainer>
+        <ContentContainer>
+        <MobileLoginContainer>
+          <FormContainer onSubmit={SendFormInput}>
+            <AppLogo src={appLogo} />
+            <Title>INICIAR SESIÓN</Title>
+            {error && (
+              <ErrorWrapper>
+                <ErrorMessage><Icon><RiErrorWarningLine /></Icon>Usuario y/o contraseña incorrecta</ErrorMessage>
+              </ErrorWrapper>
+            )}
+            <InputContainer>
+              <Input
+                key="user"
+                type="text"
+                className="loginInput"
+                placeholder="Usuario / Email"
+                value={username}
+                onChange={(event) => setUser(event.target.value)}
+                required>
+              </Input>
+            </InputContainer>
+            <InputContainer>
+              <Input
+                key="password"
+                autoFocus="autoFocus"
+                type="password"
+                className="loginInput"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(event) => setPass(event.target.value)}
+                required>
+              </Input>
+            </InputContainer>
+            <DataContainer>
+              <ButtonStyle type="submit">
+                <Icon>
+                  <IconContext.Provider value={{
+                    style: { verticalAlign: 'middle' },
+                    className: 'enter',
+                    size: '1.4em'
+                  }}>
+                    <RiArrowRightLine />
+                  </IconContext.Provider>
+                </Icon>
+              </ButtonStyle>
+            </DataContainer>
+            <Link to="/registrarse">
+              <LoginText>Crear cuenta nueva</LoginText>
+            </Link>
+            <Outlet />
+          </FormContainer>
+        </MobileLoginContainer>
+        </ContentContainer>
 	  </Background>
   	)}
 export default MobileLogin

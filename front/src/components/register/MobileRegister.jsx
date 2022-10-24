@@ -20,24 +20,12 @@ const Background = styled.div`
   padding-bottom: 3em;
 `;
 
-const LogoContainer = styled.div`
-	display: flex;
-	position: fixed;
-  bottom: 0;
-  opacity: 0.7;
-	margin: 3rem 3rem;
-`;
-
-const Logo = styled.img`
-	max-width: 10em;
-	max-height: 10em;
-	height: fit-content;
-	opacity: 1;
-	transition: 0.6s ease-in-out;
-	&:hover {
-		transform: translateX(1em);
-		transition: 0.6s ease-in-out;
-	}
+const ContentContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
 `;
 
 const AppLogo = styled.img`
@@ -46,6 +34,13 @@ const AppLogo = styled.img`
 	height: fit-content;
 	opacity: 1;
 	transition: 0.6s ease-in-out;
+`;
+
+const GoBackContainer = styled.a`
+  display: flex;
+	position: relative;
+	width: 100vw;
+  padding: 3em 3em 0 3em;
 `;
 
 const GoBackButton = styled.a`
@@ -69,31 +64,20 @@ const GoBackButton = styled.a`
   }
 `;
 
-
-const GoBackContainer = styled.a`
-  display: flex;
-	position: relative;
-	width: 100vw;
-  padding: 3rem 3rem 1em 3rem;
-`;
-
 const MobileRegisterContainer = styled.div`
   display: flex;
   position: relative;
-  width: 90%;
+  width: 85%;
   max-height: 85vh;
   height: fit-content;
   background-color: transparent;
   align-items: center;
   box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.20);
   backdrop-filter: blur(15px);
-  left: 0; 
-  right: 0;
-  top: 0;
-  bottom: 0;
   border-radius: 20px;
-  margin: auto;
   padding: 1em;
+  margin: auto;
+  justify-content: center;
 `;
 
 const Title = styled.a`
@@ -117,7 +101,7 @@ const FormContainer = styled.form`
 `;
 
 const InputContainer = styled.div`
-  width: 60%;
+  width: 90%;
   display: block;
   position: relative;
   align-items: center;
@@ -309,8 +293,7 @@ function Register() {
 
     if (res.data.response.status === 'Ok') {
       setCorrectRegister(true);
-      const timer = setTimeout(() => setRedirect(true), 1500)
-      clearTimeout(timer);
+      setTimeout(() => setRedirect(true), 1500)
     } else if (res.data.response.status === 'User already exists') {
       setError('Este nombre de usuario ya esta en uso');
     } else if (res.data.response.status === 'Mail already exists') {
@@ -335,70 +318,72 @@ function Register() {
         </Link>
         <Outlet />
       </GoBackContainer>
-      <MobileRegisterContainer>
-        <FormContainer onSubmit={SendFormInput}>
-          <AppLogo src={appLogo} />
-          <Title>REGÍSTRATE</Title>
-          {Error && (
-            <ErrorWrapper>
-              <ErrorMessage><Icon><RiErrorWarningLine /></Icon>{Error}</ErrorMessage>
-            </ErrorWrapper>
-          )}
-          <InputContainer>
-            <Input
-              type="text"
-              placeholder="Usuario"
-              value={username}
-              onChange={(event) => setUser(event.target.value)}
-              required>
-            </Input>
-          </InputContainer>
-          <InputContainer>
-            <Input
-              type="text"
-              placeholder="Email"
-              value={mail}
-              onChange={(event) => setMail(event.target.value)}
-              required>
-            </Input>
-          </InputContainer>
-          <InputContainer>
-            <Input
-              type="password"
-              placeholder="Contraseña"
-              onChange={(event) => {
-                checkPassRequirements(event.target.value)
-                if (nicePassword) setPass(event.target.value)
-              }}
-              required>
-            </Input>
-          </InputContainer>
-          {passError && !correctRegister && (<PassReq><Icon><RiErrorWarningLine /></Icon>{passError}</PassReq>)}
-          {correctRegister && <Registered><Icon><RiCheckLine /></Icon>Te has registrado correctamente!</Registered>}
-          <DataContainer>
-            <ButtonStyle type="submit">
-              <Icon>
-                <IconContext.Provider value={{
-                  style: { verticalAlign: 'middle' },
-                  className: 'enter',
-                  size: '1.4em'
-                }}>
-                  <RiArrowRightLine />
-                </IconContext.Provider>
-              </Icon>
-            </ButtonStyle>
-            {isLoading && (
-              <LoadingWrapper>
-                <MoonLoader loading color="white" size={20} />
-              </LoadingWrapper>
+      <ContentContainer>
+        <MobileRegisterContainer>
+          <FormContainer onSubmit={SendFormInput}>
+            <AppLogo src={appLogo} />
+            <Title>REGÍSTRATE</Title>
+            {Error && (
+              <ErrorWrapper>
+                <ErrorMessage><Icon><RiErrorWarningLine /></Icon>{Error}</ErrorMessage>
+              </ErrorWrapper>
             )}
-          </DataContainer>
-          <Link to="/ingresar">
-            <LoginText>¿Ya tienes una cuenta?</LoginText>
-          </Link>
-          <Outlet />
-        </FormContainer>
-      </MobileRegisterContainer>
+            <InputContainer>
+              <Input
+                type="text"
+                placeholder="Usuario"
+                value={username}
+                onChange={(event) => setUser(event.target.value)}
+                required>
+              </Input>
+            </InputContainer>
+            <InputContainer>
+              <Input
+                type="text"
+                placeholder="Email"
+                value={mail}
+                onChange={(event) => setMail(event.target.value)}
+                required>
+              </Input>
+            </InputContainer>
+            <InputContainer>
+              <Input
+                type="password"
+                placeholder="Contraseña"
+                onChange={(event) => {
+                  checkPassRequirements(event.target.value)
+                  if (nicePassword) setPass(event.target.value)
+                }}
+                required>
+              </Input>
+            </InputContainer>
+            {passError && !correctRegister && (<PassReq><Icon><RiErrorWarningLine /></Icon>{passError}</PassReq>)}
+            {correctRegister && <Registered><Icon><RiCheckLine /></Icon>Te has registrado correctamente!</Registered>}
+            <DataContainer>
+              <ButtonStyle type="submit">
+                <Icon>
+                  <IconContext.Provider value={{
+                    style: { verticalAlign: 'middle' },
+                    className: 'enter',
+                    size: '1.4em'
+                  }}>
+                    <RiArrowRightLine />
+                  </IconContext.Provider>
+                </Icon>
+              </ButtonStyle>
+              {isLoading && (
+                <LoadingWrapper>
+                  <MoonLoader loading color="white" size={20} />
+                </LoadingWrapper>
+              )}
+            </DataContainer>
+            <Link to="/ingresar">
+              <LoginText>¿Ya tienes una cuenta?</LoginText>
+            </Link>
+            <Outlet />
+          </FormContainer>
+        </MobileRegisterContainer>
+      </ContentContainer>
     </Background>
   );
 }
