@@ -5,40 +5,43 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useClickOutside } from 'react-click-outside-hook';
 import { useNavigate } from 'react-router-dom';
 
-// lens, input and x container
-const SearchInputContainer = styled.div`
-  width: 100%;
-  min-height: 4em;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 2px 25px 10px 25px;
-`;
-
 // before click searchbar container
 const SearchBarContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   width: 34em;
   height: 3.8em;
-  background-color: transparent;
+  backdrop-filter: blur(15px);
+  border: 3px solid #fafafa;
   border-radius: 40px;
-  border: solid;
-  border-color: #fafafa;
-  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.20);
-  backdrop-filter: blur(10px);
-  margin: 0 1em 0 1em;
+  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.14);
+  @media all and (max-width:600px) {
+    	& {
+			width: fit-content;
+            margin: 0 1em;
+		}
+  	}
 `;
 
 const SearchIcon = styled.span`
   color: #bebebe;
   font-size: 28px;
-  margin-left: 10px;
-  margin-top: 10px;
+  margin: auto;
   vertical-align: middle;
 `;
+
+const SearchInputContainer = styled.div`
+  width: 100%;
+  min-height: fit-content;
+  margin: 0.5em 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 1em;
+`;
+
 const SearchInput = styled.input`
-  width: 90%;
+  width: 100%;
   height: 100%;
   outline: none;
   border: none;
@@ -47,8 +50,8 @@ const SearchInput = styled.input`
   font-weight: 500;
   border-radius: 6px;
   background-color: transparent;
-  margin-top: -95px;
-  margin-left: 20px;
+  padding: 0 1em;
+  margin: auto;
   &:focus {
     outline: none;
     &::placeholder {
@@ -61,64 +64,105 @@ const SearchInput = styled.input`
     color: #bebebe;
     transition: all 250ms ease-in-out;
   }
+  @media all and (max-width:600px) and (min-width:301px){
+    	& {
+            font-size: 1em;
+		}
+  	}
+    @media all and (max-width:300px) {
+    	& {
+            font-size: 0.8em;
+		}
+  	}
 `;
 
 const containerVariants = {
     expanded: {
-        height: "25em",
         width: "calc(34em + 6em)",
+        height: "24em",
     },
     collapsed: {
         height: "3.8em",
     },
 };
+
 const CloseIcon = styled(motion.span)`
   color: #bebebe;
-  font-size: 2em;
+  font-size: 23px;
   vertical-align: middle;
-  margin-top: -95px;
   transition: all 400ms ease-in-out;
-  z-index: 3;
   cursor: pointer;
+  &:hover {
+    color: #dfdfdf;
+  }
 `;
 const SearchContent = styled.div`
-  position:absolute;
-  margin-top: 0.5em;
   width: 100%;
   height: 100%;
   display: flex;
-  padding: 25px 25px;
   flex-direction: column;
-  font-size: 23px;
-  color: #bebebe;
-  //backdrop-filter: blur(10px);
+  overflow-y: auto;
+  color: white;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const DataItem = styled.a`
     width: 100%;
-    height: 50px;
+    min-height: 4.5em;
     display: flex;
+    border-bottom: 1px solid #d8d8d852;
     align-items: center;
-    color:white;
+    padding: 0 2em;
     cursor: pointer;
+    transition: 1s ease-in-out;
+    &:hover {
+    transition: 1s ease-in-out;
+    background-color: white;
+    }
+    &:hover .text {
+        transition: 0.8s ease-in-out;
+        transform: translateX(20px);
+        font-size: 1.1em;
+        color: #000;
+    }
 `
 
 const Resultado = styled.p`
-  &:hover {
-    background-color: lightgrey;
-    width: 100%;
-  }
-`
-const Button = styled.button`
-  background-color: transparent;  
-  padding: 10px 15px;
-  border-radius: 10px;
-  outline: 0;
-  margin: auto;
+    transition: 0.8s ease-in-out;
+`;
+
+const Button = styled(motion.button)`
+  display: flex;
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  padding: 0.35em 3em;
+  border: none;
+  border-bottom: 2px solid #FFFFFF;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto',sans-serif;
+  font-weight: 300;
+  color: #FFFFFF;
+  text-align:center;
+  transition: all 0.2s;
+  background-color: transparent;
+  font-size: 0.9em;
   cursor: pointer;
-  font-size: 20px;
-  border-color: white;
-  color: #bebebe;
+  &:hover {
+    color:#000000;
+    background-color: #fafafa;
+  }
 `;
 
 const containerTransition = { type: "spring", damping: 22, stiffness: 100 };
@@ -175,10 +219,10 @@ export function SearchBar({ placeholder, data }) {
             transition={containerTransition}
             ref={parentRef}
         >
+        <SearchInputContainer>
             <SearchIcon>
                 <IoSearch />
             </SearchIcon>
-            <SearchInputContainer>
                 <SearchInput
                     value={wordEntered}
                     ref={inputRef}
@@ -217,8 +261,9 @@ export function SearchBar({ placeholder, data }) {
                             {filteredData.map((value, key) => {
                                 return (
                                     <DataItem onClick={() => { navigate(value.route); }}>
-                                        <Resultado>{value.categories} </Resultado>
+                                        <Resultado className="text">{value.categories}</Resultado>
                                     </DataItem>
+                                    
                                 );
                             })}
                         </>
