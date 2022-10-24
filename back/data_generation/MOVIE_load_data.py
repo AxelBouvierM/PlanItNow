@@ -105,7 +105,7 @@ while movie_elements == []:  # Loop to try execute until we got some movie data
             'description': description,
             }
         for element in elements:
-            re.sub(' +', ' ', element)  # Regular expression to replace more than one space
+            elements[element] = re.sub(' +', ' ', elements[element])  # Regular expression to replace more than one space.
         """Create the query to insert data into the database"""
         insert = """INSERT INTO movie (movieID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place'], elements['date'], elements['price'], elements['description'])
