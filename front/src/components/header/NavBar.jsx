@@ -119,7 +119,6 @@ export function NavBar() {
 		</button>
 		<nav ref={navRef}>
 			<Phrase><Link to="/inicio" style={{ color: '#fafafa', textDecoration: 'none' }}><ButtonStyle><RiHome2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Inicio</Link></Phrase>
-			<Phrase><Link to="/agenda" style={{ color: '#fafafa', textDecoration: 'none' }}><ButtonStyle><RiCalendar2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Agenda</Link></Phrase>
 			<Phrase><Link to="/categorias" style={{ color: '#fafafa', textDecoration: 'none' }}><ButtonStyle><RiLayout2Line style={{ verticalAlign: 'middle' }} /></ButtonStyle>Categorías</Link></Phrase>
 			<Phrase><Link to="/perfil" style={{ color: '#fafafa', textDecoration:'none' }}><ButtonStyle><RiAccountCircleLine style={{ verticalAlign: 'middle' }} /></ButtonStyle>Perfil</Link></Phrase>
 			<LogOutButtonStyle onClick={() => unsetCookie(true)}><RiLogoutBoxRLine style={{ verticalAlign: 'middle', marginRight: '1em' }} />Cerrar sesión</LogOutButtonStyle>

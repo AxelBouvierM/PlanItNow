@@ -6,7 +6,6 @@ import icon from './images/favicon.ico';
 import Landpage from './pages/Landpage'
 import Home from './pages/Inicio'
 import ErrorPage from './pages/NoPage'
-import Agenda from './pages/Agenda'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -34,7 +33,6 @@ const createRoutes = () => (
 		<Route path='/ingresar' element={<Login />} />
 		<Route path='/registrarse' element={<Register />} />
 		<Route path='/inicio' element={<Home />} />
-		<Route path='/agenda' element={<Agenda />} />
 		<Route path='/categorias' element={<Categories />} />
 		<Route path='/categorias/musica' element={<Musica />} />
 		<Route path='/categorias/cafeteria' element={<Cafeteria />} />

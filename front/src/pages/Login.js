@@ -213,6 +213,14 @@ function Login() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
+  axios.get('/login/check')
+    .then((res) => {
+      if (res.data.response.status === 'Ok') navigate('/inicio');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
 	function SendFormInput(event) {
 		event.preventDefault()
 		const headers = {
