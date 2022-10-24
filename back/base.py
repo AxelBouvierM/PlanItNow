@@ -96,6 +96,7 @@ def loginRegister():
     email = request.json.get('mail')
     username = request.json.get('username')
     password = request.json.get('password')
+    avatar = request.json.get('avatar')
     msg = ''
     # Chequeo que los tres campos no esten vacios
     if username is not None and password is not None and email is not None:
@@ -132,7 +133,7 @@ def loginRegister():
             salt = bcrypt.gensalt()
             hashPWD = bcrypt.hashpw(pwd, salt)
             # Almacenando datos de usuario en DB
-            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', (UserID, username, hashPWD, email,))
+            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s, %s)', (UserID, username, hashPWD, email, avatar,))
             # Guardando los cambios
             mysql.connection.commit()
             msg = 'Ok'
