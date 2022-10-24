@@ -2,7 +2,7 @@ import { React } from 'react';
 import styled from "styled-components";
 
 import { IconContext } from "react-icons";
-import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine, RiCalendarCheckLine, RiInformationLine, RiText } from 'react-icons/ri';
+import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine, RiDoubleQuotesL, RiSendPlaneLine } from 'react-icons/ri';
 
 const ModalContainer = styled.div`
   display: block;
@@ -109,12 +109,13 @@ const Buttons = styled.div`
 const MoreInfoButton = styled.a`
   display: flex;
   position: relative;
-  width: 50%;
+  width: 100%;
   align-items: center;
   justify-content: center;
   padding:0.35em 1.2em;
   border:0.1em solid #FFFFFF;
   border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   box-sizing: border-box;
   text-decoration:none;
   font-family:'Roboto',sans-serif;
@@ -126,30 +127,6 @@ const MoreInfoButton = styled.a`
   &:hover {
     color:#000;
     background-color: #fafafa;
-  }
-`;
-
-const AgendaButton = styled.a`
-  display: flex;
-  position: relative;
-  width: 50%;
-  align-items: center;
-  justify-content: center;
-  padding:0.35em 1.2em;
-  border:0.1em solid #FFFFFF;
-  border-bottom-right-radius: 20px;
-  box-sizing: border-box;
-  text-decoration:none;
-  font-family:'Roboto',sans-serif;
-  font-weight: 350;
-  color:#fafafa;
-  background-color: #5F326E;
-  transition: 0.2s ease-in-out;
-  cursor: pointer;
-  &:hover {
-    color:#000;
-    background-color: #fafafa;
-    transition: 0.2s ease-in-out;
   }
 `;
 
@@ -174,7 +151,7 @@ const Modal = ({ open, close, selected }) => {
           <Content>
             <EventContainer>
               <EventData>
-                <InfoText><Icon><RiText /></Icon>{selected.title}</InfoText>
+                <InfoText><Icon><RiDoubleQuotesL /></Icon>{selected.title}</InfoText>
                 <InfoText><Icon><RiCalendarTodoLine /></Icon>{selected.date}</InfoText>
                 <InfoText><Icon><RiMapPinLine /></Icon>{selected.place}</InfoText>
                 <InfoText><Icon><RiMoneyDollarCircleLine /></Icon>{selected.price}</InfoText>
@@ -183,8 +160,7 @@ const Modal = ({ open, close, selected }) => {
             </EventContainer>
           </Content>
           <Buttons>
-            <MoreInfoButton href={selected.link} target="_blank" rel="noreferrer"><Icon><RiInformationLine /></Icon>Más información</MoreInfoButton>
-              <AgendaButton><Icon><RiCalendarCheckLine /></Icon>Agendar</AgendaButton>
+          <MoreInfoButton href={selected.link} target="_blank" rel="noreferrer"><Icon><RiSendPlaneLine /></Icon>Ir al sitio web</MoreInfoButton>
           </Buttons>
         </ModalContainer>
     </>

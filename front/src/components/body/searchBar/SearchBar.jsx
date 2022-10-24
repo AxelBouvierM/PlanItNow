@@ -60,13 +60,12 @@ const SearchInput = styled.input`
   &::placeholder {
     color: #bebebe;
     transition: all 250ms ease-in-out;
-
   }
 `;
 
 const containerVariants = {
     expanded: {
-        height: "20em",
+        height: "25em",
         width: "calc(34em + 6em)",
     },
     collapsed: {
@@ -79,15 +78,16 @@ const CloseIcon = styled(motion.span)`
   vertical-align: middle;
   margin-top: -95px;
   transition: all 400ms ease-in-out;
+  z-index: 3;
   cursor: pointer;
 `;
 const SearchContent = styled.div`
   position:absolute;
-  margin-top: 2em;
+  margin-top: 0.5em;
   width: 100%;
   height: 100%;
   display: flex;
-  padding: 2px 25px;
+  padding: 25px 25px;
   flex-direction: column;
   font-size: 23px;
   color: #bebebe;
@@ -114,7 +114,6 @@ const Button = styled.button`
   padding: 10px 15px;
   border-radius: 10px;
   outline: 0;
-  text-transform: uppercase;
   margin: auto;
   cursor: pointer;
   font-size: 20px;
@@ -210,7 +209,7 @@ export function SearchBar({ placeholder, data }) {
                                 navigate("/categorias");
                             }}
                         >
-                            Categories
+                            Ver todas las categorias
                         </Button>
                     )}
                     {filteredData.length !== 0 && (
