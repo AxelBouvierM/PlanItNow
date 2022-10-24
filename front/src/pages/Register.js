@@ -246,7 +246,15 @@ function Register() {
   const [nicePassword, setNicePassword] = useState(false);
   const [correctRegister, setCorrectRegister] = useState(false);
   const navigate = useNavigate();
-
+  
+  axios.get('/login/check')
+    .then((res) => {
+      if (res.data.response.status === 'Ok') navigate('/inicio');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    
   function checkPassRequirements(string) {
     const intMatch = string.match(/\d+/g);
     const upperMatch = string.match(/[A-Z]/);
