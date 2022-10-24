@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-
-import { NavBar } from '../components/header/NavBar'
-import { SearchBar } from '../components/body/searchBar/SearchBar'
-import Slides from '../components/body/Carousel/Slides';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import rambla from '../images/rambla6.jpg'
-import Footer from '../components/footer/Footer';
-import { FaFileExcel } from 'react-icons/fa';
-
+import { NavBar } from '../components/header/NavBar'
+import { SearchBar } from '../components/body/searchBar/SearchBar'
+import { Footer } from '../components/footer/Footer';
+import { Slides } from '../components/body/carousel/HomeSlides';
+import { Categorias } from '../components/body/searchBar/SearchCategories'
 
 const TopSectionContainer = styled.div`
   width: 100vw;
@@ -49,18 +49,12 @@ const Phrase = styled.p`
   font-size: 1em;
 `;
 
-const SlidesContainer = styled.div`
-  z-index: 5;
-`;
-
 const navBarStyles = {
   position: 'relative',
   display: 'flex',
-  width: '100%',
   top: '1%',
   zIndex: '5',
-	width: 'fit-content'
-
+  width: 'fit-content'
 };
 
 const searchBarStyles = {
@@ -71,8 +65,16 @@ const searchBarStyles = {
 };
 
 function Inicio() {
-  // metodo get para chequear si el user esta logeado (endpoint /login/check), si no esta logeado redireccionar
-  // a landpage
+  const navigate = useNavigate();
+
+  axios.get('/login/check')
+    .then((res) => {
+      if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   return (
     <>
       <TopSectionContainer>
@@ -85,7 +87,7 @@ function Inicio() {
               <Phrase>- Dejá que Montevideo te guíe -</Phrase>
             </PhraseContainer>
             <div className='searchBar' style={searchBarStyles}>
-              <SearchBar />
+              <SearchBar data={Categorias} />
             </div>
             <div>
               <Slides />

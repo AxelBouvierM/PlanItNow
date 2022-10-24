@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Icon from '../../images/testLogo.png'
+import Icon from '../../images/pinLogoEstirado.png'
 import { IconContext } from "react-icons";
 import { RiInstagramLine, RiArrowDropUpLine } from 'react-icons/ri'
 import { FaFacebookSquare } from 'react-icons/fa'
@@ -16,15 +16,15 @@ const AllPagesFooter = styled.footer`
 `;
 
 const LogoContainer = styled.div`
-	width: fit-content;
 	display: flex;
 	position: relative;
+	padding-bottom: 0.6em;
 `;
 
 const Logo = styled.img`
-	width: 7em;
-	height: 7em;
-	opacity: 0.8;
+	max-width: 7em;
+	width: 20%;
+	opacity: 0.7;
 `;
 
 const SocialContainer = styled.div`
@@ -72,7 +72,7 @@ const CopPhrase = styled.p`
 	opacity: 0.8;
 `;
 
-function Footer() {
+export function Footer() {
 	
 	function goTop() {
 		document.body.scrollTop = 0; // for safari
@@ -97,7 +97,7 @@ function Footer() {
 					</IconContext.Provider>
 				</SocialIcon>
 			</SocialButtons2>
-			<a href='https://www.facebook.com/'>
+			<a href='https://www.facebook.com/' target="_blank" rel="noreferrer">
 				<SocialButtons type='button' >
 					<SocialIcon>
 						<IconContext.Provider value={{
@@ -111,7 +111,7 @@ function Footer() {
 					</SocialIcon>
 				</SocialButtons>
 			</a>
-			<a href='https://www.instagram.com/'>
+			<a href='https://www.instagram.com/planitnow_' target="_blank" rel="noreferrer">
 				<SocialButtons type='button'>
 					<SocialIcon>
 						<IconContext.Provider value={{
@@ -132,8 +132,3 @@ function Footer() {
 	</AllPagesFooter>
   )
 }
-
-export default Footer
-
-
-/* */ 
