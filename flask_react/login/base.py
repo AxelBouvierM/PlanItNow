@@ -39,7 +39,7 @@ def loginAuth():
     if username is not None and password is not None:
         # Inicio de sesion MySQL, obtenemos la informacion del usuario. Almacenada en la DB
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s OR email = %s', (username, username,))
         pwd = cursor.fetchone()
 
         if pwd:
@@ -119,7 +119,7 @@ def loginRegister():
             msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
             msg = 'Please complete all the data'
-        elif len(username) < 6:
+        elif len(username) <= 6:
             msg = 'Invalid user'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
