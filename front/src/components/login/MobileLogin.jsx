@@ -80,10 +80,14 @@ const MobileLoginContainer = styled.div`
   padding: 1em;
 `;
 
-const Title = styled.a`
+const Title = styled.p`
   color: #fafafa;
-  display: block;
-  font-size: 2em;
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8em;
   transition: 0.3s ease-in-out;
   margin-bottom: 1em;
   &:hover {

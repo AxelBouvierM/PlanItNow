@@ -80,10 +80,10 @@ const MobileRegisterContainer = styled.div`
   justify-content: center;
 `;
 
-const Title = styled.a`
+const Title = styled.p`
   color: #fafafa;
   display: block;
-  font-size: 2em;
+  font-size: 1.8em;
   transition: 0.3s ease-in-out;
   &:hover {
 	color: white;
