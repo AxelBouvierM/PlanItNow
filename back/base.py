@@ -18,7 +18,6 @@ app = Flask(__name__)
 app.secret_key = 'PIN_key'
 
 DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
-
 # Conexion con la Base de Datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -41,7 +40,7 @@ def loginAuth():
     if username is not None and password is not None:
         # Inicio de sesion MySQL, obtenemos la informacion del usuario. Almacenada en la DB
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s OR email = %s', (username,username,))
         pwd = cursor.fetchone()
 
         if pwd:
@@ -121,6 +120,8 @@ def loginRegister():
             msg = 'Username must contain only characters and numbers'
         elif not username or not password or not email:
             msg = 'Please complete all the data'
+        elif len(username) < 6:
+            msg = 'Invalid user'
         else:
             # La cuenta no exite y los datos son validos para crear el nuevo usuario
 
@@ -206,7 +207,7 @@ def data(category):
 @app.route('/data', methods=['GET'])
 def dataAll():
     app.config['MYSQL_DB'] = 'events'
-    categories = ['music', 'theater', 'sport', 'dance', 'others', 'party']
+    categories = ['music', 'theater', 'sport', 'party', 'others', 'dance']
 
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
@@ -259,22 +260,47 @@ def calendar():
         app.config['MYSQL_DB'] = 'events'
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM schedule WHERE userID = %s', (existCookies.get('UserID'),))
-        schedule = cursor.fetchone()
+        scheduleAll = cursor.fetchall()
 
-        if schedule:
-            category = schedule.get('category')
-            id = category + 'ID'
-            insert = f'SELECT * FROM {category} WHERE title = %s'
-            cursor.execute(insert, (schedule.get('event'),))
-            event = cursor.fetchone()
-            data = {"event": event, "schedule": schedule}
+        if scheduleAll:
+            dic = {}
+            for schedule in scheduleAll:
+                category = schedule.get('category')
+                id = category + 'ID'
+                insert = f'SELECT * FROM {category} WHERE title = %s'
+                cursor.execute(insert, (schedule.get('event'),))
+                event = cursor.fetchone()
+                dic[schedule.get('date')] = event
+            dic2 = {}
+            for info in scheduleAll:
+                dic2[info.get('date')] = info
+            data = {"event": dic, "schedule": dic2}
             return (data)
         else:
             return jsonify(response={"status": "There are no scheduled events"})
     else:
         return ("User not logged in")
 
+@app.route('/user', methods=['GET'])
+def user():
+    app.config['MYSQL_DB'] = 'login'
+    existCookies = request.cookies.get('cookie')
+    # Decodificacion de token para el chequeo de coincidencia
+    existCookies = jwt.decode(existCookies, "AEPINMM")
+
+    if existCookies:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE userID = %s', (existCookies.get('UserID'),))
+        scheduleAll = cursor.fetchone()
+
+        if scheduleAll:
+            dic = {"user": scheduleAll}
+            return dic
+        else:
+            return jsonify(response={"status": "Not Found"})
+    else:
+        return jsonify(response={"status": "Not Found"})
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
