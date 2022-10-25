@@ -53,7 +53,7 @@ def loginAuth():
             if hashPWD is True:
                 # Encriptacion de usuraio e id con jwt para generar token
                 UserID = pwd.get('UserID')
-                token = jwt.encode({"username": username, "UserID": UserID}, "AEPINMM")
+                token = jwt.encode({"username": pwd.get('username'), "UserID": UserID}, "AEPINMM")
                 # Seteando respuesta
                 resp = make_response(jsonify(response={"status": "Ok"}))
                 resp.status_code = 200
