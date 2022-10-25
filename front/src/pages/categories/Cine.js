@@ -5,7 +5,7 @@ import { NavBar } from '../../components/header/NavBar'
 import { Footer } from '../../components/footer/Footer'
 import { SearchBar } from '../../components/body/searchBar/SearchBar'
 import { Categorias } from '../../components/body/searchBar/SearchCategories'
-import Modal from '../../components/body/modal/Modal'
+import Modal from '../../components/body/modal/VerticalDesktopModal'
 import styled from 'styled-components';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
