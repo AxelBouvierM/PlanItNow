@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.secret_key = 'PIN_key'
 
 DB_KEY = open('/home/planitnow_pin/DB_KEY.txt').read().replace('\n', '')  # open and save the mysql pass into a variable
+
 # Conexion con la Base de Datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -40,7 +41,7 @@ def loginAuth():
     if username is not None and password is not None:
         # Inicio de sesion MySQL, obtenemos la informacion del usuario. Almacenada en la DB
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s OR email = %s', (username,username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s OR email = %s', (username, username,))
         pwd = cursor.fetchone()
 
         if pwd:
@@ -97,6 +98,7 @@ def loginRegister():
     email = request.json.get('mail')
     username = request.json.get('username')
     password = request.json.get('password')
+    avatar = request.json.get('avatar')
     msg = ''
     # Chequeo que los tres campos no esten vacios
     if username is not None and password is not None and email is not None:
@@ -133,7 +135,7 @@ def loginRegister():
             salt = bcrypt.gensalt()
             hashPWD = bcrypt.hashpw(pwd, salt)
             # Almacenando datos de usuario en DB
-            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', (UserID, username, hashPWD, email,))
+            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s, %s)', (UserID, username, hashPWD, email, avatar,))
             # Guardando los cambios
             mysql.connection.commit()
             msg = 'Ok'
