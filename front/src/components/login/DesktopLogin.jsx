@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
@@ -230,14 +230,16 @@ function DesktopLogin() {
 	const [error, setError] = useState(false);
 	const navigate = useNavigate();
 
-	axios.get('/login/check')
-		.then((res) => {
-			if (res.data.response.status === 'Ok') navigate('/inicio');
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-
+  useEffect(() => {
+    axios.get('/login/check')
+    .then((res) => {
+      if (res.data.response.status === 'Ok') navigate('/inicio');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, [])
+    
 	function SendFormInput(event) {
 		event.preventDefault()
 		const headers = {

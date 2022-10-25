@@ -52,13 +52,15 @@ const HowToUseContainer = styled.div`
 function Landpage() {
   const navigate = useNavigate();
   
-  axios.get('/login/check')
-    .then((res) => {
-      if (res.data.response.status === 'Ok') navigate('/inicio');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  useEffect(() => {
+    axios.get('/login/check')
+      .then((res) => {
+        if (res.data.response.status === 'Ok') navigate('/inicio');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [])
 
   return (
   <>
