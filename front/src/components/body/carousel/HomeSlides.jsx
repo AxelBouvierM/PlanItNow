@@ -35,10 +35,10 @@ const Images = styled.img`
 `;
 
 const CardTitle = styled.h1`
-	margin-top: 0.3em;
-	font-size: 1.4em;
-	font-weight: 300;
+	margin-top: 0.5em;
+	font-size: 1em;
 	text-transform: uppercase;
+	font-family: 'Lexend', sans-serif;
 `;
 
 export function Slides() {

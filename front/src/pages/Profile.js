@@ -45,7 +45,7 @@ const Phrase = styled.p`
   	text-transform: uppercase;
 	text-align: center;
 	font-weight: normal;
-	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Lexend', sans-serif;
 	animation: neon 3s infinite;
 	@keyframes neon {
 	0% {
@@ -110,6 +110,7 @@ const User = styled.p`
 	color: white;
 	margin: auto;
 	text-align:center;
+	font-family: 'Barlow', sans-serif;
 `
 
 const Button = styled.button`
@@ -120,12 +121,12 @@ const Button = styled.button`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
   font-weight:350;
   color:#FFFFFF;
   font-size: 18px;
   background-color: transparent;
   transition: all 0.2s;
+  font-family: 'Lexend', sans-serif;
   cursor: pointer;
   &:hover {
     color:#000000;

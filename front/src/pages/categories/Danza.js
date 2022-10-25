@@ -41,7 +41,7 @@ const Phrase = styled.p`
   	text-transform: uppercase;
 	text-align: center;
 	font-weight: normal;
-	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Lexend', sans-serif;
 	animation: neon 3s infinite;
 	@keyframes neon {
 	0% {

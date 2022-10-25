@@ -83,6 +83,7 @@ const InfoText = styled.p`
 	color: #000;
   font-size: 1em;
 	font-weight: 550;
+  font-family: 'Lexend', sans-serif;
 `;
 
 const EventContainer = styled.div`
@@ -101,9 +102,9 @@ const EventData = styled.div`
 const Description = styled.div`
   height: 50%;
   width: fit-content;
-	font-weight: 300;
   text-align: left;
   margin-top: 1em;
+  font-family: 'Barlow', sans-serif;
 `;
 
 const Buttons = styled.div`
