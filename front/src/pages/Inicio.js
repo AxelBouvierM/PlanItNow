@@ -54,7 +54,6 @@ const Phrase = styled.p`
     text-align: center;
     font-weight: normal;
     font-family: 'Fira Sans', sans-serif;
-    animation: neon 3s infinite;
     @media all and (max-width:400px) {
         & {
           font-size: 1em;
