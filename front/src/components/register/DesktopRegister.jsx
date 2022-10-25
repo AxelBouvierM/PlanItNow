@@ -284,10 +284,13 @@ function Register() {
 			'Content-Encoding': 'gzip, deflate, br',
 		};
 
+		const imagePicker = Math.floor(Math.random() * 12);
+
 		const regData = {
 			'username': username,
 			'mail': mail,
-			'password': password
+			'password': password,
+			'avatar': imagePicker
 		};
 
 		setLoading(true);
@@ -299,8 +302,7 @@ function Register() {
 
 		if (res.data.response.status === 'Ok') {
 			setCorrectRegister(true);
-			const timer = setTimeout(() => setRedirect(true), 1500)
-			clearTimeout(timer);
+			setTimeout(() => setRedirect(true), 1500)
 		} else if (res.data.response.status === 'User already exists') {
 			setError('Este nombre de usuario ya esta en uso');
 		} else if (res.data.response.status === 'Mail already exists') {
