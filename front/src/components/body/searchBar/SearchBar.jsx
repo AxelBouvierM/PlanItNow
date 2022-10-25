@@ -121,7 +121,7 @@ const DataItem = styled.a`
     transition: 1s ease-in-out;
     &:hover {
     transition: 1s ease-in-out;
-    background-color: white;
+    background-color: #fafafa;
     }
     &:hover .text {
         transition: 0.8s ease-in-out;
