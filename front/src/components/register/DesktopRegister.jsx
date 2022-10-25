@@ -264,7 +264,7 @@ function Register() {
 			setPassError(null);
 			setNicePassword(true);
 		} else if (string.length < 6) {
-			setPassError('La contraseña debe tener al menos 6 caracteres.');
+			setPassError('La contraseña debe tener al menos 7 caracteres.');
 			setNicePassword(false);
 		} else if (intMatch == null) {
 			setPassError('La contraseña debe tener al menos 1 número.');
@@ -306,7 +306,7 @@ function Register() {
 		} else if (res.data.response.status === 'Mail already exists') {
 			setError('Ya existe una cuenta asociada con este correo');
 		} else if (res.data.response.status === 'Invalid user') {
-			setError('El nombre de usuario debe tener al menos 6 caracteres');
+			setError('El nombre de usuario debe tener al menos 7 caracteres');
 		} else if (res.data.response.status === 'Please complete all the data') {
 			setError('Debes completar todos los campos');
 		} else {
