@@ -1,10 +1,13 @@
 import { React } from 'react';
 import styled from "styled-components";
+import { motion } from 'framer-motion';
 
 import { IconContext } from "react-icons";
 import { RiCloseLine, RiMapPinLine, RiCalendarTodoLine, RiMoneyDollarCircleLine, RiDoubleQuotesL, RiSendPlaneLine } from 'react-icons/ri';
 
-const ModalContainer = styled.div`
+const modalTransition = { type: "spring", stiffness: 100 };
+
+const ModalContainer = styled(motion.div)`
   display: block;
   position: fixed;
   border: none;
@@ -97,6 +100,7 @@ const Description = styled.div`
   width: fit-content;
 	font-weight: 300;
   text-align: left;
+  margin-top: 1em;
 `;
 
 const Buttons = styled.div`
@@ -135,7 +139,10 @@ const Modal = ({ open, close, selected }) => {
 
   return (
     <>
-        <ModalContainer>
+        <ModalContainer
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={modalTransition}>
           <Top>
             <Images src={selected.image} />
           </Top>
