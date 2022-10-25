@@ -18,6 +18,9 @@ const ModalContainer = styled(motion.div)`
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 1);
   border-radius: 20px;
   z-index: 4;
+  @media all and (max-width: 600px) {
+    width: 85vw;
+  }
 `;
 
 const Top = styled.div`
