@@ -217,7 +217,7 @@ function MobileLogin() {
     .catch((err) => {
       console.log(err);
     });
-  }, [])
+  }, [navigate])
 
 	function SendFormInput(event) {
 		event.preventDefault()

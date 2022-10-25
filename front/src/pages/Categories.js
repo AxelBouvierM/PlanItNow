@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useEffect } from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -70,7 +70,7 @@ function Categories() {
       .catch((err) => {
         console.log(err);
       });
-  }, [])
+  }, [navigate])
 
   return (
     <>

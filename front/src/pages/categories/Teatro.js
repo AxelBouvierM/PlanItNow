@@ -125,7 +125,7 @@ function Teatro() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [])
+	}, [navigate])
 		
 	useEffect(() => {
 		axios.get('/data/theater')

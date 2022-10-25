@@ -125,7 +125,7 @@ function Entretenimiento() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [])
+	}, [navigate])
 		
 	useEffect(() => {
 		axios.get('/data/entertainment')

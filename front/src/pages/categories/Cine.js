@@ -135,7 +135,7 @@ function Cine() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [])
+	}, [navigate])
 		
 	useEffect(() => {
 		axios.get('/data/movie')

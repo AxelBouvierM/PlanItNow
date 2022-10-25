@@ -125,7 +125,7 @@ function Restaurant() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [])
+	}, [navigate])
 		
 	useEffect(() => {
 		axios.get('/data/restaurant')

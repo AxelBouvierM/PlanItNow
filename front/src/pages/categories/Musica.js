@@ -125,7 +125,7 @@ function Musica() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [])
+	}, [navigate])
 		
 	useEffect(() => {
 		axios.get('/data/music')

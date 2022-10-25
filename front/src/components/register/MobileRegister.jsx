@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
@@ -249,7 +249,7 @@ function Register() {
       .catch((err) => {
         console.log(err);
       });
-  }, [])
+  }, [navigate])
 
   function checkPassRequirements(string) {
     const intMatch = string.match(/\d+/g);

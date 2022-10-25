@@ -255,7 +255,7 @@ function Register() {
 		.catch((err) => {
 			console.log(err);
 		});
-	}, [])
+	}, [navigate])
 	
 	function checkPassRequirements(string) {
 		const intMatch = string.match(/\d+/g);

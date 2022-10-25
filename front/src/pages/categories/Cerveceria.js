@@ -125,7 +125,7 @@ function Cerveceria() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [])
+	}, [navigate])
 	
 	useEffect(() => {
 		axios.get('/data/brewery')

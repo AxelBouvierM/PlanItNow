@@ -147,7 +147,7 @@ function Profile() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [])
+	}, [navigate])
 
 	useEffect(() => {
 		axios.get('/user')
