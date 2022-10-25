@@ -2,46 +2,26 @@ import styled from "styled-components";
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
 import { motion } from 'framer-motion';
-import { React, useEffect, useState } from 'react';
+import { React, useState } from 'react';
 import { RiErrorWarningLine, RiCheckLine } from 'react-icons/ri';
 
-
+const modalTransition = { type: "spring", stiffness: 100 };
 
 const Overlay = styled.div`
     transition: all 400ms ease-in-out;
 `;
 
-const ModalContainer = styled.div`
-  margin: auto;
+const ModalContainer = styled(motion.div)`
   display: block;
   position: fixed;
-  max-height: 50vh;
-  height: 100%;
-  max-width: 40vw;
-  width: 100%;
-  text-align: center;
-  top: -40%;
+  border: none;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #FFFFFF;
-  border-radius: 40px;
-  border: solid;
-  border-color: #fafafa;
-  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.20);
-  backdrop-filter: blur(20px);
-  margin: 0 1em 0 1em;
-  @media screen and (max-width:1279px) {
-    	& {
-     	max-width: 90vw;
-			max-height: 85vh;
-    	}
-  	}
-  @media screen and (max-width:300px) {
-    	& {
-     	max-width: 90vw;
-			max-height: 80vh;
-    	}
-  	}
+  background-color: #fafafa;
+  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 1);
+  border-radius: 20px;
+  z-index: 4;
 `;
 
 const Icon = styled.i`
@@ -49,23 +29,31 @@ const Icon = styled.i`
   margin: 0 0.4em 0 0;
 `;
 
-const InputContainer = styled.div`
-  width: 18em;
+const FormContainer = styled.form`
   display: flex;
-  align-items: center;
-  text-align: center;
   position: relative;
-  padding-bottom: 2em;
+  flex-direction: column;
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
   margin: auto;
+  padding: 1em;
 `;
-const InputContainer2 = styled.div`
-  width: 18em;
-  display: flex;
-  align-items: center;
+
+const Title = styled.h1`
+  font-size: 2em;
+  color: #000;
   text-align: center;
+`;
+
+const InputContainer = styled.div`
+  width: 100%;
+  display: block;
   position: relative;
-  padding-bottom: 1.0em;
-  margin: auto;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
 `;
 
 const Input = styled.input`
@@ -76,8 +64,7 @@ const Input = styled.input`
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.20);
   color: #fafafa;
-  padding-left: 6.5em;
-
+  padding-left: 1.5em;
   margin: auto;
   &:focus {
     outline: none;
@@ -95,42 +82,47 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  display:inline-block; 
-  background-color: #cde3f6;
-	font-size: 21px;
-  font-weight:350;
-  box-sizing: border-box;
-  text-decoration:none;
-  font-family:'Roboto',sans-serif;
-	width: 200px;
-  color:#9dd0e4;
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 3em;
+	align-items: center;
+	justify-content: center;
+	padding:0.20em 1.2em;
+	border:0.1em solid #FFFFFF;
+	border-radius:0.12em;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:350;
+	color: #fafafa;
+	font-size: 1em;
+	background-color: #000;
+	transition: all 0.2s;
 	text-align: center;
-	margin: auto;
-	border-radius: 50px;
-  border:0.1em solid #FFFFFF;
-  border: none;
+	margin-top: 1em;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
 	cursor: pointer;
-  box-shadow: 0px 0px 2px 2px rgb(0,0,0);
-  background-color: transparent;
-  transition: all 0.2s;
-  cursor: pointer;
-  &:hover {
-    color:#000000;
-    background-color: #fafafa;
-}
+	&:hover {
+		color: #000;
+		background-color: #fafafa;
+	}
 `
-
 
 const CloseIcon = styled(motion.span)`
   color: black;
+  position: relative;
+  width: fit-content;
   font-size: 2em;
   vertical-align: middle;
   margin-top: -95px;
-  padding-bottom: 1px;
+  padding: 1px;
   margin-left: 480px;
   transition: all 400ms ease-in-out;
   cursor: pointer;
 `;
+
 const Cambio = styled.label`
   display: block;
   width: 100%;
@@ -151,28 +143,13 @@ const PassRequest = styled.label`
   text-align: center;
 `;
 
-
 const ChangePwsdModal = ({ open, close }) => {
-
-	const [data, setData] = useState([]);
 	const [correctRegister, setCorrectRegister] = useState(false);
-	const [nicePassword, setNicePassword] = useState(false);
 	const [passError, setPassError] = useState('');
+	const [oldPassword, setActualPass] = useState('');
 	const [password, setPass] = useState('');
 	const [newPassword, setNewPass] = useState('');
-
-	// get old password to compare to the one we ask
-	useEffect(() => {
-		axios.get('/newPWD')
-			.then((res) => {
-				const values = Object.values(res.data)
-				setData(values)
-			})
-			.catch((err) => {
-				console.log(err)
-			});
-	}, [])
-
+	
 	// post password into base.py
 	async function SendNewPassword(event) {
 		event.preventDefault()
@@ -182,73 +159,57 @@ const ChangePwsdModal = ({ open, close }) => {
 		};
 
 		const pwdData = {
-			'password': password,
+			'oldPassword': oldPassword,
 			'newPassword': newPassword
-
 		}
-		const res = await axios.post('/newPWD', pwdData, { headers: headers }).catch((err) => {
-			console.log("Error: ", err);
-		});
-		if (res.data.response.status === 'Ok') {
-			setCorrectRegister(true);
+		if (newPassword === '') {
+			setPassError('Ingresa una nueva contraseña válida');
+			return;
 		}
-
+		const res = await axios.post('/newPWD', pwdData, { headers: headers })
+			.catch((err) => {
+				console.log(err);
+			});
+			console.log(res);
+		if (res.data.response.status === 'Ok') setCorrectRegister(true);
+		else if (res.data.response.status === 'Old password invalid') setPassError('Contraseña incorrecta')
+		else setPassError('Ha ocurrido un error, vuelve a intentarlo');
 	}
-
-	// get the password writen and compares it with old password.
-	/*const handlePswd = (event) => {
-	  const searchPswd = event.target.value;
-	  setPswdEntered(searchPswd);
-  
-	  const getOldPwsd = data.filter((value) => {
-		  return value.oldPassword();
-	  });
-  
-	  if (searchPswd === getOldPwsd) {
-		  return ("");
-	  } else {
-		  return ("Password doesn't match");
-	  }
-	};*/
-
-	// post new password
-
-	/*const newPassword = (event) => {
-	  const getNewPswd = event.target.value;
-	  setNewPswd(getNewPswd);
-  
-	};*/
 
 	// chequea que cumpla los requisitos
 	function checkPassRequirements(string) {
 		const intMatch = string.match(/\d+/g);
 		const upperMatch = string.match(/[A-Z]/);
 
-		setNicePassword(false);
 		if (string.length >= 6 && intMatch != null && upperMatch != null) {
 			setPassError(null);
-			setNicePassword(true);
+			return true;
 		} else if (string.length < 6) {
 			setPassError('La contraseña debe tener al menos 6 caracteres.');
-			setNicePassword(false);
 		} else if (intMatch == null) {
 			setPassError('La contraseña debe tener al menos 1 número.');
-			setNicePassword(false);
 		} else if (upperMatch == null) {
 			setPassError('La contraseña debe tener al menos 1 mayúscula.');
-			setNicePassword(false);
 		} else {
 			setPassError('Ha ocurrido un error, vuelve a intentarlo');
 		}
 	}
 
+	function checkCoincidence(string) {
+		if (string === password) return true;
+		else return false;
+	}
 
 	if (!open) return null;
 
 	return (
 		<>
 			<Overlay>
-				<ModalContainer onSubmit={SendNewPassword}>
+				<ModalContainer 
+					initial={{ opacity: 0 }} 
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={modalTransition}>
 					<CloseIcon
 						key="close-icon"
 						initial={{ opacity: 0 }}
@@ -259,43 +220,52 @@ const ChangePwsdModal = ({ open, close }) => {
 					>
 						<IoClose />
 					</CloseIcon>
-					<InputContainer>
-						<Input
-							type="password"
-							placeholder="Contraseña Actual"
-							onChange={(event) => {
-								checkPassRequirements(event.target.value)
-								if (nicePassword) setPass(event.target.value)
-							}}
-							required>
-						</Input>
-					</InputContainer>
-					<InputContainer>
-						<Input
-							type="password"
-							className="loginInput"
-							placeholder="Nueva Contraseña"
-							onChange={(event) => {
-								checkPassRequirements(event.target.value)
-								if (nicePassword) setNewPass(event.target.value)
-							}}
-							required>
-						</Input>
-					</InputContainer>
-					<InputContainer2>
-						<Input
-							type="password"
-							placeholder="Nueva Contraseña"
-							onChange={(event) => {
-								checkPassRequirements(event.target.value)
-								if (nicePassword) setNewPass(event.target.value)
-							}}
-							required>
-						</Input>
-					</InputContainer2>
-					{passError && !correctRegister && (<PassRequest><Icon><RiErrorWarningLine /></Icon>{passError}</PassRequest>)}
-					{correctRegister && <Cambio><Icon><RiCheckLine /></Icon>La contraseña see ha cambiado correctamente!</Cambio>}
-					<Button type="submit">Confirmar</Button>
+					<Title>Cambiar contraseña</Title>
+					<FormContainer onSubmit={SendNewPassword}>
+						<InputContainer>
+							<Input
+								type="password"
+								className="loginInput"
+								placeholder="Contraseña actual"
+								onChange={(event) => {
+									setActualPass(event.target.value);
+								}}
+								required>
+							</Input>
+						</InputContainer>
+						<InputContainer>
+							<Input
+								type="password"
+								className="loginInput"
+								placeholder="Nueva Contraseña"
+								onChange={(event) => {
+									if (checkPassRequirements(event.target.value)) setPass(event.target.value)
+								}}
+								required>
+							</Input>
+						</InputContainer>
+						<InputContainer>
+							<Input
+								type="password"
+								placeholder="Confirma tu contraseña"
+								onChange={(event) => {
+									setPassError('')
+									if (checkCoincidence(event.target.value) && checkPassRequirements(event.target.value)) {
+										setPassError('');
+										setNewPass(event.target.value);
+									} else if (!checkPassRequirements(event.target.value)) {
+										setPassError('La contraseña no cumple los requisitos');
+									} else if (!checkCoincidence(event.target.value)) {
+										setPassError('Las contraseñas no coinciden');
+									}
+								}}
+								required>
+							</Input>
+						</InputContainer>
+						{passError && !correctRegister && (<PassRequest><Icon><RiErrorWarningLine /></Icon>{passError}</PassRequest>)}
+						{correctRegister && <Cambio><Icon><RiCheckLine /></Icon>La contraseña se ha modificado correctamente!</Cambio>}
+						<Button type="submit" >Confirmar</Button>
+					</FormContainer>
 				</ModalContainer>
 			</Overlay>
 		</>

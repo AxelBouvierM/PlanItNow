@@ -41,7 +41,7 @@ const Phrase = styled.p`
   	text-transform: uppercase;
 	text-align: center;
 	font-weight: normal;
-	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Lexend', sans-serif;
 	animation: neon 3s infinite;
 	@keyframes neon {
 	0% {
@@ -111,7 +111,7 @@ const FooterStyle = {
 	bottom: '0',
 }
 
-function Music() {
+function Danza() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
@@ -168,4 +168,4 @@ function Music() {
 	)
 }
 
-export default Music
+export default Danza

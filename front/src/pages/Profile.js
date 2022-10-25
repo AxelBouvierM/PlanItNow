@@ -1,47 +1,51 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
-import profile from '../images/landpageBg1.jpg'
-import { NavBar } from '../components/header/NavBar.jsx'
-import { Footer } from '../components/footer/Footer'
 import styled from 'styled-components';
-
-import logo from '../images/pinLogoApp.png'
-import ChangePswdModal from '../components/body/modal/ChangePswdModal'
-
-const TopSectionContainer = styled.div`
-  display: block;
-  position: relative;
-`;
+import { useNavigate } from 'react-router-dom';
+import profileBg from '../images/landpageBg1.jpg';
+import { NavBar } from '../components/header/NavBar.jsx';
+import { Footer } from '../components/footer/Footer';
+import { avatarImages } from '../components/profile/ProfileImages';
+import ChangePswdModal from '../components/body/modal/ChangePswdModal';
 
 const Background = styled.div`
   display: flex;
   position: relative;
-  background-image: url(${profile});
-  flex-wrap: wrap;
-  background-color: black;
+  background-image: url(${profileBg});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+`;
+
+const TopSectionContainer = styled.div`
+  display: block;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Content = styled.div`
   display: block;
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: 100%;
-  margin-bottom: 6em;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 `;
 
 const Phrase = styled.p`
-  	margin-top: 1em;
+	display: block;
   	color: white;
   	font-size: 2.5em;
   	text-transform: uppercase;
 	text-align: center;
 	font-weight: normal;
-	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Lexend', sans-serif;
 	animation: neon 3s infinite;
 	@keyframes neon {
 	0% {
@@ -67,50 +71,34 @@ const Phrase = styled.p`
   	}
 `;
 
-const NavBarContainer = styled.div`
-	display: block;
-	position: relative;
-	top: 1%;
-	z-index: 5;
-	width: fit-content;
-	height: fit-content;
+const NavBarStyles = styled.div`
+    display: flex;
+    position: relative;
+    top: 1%;
+    z-index: 5;
+    width: fit-content;
+    margin-bottom: 2.5em;
 `;
 
 const LayoutMargin = styled.div`
-	margin: 0 5em;
-	@media all and (max-width:400px) {
-    	& {
-			margin: 0 1em;
-    	}
-  	}
-	@media all and (max-width:800px) and (min-width: 401px) {
-    	& {
-			margin: 0 3em;
-    	}
-  	}
+	display: block;
+	margin: 1.5em auto;
 `;
-
-
-
-const FooterStyle = {
-	position: 'absolute',
-	bottom: '0',
-}
 
 const Images = styled.img`
 	display: flex;
 	border-radius: 360px;
-	padding: 20px;
-	width: 18em;
-	height: 18em;
+	padding: 1em;
+	max-width: 15em;
 	margin: auto;
-	border: solid white;
+	border: solid #fafafa;
 `;
 
 const ProfileContainer = styled.div`
+	display: block;
+	width: fit-content;
+	height: fit-content;
 	background-color: transparent;
-	height: 20em;
-    width: 34em;
 	margin: auto;
 	backdrop-filter: blur(0px);
 	text-align: center;
@@ -122,6 +110,7 @@ const User = styled.p`
 	color: white;
 	margin: auto;
 	text-align:center;
+	font-family: 'Barlow', sans-serif;
 `
 
 const Button = styled.button`
@@ -132,76 +121,65 @@ const Button = styled.button`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
   font-weight:350;
   color:#FFFFFF;
   font-size: 18px;
   background-color: transparent;
   transition: all 0.2s;
+  font-family: 'Lexend', sans-serif;
   cursor: pointer;
   &:hover {
     color:#000000;
     background-color: #fafafa;
   }
 `;
-const userStyle = styled.p`
-
-	color: white;
-	margin: auto;
-	text-align:center;
-`
 
 function Profile() {
 	const [data, setData] = useState([]);
+	const [openModal, setOpenModal] = useState(false)
+	const navigate = useNavigate();
+
+	axios.get('/login/check')
+		.then((res) => {
+			if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+
 
 	useEffect(() => {
 		axios.get('/user')
 			.then((res) => {
-				const values = Object.values(res.data)
-				setData(values)
+				setData(res.data.user)
 			})
 			.catch((err) => {
 				console.log(err)
 			});
 	}, [])
 
-	const [openModal, setOpenModal] = useState(false)
-
 	return (
 		<>
-			<TopSectionContainer>
-				<Background>
+			<Background>
+				<TopSectionContainer>
+					<NavBarStyles>
+						<NavBar />
+					</NavBarStyles>
 					<Content>
-						<NavBarContainer>
-							<NavBar />
-						</NavBarContainer>
-						<Phrase>Perfil
-						</Phrase>
+						<Phrase>Perfil</Phrase>
 						<LayoutMargin>
-							<Images img src={logo} />
+							<Images src={avatarImages[data.avatar]} />
 						</LayoutMargin>
 						<ProfileContainer>
-							<User>
-								{data.map((item) => (
-									<userStyle>{item.username}</userStyle>
-								))
-								}
-							</User>
-							<User>
-								{data.map((item) => (
-									<userStyle>{item.email}</userStyle>
-								))
-								}
-							</User>
-							<Button
-								onClick={() => { setOpenModal(true) }}
-							>Cambiar Contraseña</Button>
-							<ChangePswdModal l open={openModal} close={() => setOpenModal(false)} />
+							<User>{data.username}</User>
+							<User>{data.email}</User>
+							<Button onClick={() => { setOpenModal(true) }}>Cambiar contraseña</Button>
 						</ProfileContainer>
+						<ChangePswdModal open={openModal} close={() => setOpenModal(false)} />
 					</Content>
-				</Background>
-			</TopSectionContainer>
-			<Footer style={{ FooterStyle }} />
+				</TopSectionContainer>
+			</Background>
+			<Footer />
 		</>
 	)
 }
