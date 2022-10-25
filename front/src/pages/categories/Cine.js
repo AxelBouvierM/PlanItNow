@@ -1,13 +1,16 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+
 import { useNavigate } from "react-router-dom";
 import { NavBar } from '../../components/header/NavBar'
 import { Footer } from '../../components/footer/Footer'
 import { SearchBar } from '../../components/body/searchBar/SearchBar'
 import { Categorias } from '../../components/body/searchBar/SearchCategories'
+import VerticalModal from '../../components/body/modal/VerticalDesktopModal'
 import Modal from '../../components/body/modal/Modal'
-import styled from 'styled-components';
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
 const TopSectionContainer = styled.div`
   display: block;
@@ -111,19 +114,28 @@ const FooterStyle = {
 	bottom: '0',
 }
 
-function Music() {
+function Cine() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
 	const navigate = useNavigate();
+	
+	const DesktopOrTablet = useMediaQuery({
+		query: '(min-width: 600px)'
+	})
+	const Mobile = useMediaQuery({
+		query: '(max-width: 600px)'
+	})
 
-	axios.get('/login/check')
-		.then((res) => {
-			if (res.data.response.status === 'User not logged in') navigate('/ingresar');
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	useEffect(() => {
+		axios.get('/login/check')
+			.then((res) => {
+				if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [navigate])
 		
 	useEffect(() => {
 		axios.get('/data/movie')
@@ -154,12 +166,16 @@ function Music() {
 										<Images src={item.image} alt={item.title}
 											key={item.image.toString()}
 											onClick={() => { setOpenModal(true); setSelected(item); }} />
-									))
-									}
+									))}
 								</Masonry>
 							</ResponsiveMasonry>
 						</LayoutMargin>
-						<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '7' }} />
+						{DesktopOrTablet && (
+							<VerticalModal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '7' }} />
+						)}
+						{Mobile && (
+							<Modal open={openModal} close={() => setOpenModal(false)} selected={selected} style={{ zIndex: '7' }} />
+							)}
 					</Content>
 				</Background>
 			</TopSectionContainer>
@@ -168,4 +184,4 @@ function Music() {
 	)
 }
 
-export default Music
+export default Cine

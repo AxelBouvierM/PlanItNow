@@ -111,19 +111,21 @@ const FooterStyle = {
 	bottom: '0',
 }
 
-function Music() {
+function Deporte() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
 	const navigate = useNavigate();
 
-	axios.get('/login/check')
-		.then((res) => {
-			if (res.data.response.status === 'User not logged in') navigate('/ingresar');
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	useEffect(() => {
+		axios.get('/login/check')
+			.then((res) => {
+				if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [navigate])
 		
 	useEffect(() => {
 		axios.get('/data/sport')
@@ -168,4 +170,4 @@ function Music() {
 	)
 }
 
-export default Music
+export default Deporte

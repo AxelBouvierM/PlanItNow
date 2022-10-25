@@ -47,13 +47,6 @@ const Images = styled.img`
     height: 100%;
 `;
 
-const CardTitle = styled.h1`
-	margin-top: 0.3em;
-	font-size: 1.4em;
-	font-weight: 300;
-	text-transform: uppercase;
-`;
-
 function Slides() {
 	const [redirect, setRedirect] = useState(false);
 	const [redirectTo, setRedirectTo] = useState('');

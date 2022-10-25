@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useEffect } from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,9 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
-  font-size: 1em;
+  font-size: 1.4em;
+  font-family: 'Lexend', sans-serif;
+  animation: neon 3s infinite;
 `;
 
 const navBarStyles = {
@@ -57,16 +59,18 @@ const navBarStyles = {
 
 };
 
-function Inicio() {
+function Categories() {
   const navigate = useNavigate();
 
-  axios.get('/login/check')
-    .then((res) => {
-      if (res.data.response.status === 'User not logged in') navigate('/ingresar');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  useEffect(() => {
+    axios.get('/login/check')
+      .then((res) => {
+        if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [navigate])
 
   return (
     <>
@@ -93,23 +97,4 @@ function Inicio() {
   );
 }
 
-export default Inicio;
-
-/* <Parallax strength={500}>
-        <Background className='customBg' bgImageStyle={bgStyles}>
-          <img src={image1} alt='montaña' />
-        </Background>
-        <div className='bgDimensions' style={{ height: '100vh' }}>
-          <div className='content'>
-            <div className='navBar' style={navBarStyles}>
-              <NavBar />
-            </div>
-            <div className='searchBar' style={searchBarStyles}>
-              <SearchBar />
-            </div>
-            <div>
-              <Slides />
-            </div>
-          </div>
-        </div>
-      </Parallax> */
+export default Categories;

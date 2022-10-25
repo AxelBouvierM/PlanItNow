@@ -3,9 +3,7 @@ import styled from 'styled-components'
 
 import Icon from '../../images/pinLogoEstirado.png'
 import { IconContext } from "react-icons";
-import { RiInstagramLine, RiArrowDropUpLine } from 'react-icons/ri'
-import { FaFacebookSquare } from 'react-icons/fa'
-
+import { RiInstagramLine, RiArrowDropUpLine, RiGithubLine } from 'react-icons/ri'
 
 const AllPagesFooter = styled.footer`
 	width: 100vw;
@@ -97,16 +95,16 @@ export function Footer() {
 					</IconContext.Provider>
 				</SocialIcon>
 			</SocialButtons2>
-			<a href='https://www.facebook.com/' target="_blank" rel="noreferrer">
+			<a href='https://github.com/AxelBouvierM/PlanItNow/' target="_blank" rel="noreferrer">
 				<SocialButtons type='button' >
 					<SocialIcon>
 						<IconContext.Provider value={{
 							style: { verticalAlign: 'middle' },
 							color: 'white',
-							className: 'facebook',
+							className: 'Github',
 							size: '2em',
 							}}>
-									<FaFacebookSquare />
+							<RiGithubLine />
 						</IconContext.Provider>
 					</SocialIcon>
 				</SocialButtons>
@@ -117,7 +115,7 @@ export function Footer() {
 						<IconContext.Provider value={{
 							style: { verticalAlign: 'middle' },
 							color: 'white',
-							className: 'facebook',
+							className: 'Instagram',
 							size: '2.1em'
 							}}>
 							<RiInstagramLine />
@@ -128,7 +126,7 @@ export function Footer() {
 					 
 		</SocialContainer>
 		<Line />
-		<CopPhrase>©2022 Plan It Now, Holberton School</CopPhrase>
+		<CopPhrase>©2022 Plan It Now, Holberton School Portfolio</CopPhrase>
 	</AllPagesFooter>
   )
 }
