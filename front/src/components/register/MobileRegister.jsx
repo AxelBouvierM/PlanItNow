@@ -278,10 +278,13 @@ function Register() {
       'Content-Encoding': 'gzip, deflate, br',
     };
 
+    const imagePicker = Math.floor(Math.random() * 12);
+
     const regData = {
       'username': username,
       'mail': mail,
-      'password': password
+      'password': password,
+      'avatar': imagePicker
     };
 
     setLoading(true);
