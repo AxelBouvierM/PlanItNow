@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
@@ -30,18 +30,6 @@ const LogoContainer = styled.div`
 const Logo = styled.img`
 	max-width: 10em;
 	max-height: 10em;
-	height: fit-content;
-	opacity: 1;
-	transition: 0.6s ease-in-out;
-	&:hover {
-		transform: translateX(1em);
-		transition: 0.6s ease-in-out;
-	}
-`;
-
-const AppLogo = styled.img`
-	max-width: 7em;
-	max-height: 7em;
 	height: fit-content;
 	opacity: 1;
 	transition: 0.6s ease-in-out;
@@ -230,14 +218,16 @@ function DesktopLogin() {
 	const [error, setError] = useState(false);
 	const navigate = useNavigate();
 
-	axios.get('/login/check')
-		.then((res) => {
-			if (res.data.response.status === 'Ok') navigate('/inicio');
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-
+  useEffect(() => {
+    axios.get('/login/check')
+    .then((res) => {
+      if (res.data.response.status === 'Ok') navigate('/inicio');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, [navigate])
+    
 	function SendFormInput(event) {
 		event.preventDefault()
 		const headers = {
