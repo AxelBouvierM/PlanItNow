@@ -134,7 +134,7 @@ for category in categories:  # traverse all the caregories
             for element in elements:
                 elements[element] = re.sub(' +', ' ', elements[element])  # Regular expression to replace more than one space.
             if '/' in price:
-                price = 'Sin información visitar link del evento'
+                elements['price'] = 'Sin información visitar link del evento'
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category} ({category}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
