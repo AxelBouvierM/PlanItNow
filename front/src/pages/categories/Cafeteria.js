@@ -111,7 +111,7 @@ const FooterStyle = {
 	bottom: '0',
 }
 
-function Music() {
+function Cafeteria() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
@@ -170,4 +170,4 @@ function Music() {
 	)
 }
 
-export default Music
+export default Cafeteria

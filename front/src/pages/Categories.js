@@ -57,7 +57,7 @@ const navBarStyles = {
 
 };
 
-function Inicio() {
+function Categories() {
   const navigate = useNavigate();
 
   axios.get('/login/check')
@@ -93,7 +93,7 @@ function Inicio() {
   );
 }
 
-export default Inicio;
+export default Categories;
 
 /* <Parallax strength={500}>
         <Background className='customBg' bgImageStyle={bgStyles}>
