@@ -1,11 +1,10 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router-dom';
 import profileBg from '../images/landpageBg1.jpg';
 import { NavBar } from '../components/header/NavBar.jsx';
 import { Footer } from '../components/footer/Footer';
-
 import { avatarImages } from '../components/profile/ProfileImages';
 import ChangePswdModal from '../components/body/modal/ChangePswdModal';
 
@@ -137,6 +136,16 @@ const Button = styled.button`
 function Profile() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
+	const navigate = useNavigate();
+
+	axios.get('/login/check')
+		.then((res) => {
+			if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+
 
 	useEffect(() => {
 		axios.get('/user')
