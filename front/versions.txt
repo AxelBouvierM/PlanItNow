@@ -24,6 +24,8 @@ sudo apt-get install -y nodejs
   -> react-slick: npm i react-slick
   -> slick-carousel: npm install slick-carousel
   
+  AGENDA: 
+  -> react-calendar: npm install --save @fullcalendar/react @fullcalendar/daygrid @fullcalendar/core
 	SEARCHBAR:
 	-> framer motion: npm install framer-motion
 	-> styled-components: npm install styled-components --save

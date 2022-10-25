@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Icon from '../../images/testLogo.png'
+import Icon from '../../images/pinLogoEstirado.png'
 import { IconContext } from "react-icons";
-import { RiInstagramLine, RiArrowDropUpLine } from 'react-icons/ri'
-import { FaFacebookSquare } from 'react-icons/fa'
-
+import { RiInstagramLine, RiArrowDropUpLine, RiGithubLine } from 'react-icons/ri'
 
 const AllPagesFooter = styled.footer`
 	width: 100vw;
@@ -16,15 +14,15 @@ const AllPagesFooter = styled.footer`
 `;
 
 const LogoContainer = styled.div`
-	width: fit-content;
 	display: flex;
 	position: relative;
+	padding-bottom: 0.6em;
 `;
 
 const Logo = styled.img`
-	width: 7em;
-	height: 7em;
-	opacity: 0.8;
+	max-width: 7em;
+	width: 20%;
+	opacity: 0.7;
 `;
 
 const SocialContainer = styled.div`
@@ -38,9 +36,22 @@ const SocialButtons = styled.button`
 	position: relative;
 	vertical-align: middle;
 	opacity: 0.8;
+	margin-right: 0.2em;
 	cursor: pointer;
 	background: none;
 	border: none;
+`;
+
+const SocialButtons2 = styled.button`
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	opacity: 0.8;
+	margin-right: 0.2em;
+	cursor: pointer;
+	background: none;
+	border: none;
+	border-bottom: 1px solid white;
 `;
 
 const SocialIcon = styled.i`
@@ -50,7 +61,7 @@ const Line = styled.span`
 	display:block;
    	width: 100%;
 	margin-top: 1em;
-   	border-top: 1px solid #ccc
+   	border-top: 1px solid #ccc;
 `;
 
 const CopPhrase = styled.p`
@@ -59,7 +70,7 @@ const CopPhrase = styled.p`
 	opacity: 0.8;
 `;
 
-function Footer() {
+export function Footer() {
 	
 	function goTop() {
 		document.body.scrollTop = 0; // for safari
@@ -72,53 +83,50 @@ function Footer() {
 			<Logo src={Icon} />
 		</LogoContainer>
 		<SocialContainer>
-			<a href='https://www.facebook.com/'>
+			<SocialButtons2 type='button' onClick={goTop}>
+				<SocialIcon>
+					<IconContext.Provider value={{
+						style: { verticalAlign: 'middle' },
+						color: 'white',
+						className: 'facebook',
+						size: '2em'
+						}}>
+						<RiArrowDropUpLine />
+					</IconContext.Provider>
+				</SocialIcon>
+			</SocialButtons2>
+			<a href='https://github.com/AxelBouvierM/PlanItNow/' target="_blank" rel="noreferrer">
 				<SocialButtons type='button' >
 					<SocialIcon>
 						<IconContext.Provider value={{
 							style: { verticalAlign: 'middle' },
 							color: 'white',
-							className: 'facebook',
+							className: 'Github',
 							size: '2em',
 							}}>
-									<FaFacebookSquare />
+							<RiGithubLine />
 						</IconContext.Provider>
 					</SocialIcon>
 				</SocialButtons>
 			</a>
-			<a href='https://www.instagram.com/'>
+			<a href='https://www.instagram.com/planitnow_' target="_blank" rel="noreferrer">
 				<SocialButtons type='button'>
 					<SocialIcon>
 						<IconContext.Provider value={{
 							style: { verticalAlign: 'middle' },
 							color: 'white',
-							className: 'facebook',
-							size: '2.2em'
+							className: 'Instagram',
+							size: '2.1em'
 							}}>
 							<RiInstagramLine />
 						</IconContext.Provider>
 					</SocialIcon>
 				</SocialButtons>
 			</a>
+					 
 		</SocialContainer>
 		<Line />
-		<CopPhrase>©2022 Plan It Now, Holberton School</CopPhrase>
+		<CopPhrase>©2022 Plan It Now, Holberton School Portfolio</CopPhrase>
 	</AllPagesFooter>
   )
 }
-
-export default Footer
-
-
-/* <SocialButtons type='button' onClick={goTop}>
-				<SocialIcon>
-					<IconContext.Provider value={{
-						style: { verticalAlign: 'middle' },
-						color: 'white',
-						className: 'facebook',
-						size: '3.5em'
-						}}>
-						<RiArrowDropUpLine />
-					</IconContext.Provider>
-				</SocialIcon>
-			</SocialButtons> */ 

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Outlet, Link } from 'react-router-dom';
 
-import testLogo from '../../images/testLogo.png'
+import testLogo from '../../images/pinLogoApp.png'
 
 const HeaderContainer = styled.div`
 	display: flex;
@@ -11,7 +11,7 @@ const HeaderContainer = styled.div`
   padding: 0 3em;
   top: 0;
   z-index: 3;
-  @media all and (max-width:37em) {
+  @media all and (max-width:600px) {
     & {
       padding: 0 1em;
     }
@@ -27,9 +27,8 @@ const LogoContainer = styled.div`
 
 const Logo = styled.img`
 	width: 7em;
-	height: 7em;
 	opacity: 1;
-  @media all and (max-width:37em) {
+  @media all and (max-width:600px) {
     & {
     width: 5em;
     height: 5em;
@@ -45,11 +44,11 @@ const ButtonsContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-left: auto;
+  gap: 1em;
 `;
 
-const AccountButton = styled.a`
+const AccountButton = styled.button`
   display:inline-block;
-  margin: 0 1em;
   padding:0.35em 1.2em;
   border:0.1em solid #FFFFFF;
   border-radius:0.12em;
@@ -60,6 +59,9 @@ const AccountButton = styled.a`
   color:#FFFFFF;
   text-align:center;
   transition: all 0.2s;
+  background-color: transparent;
+  font-size: 0.9em;
+  cursor: pointer;
   &:hover {
     color:#000000;
     background-color: #fafafa;
@@ -72,11 +74,6 @@ const AccountButton = styled.a`
 }
 `;
 
-const ButtonTitle = styled.span`
-	z-index: 1;
-  position: relative;
-`;
-
 function LandPageHeader() {
   return (
     <HeaderContainer>
@@ -84,11 +81,8 @@ function LandPageHeader() {
         <Logo src={testLogo} />
       </LogoContainer>
       <ButtonsContainer>
-        <Link to="/register">
-          <AccountButton type="button"><ButtonTitle>Registrarse</ButtonTitle></AccountButton>
-        </Link>
-        <Link to="/login">
-          <AccountButton type="button"><ButtonTitle>Iniciar sesión</ButtonTitle></AccountButton>
+        <Link to="/ingresar">
+          <AccountButton type="button">Iniciar sesión</AccountButton>
         </Link>
         <Outlet />
       </ButtonsContainer>
