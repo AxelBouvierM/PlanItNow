@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 import rambla from '../images/rambla6.jpg'
 import { NavBar } from '../components/header/NavBar'

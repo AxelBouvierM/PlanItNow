@@ -39,18 +39,6 @@ const Logo = styled.img`
 	}
 `;
 
-const AppLogo = styled.img`
-	max-width: 7em;
-	max-height: 7em;
-	height: fit-content;
-	opacity: 1;
-	transition: 0.6s ease-in-out;
-	&:hover {
-		transform: translateX(1em);
-		transition: 0.6s ease-in-out;
-	}
-`;
-
 const Text = styled.p`
 	display: flex;
 	position: fixed;
