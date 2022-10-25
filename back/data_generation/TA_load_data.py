@@ -101,9 +101,9 @@ for category in categories:  # traverse all the caregories
                     except Exception:
                         continue
             except Exception:
-                description = 'Sin información'
+                description = 'Sin información visitar link del evento'
             info_place = soup.find(id='lugar')
-            place = 'Sin información'
+            place = 'Sin información visitar link del evento'
             # Change date in long format
             try:
                 since_date = datetime.datetime.strptime(since_date, '%d/%m/%Y')
@@ -133,6 +133,8 @@ for category in categories:  # traverse all the caregories
             }
             for element in elements:
                 elements[element] = re.sub(' +', ' ', elements[element])  # Regular expression to replace more than one space.
+            if '/' in price:
+                price = 'Sin información visitar link del evento'
             """Create the query to insert data into the database"""
             insert = f'INSERT INTO {category} ({category}ID, title, image, link, place, date, price, description)'
             insert += ' VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)'
