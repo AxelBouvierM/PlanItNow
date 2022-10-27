@@ -1,5 +1,7 @@
-import React from 'react';
+import {React, useEffect} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 import rambla from '../images/rambla6.jpg'
 import { NavBar } from '../components/header/NavBar'
@@ -76,6 +78,18 @@ const searchBarStyles = {
 };
 
 function Inicio() {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    axios.get('/login/check')
+      .then((res) => {
+        if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [navigate])
+
   return (
     <>
       <Background>

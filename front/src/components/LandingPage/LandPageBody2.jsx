@@ -1,71 +1,130 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { RiMapLine, RiPushpinLine, RiCalendarTodoLine } from 'react-icons/ri';
+import { motion } from 'framer-motion';
+import concert from '../../images/concert.jpg';
 
 const BodyContainer = styled.div`
-  	display: block;
-  	position: absolute;
+  	display: flex;
+  	position: relative;
   	width: 100vw;
-	top: 50%;
 	padding: 0 5em;
-    transform: translateY(-50%);
 	z-index: 3;
-	@media all and (max-width:600px) {
-    	& {
-			padding: 0 1em;
-    	}
-  	}
+	align-items: center;
 `;
 
-const Phrase = styled.p`
+const Image = styled(motion.img)`
 	display: inline-block;
+	position: relative;
+	max-width: 50%;
+	max-height: 85vh;
+	color: white;
+	border: none;
+	border-top: 1px solid #fafafa;
+	border-bottom: 1px solid #fafafa;	
+	text-align: center;
+	@media all and (max-width: 1280) {
+		max-width: 20%;
+		max-height: 50vh;
+	}
+`;
+
+const ContentContainer = styled.div`
+	display: flex;
+	position: relative;
 	width: fit-content;
 	color: white;
   	font-size: 2em;
-	font-weight: 350;
 	margin: 0 0.5em;
-	font-style: italic;
-	@media all and (max-width:1200px) and (min-width:801px) {
-    	& {
-			font-size: 1.8em;
-			margin: auto;
-			padding: 0.5em;
-    	}
-  	}
-	@media all and (max-width:800px) and (min-width:601px) {
-    	& {
-			font-size: 1.3em;
-			margin: auto;
-			padding: 0.5em;
-    	}
-  	}
-	@media all and (max-width:600px) {
-    	& {
-			display: block;
-     		font-size: 1.5em;
-			margin: auto;
-			padding: 0.5em;
-    	}
-  	}
 `;
 
-const Icon = styled.i`
-  vertical-align: middle;
-  margin: 0 0.4em;
+const Texto = styled.div`
+	display: inline-block;
+	position: relative;
+	max-height: 85vh;
+	color: white;
+  	font-size: 1.5em;
+	padding: 0 0.5em;
+	margin: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
 `;
 
-function LandPageBody() {
+const Phrase = styled(motion.p)`
+	display: flex;
+	position: relative;
+	color: white;
+  	font-size: 1em;
+	top: 0;
+	font-family: 'kanit', sans-serif;
+`;
+
+const Phrase2 = styled(motion.p)`
+	display: flex;
+	position: relative;
+	color: white;
+	margin: 1em 0 0.5em;
+  	font-size: 0.7em;
+	font-weight: 300;
+	font-family: 'Barlow', sans-serif;
+`;
+
+const Phrase3 = styled(motion.p)`
+	display: flex;
+	position: relative;
+	color: white;
+  	font-size: 0.7em;
+	font-weight: 300;
+	font-family: 'Barlow', sans-serif;
+`;
+
+function LandPageBody2() {
   return (
 	<>
 		<BodyContainer>
-			<Phrase><Icon><RiMapLine /></Icon>Descubre lugares</Phrase>
-			<Phrase><Icon><RiPushpinLine /></Icon>Elige tu evento</Phrase>
-			<Phrase><Icon><RiCalendarTodoLine /></Icon>Agenda tu fecha</Phrase>
+			<ContentContainer>
+				<Image src={concert} alt='concert'
+					initial={{ opacity: 0, x: -50 }}
+					whileInView={{ opacity: 1, x: 0 }}
+					transition={{
+						ease: "easeInOut",
+						duration: 1.5,
+						delay: 0.4,
+					}}
+					viewport={{ once: true }}
+				/>
+				<Texto>
+					<Phrase
+						initial={{ opacity: 0, x: -50 }}
+						whileInView={{ opacity: 1, x: 0 }}
+						transition={{
+							ease: "easeInOut",
+							duration: 1.5,
+							delay: 0.4,
+						}}
+						viewport={{ once: true }}>Nuestro origen</Phrase>
+					<Phrase2
+						initial={{ opacity: 0, x: 50 }}
+						whileInView={{ opacity: 1, x: 0 }}
+						transition={{
+							ease: "easeInOut",
+							duration: 1.5,
+							delay: 0.4,
+						}} 
+						viewport={{ once: true }}>PIN! Surge como nexo entre el usuario y las distintas actividades que ofrece Montevideo. </Phrase2>
+					<Phrase3
+						initial={{ opacity: 0, x: -50 }}
+						whileInView={{ opacity: 1, x: 0 }}
+						transition={{
+							ease: "easeInOut",
+							duration: 1.5,
+							delay: 0.4,
+						}}
+						viewport={{ once: true }}>Debido a la insuficiente difusión de eventos, espacios de entretenimiento y ofertas gastronómicas, decidimos diseñar una aplicación que reúna la mayor información posible, permitiendo así al usuario encontrar en un solo lugar una amplia variedad de opciones.</Phrase3>
+				</Texto>
+			</ContentContainer>
 		</BodyContainer>
 	</>
   )
 }
-
 	
-export default LandPageBody
+export default LandPageBody2
