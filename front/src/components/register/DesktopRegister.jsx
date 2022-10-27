@@ -258,9 +258,7 @@ function Register() {
         }, [navigate])
 
         function checkPassRequirements(string = "") {
-                console.log("STRING", string);
                 const intMatch = string.match(/\d+/g);
-                console.log("resultado:", intMatch);
                 const upperMatch = string.match(/[A-Z]/);
 
                 setNicePassword(false);
