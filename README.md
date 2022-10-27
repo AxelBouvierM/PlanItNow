@@ -28,7 +28,7 @@ New user:
 ## PIN!
 www.planitnow.app
 
-www.instagram.com/planitnow_
+www.instagram.com/planitnow_/
 
 ### Authors
 
