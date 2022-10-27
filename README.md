@@ -1,4 +1,4 @@
-![Logo](https://i.postimg.cc/wjhjK4nL/pin-Logo-Estirado-B.png)
+![Logo](https://i.postimg.cc/g2GKRQy2/pin-Logo-Estirado.png)
 
 PIN! Borns as the nexus between
 the user and the different activities that 
