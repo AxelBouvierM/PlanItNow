@@ -29,17 +29,17 @@ const ContentContainer = styled.div`
 `;
 
 const AppLogo = styled.img`
-	max-width: 7em;
-	max-height: 7em;
-	height: fit-content;
-	opacity: 1;
-	transition: 0.6s ease-in-out;
+        max-width: 7em;
+        max-height: 7em;
+        height: fit-content;
+        opacity: 1;
+        transition: 0.6s ease-in-out;
 `;
 
 const GoBackContainer = styled.a`
   display: flex;
-	position: relative;
-	width: 100vw;
+        position: relative;
+        width: 100vw;
   padding: 3em 3em 0 3em;
 `;
 
@@ -86,7 +86,7 @@ const Title = styled.p`
   font-size: 1.8em;
   transition: 0.3s ease-in-out;
   &:hover {
-	color: white;
+        color: white;
   transition: 0.5s ease-in-out;
   }
 `;
@@ -121,7 +121,7 @@ const Input = styled.input`
   padding-left: 1.5em;
   &:focus {
     outline: none;
-	transition: all 200ms ease-in-out;
+        transition: all 200ms ease-in-out;
     &::placeholder {
       opacity: 0;
       overflow: auto;
@@ -195,7 +195,7 @@ const LoginText = styled.a`
   font-size: 0.8em;
   transition: 0.3s ease-in-out;
   &:hover {
-	color: white;
+        color: white;
   transition: 0.5s ease-in-out;
   }
 `;
@@ -251,30 +251,35 @@ function Register() {
       });
   }, [navigate])
 
-  function checkPassRequirements(string) {
+  function checkPassRequirements(string="") {
+    console.log("STRING", string);
     const intMatch = string.match(/\d+/g);
+    console.log("resultado:", intMatch);
     const upperMatch = string.match(/[A-Z]/);
 
     setNicePassword(false);
     if (string.length >= 6 && intMatch != null && upperMatch != null) {
       setPassError(null);
-      setNicePassword(true);
+      return (true);
     } else if (string.length < 6) {
       setPassError('La contraseña debe tener al menos 7 caracteres.');
-      setNicePassword(false);
+      return(false);
     } else if (intMatch == null) {
       setPassError('La contraseña debe tener al menos 1 número.');
-      setNicePassword(false);
+      return(false);
     } else if (upperMatch == null) {
       setPassError('La contraseña debe tener al menos 1 mayúscula.');
-      setNicePassword(false);
+      return(false);
     } else {
       setPassError('Ha ocurrido un error, vuelve a intentarlo');
+      return (false);
     }
   }
 
   async function SendFormInput(event) {
-    event.preventDefault()
+    event.preventDefault();
+    if (!checkPassRequirements(password)) return;
+    console.log("asaga");
     const headers = {
       'Content-Type': 'application/json',
       'Content-Encoding': 'gzip, deflate, br',
@@ -355,10 +360,8 @@ function Register() {
               <Input
                 type="password"
                 placeholder="Contraseña"
-                onChange={(event) => {
-                  checkPassRequirements(event.target.value)
-                  if (nicePassword) setPass(event.target.value)
-                }}
+                value={password}
+                onChange={(e) => { setPass(e.target.value)}}
                 required>
               </Input>
             </InputContainer>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import cafe from '../../images/cafe.jpg';
+import concert from '../../images/concert.jpg';
 
 const BodyContainer = styled.div`
   	display: flex;
@@ -12,14 +12,15 @@ const BodyContainer = styled.div`
 	align-items: center;
 `;
 
-const Image = styled.img`
+const Image = styled(motion.img)`
 	display: inline-block;
 	position: relative;
 	max-width: 50%;
 	max-height: 85vh;
 	color: white;
 	border: none;
-	border-top: solid 5px #fafafa;
+	border-top: 1px solid #fafafa;
+	border-bottom: 1px solid #fafafa;	
 	text-align: center;
 	@media all and (max-width: 1280) {
 		max-width: 20%;
@@ -81,7 +82,16 @@ function LandPageBody2() {
 	<>
 		<BodyContainer>
 			<ContentContainer>
-				<Image src={cafe} alt='coffee'/>
+				<Image src={concert} alt='concert'
+					initial={{ opacity: 0, x: -50 }}
+					whileInView={{ opacity: 1, x: 0 }}
+					transition={{
+						ease: "easeInOut",
+						duration: 1.5,
+						delay: 0.4,
+					}}
+					viewport={{ once: true }}
+				/>
 				<Texto>
 					<Phrase
 						initial={{ opacity: 0, x: -50 }}

@@ -127,8 +127,8 @@ function LandPageBody3() {
 					whileInView={{ opacity: 1 }}
 					transition={{
 						ease: "easeInOut",
-						duration: 2,
-						delay: 0,
+						duration: 2.5,
+						delay: 0.1,
 					}}
 					viewport={{ once: true }}>Nuestro Equipo</Title>
 				<ContentWrapper>

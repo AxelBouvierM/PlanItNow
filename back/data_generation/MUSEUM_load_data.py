@@ -57,7 +57,7 @@ while True:  # loop to get more results until next_page is not None
             description += ' - Horario: '
             for day in open_days:
                 description += day.replace(': ', ' ').replace('–', ' a ') + ' - '
-            description = description[:-1]
+            description = description[:-3]
         link = results.get('website')
         image_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&maxheight=1600&photo_reference={photo_reference}&language=es-419&key={API_KEY}'
         chrome_options = webdriver.ChromeOptions()  # Class for managing ChromeDriver specific options.
@@ -83,7 +83,7 @@ while True:  # loop to get more results until next_page is not None
         for element in elements:  # loop to set those attributes that we couldn´t get information
             if elements[element] is None:
                 elements[element] = 'Sin información'
-            re.sub(' +', ' ', element)  # Regular expression to replace more than one space.
+            elements[element] = re.sub(' +', ' ', elements[element])  # Regular expression to replace more than one space.
         """Create the query to insert data into the database"""
         insert = """INSERT INTO museum (museumID, title, image, link, place, date, price, description) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"""
         record = (elements['title'], elements['image'], elements['link'], elements['place_location'], elements['date'], elements['price'], elements['description'])
