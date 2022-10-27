@@ -1,201 +1,221 @@
 import React from 'react';
 import styled from 'styled-components';
-import cafe from '../../images/cafe.jpg';
+import { motion } from 'framer-motion';
+
+import { RiLinkedinFill, RiGithubFill } from 'react-icons/ri';
+import axel from '../../images/landpagePics/axel.jpg';
+import maxi from '../../images/landpagePics/maxi.jpg';
+import mati from '../../images/landpagePics/mati.jpg';
+import eze from '../../images/landpagePics/eze.jpg';
+
 
 const BodyContainer = styled.div`
-  	display: block;
-  	position: absolute;
+  	display: flex;
+  	position: relative;
   	width: 100vw;
-	top: 50%;
+	height: 100vh;
 	padding: 0 5em;
-    transform: translateY(-50%);
 	z-index: 3;
-	@media all and (max-width:600px) {
-    	& {
-			padding: 0 1em;
-    	}
-  	}
+	justify-content: center;
+	align-items: center;
+`;
+
+const Divisor = styled.div`
+	display: block;
+	position: absolute;
+	left: 0; 
+  	right: 0;
+	top: 0;
+  	margin-left: auto; 
+  	margin-right: auto;
+	padding: 0 5em;
+  	width: 100%;
+`;
+
+const Title = styled(motion.p)`
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	color: white;
+	font-size: 3em;
+	font-family: 'kanit', sans-serif;
+	margin: 1em 0;
+	text-align: right;
+`;
+
+const ContentWrapper = styled.div`
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	color: white;
+  	font-size: 1em;
+	text-align: center;
+	margin: 0 0.5em;
+`;
+const ContentContainer = styled(motion.div)`
+	display: inline-block;
+	position: relative;
+	width: 22.5%;
+	color: white;
+  	font-size: 1em;
+	text-align: center;
+	margin: 0 0.5em;
 `;
 
 const Image = styled.img`
-	display: inline-block;
+	display: block;
 	position: relative;
-	height: 80vh;
+	max-width: 100%;
+	max-height: 50vh;
 	color: white;
 	border: none;
-	border-top: solid 5px #7e4894;
 	text-align: center;
-	@media all and (min-width:1151px) and (max-width:1280px) {
-    	& {
-			width: 70%;
-			height: 70vh;
-			margin: auto;
-		}
-  	}
-	@media all and (min-width:900px) and (max-width: 1150px) {
-    	& {
-			width: 70%;
-			height: 60vh;
-			margin: auto;
-		}
-  	}
-	@media all and (min-width:601px) and (max-width: 899px) {
-    	& {
-			width: 70%;
-			height: 60vh;
-			margin: auto;
-		}
-  	}
-	@media all and (max-width:600px) {
-    	& {
-			width: 90%;
-			height: 50vh;
-			margin: auto;
-    	}
-  	}
-`;
+	margin-left: auto;
+  	margin-right: auto;
+	margin-top: 1em;
 
-const ContentContainer = styled.div`
-	display: inline-block;
-	position: relative;
-	width: fit-content;
-	color: white;
-  	font-size: 2em;
-	font-weight: 350;
-	margin: 0 0.5em;
-	@media all and (max-width:900px) {
-    	& {
-			display: block;
-			width: 100%;
-			height: 70vh;
-			margin: auto;
-			text-align: center;
-
-    	}
-  	}
 `;
 
 const Phrase = styled.p`
-	display: inline-block;
-	position: absolute;
-	width: 100%;
+	display: block;
+	position: relative;
 	color: white;
-  	font-size: 1.5em;
-	font-weight: 500;
-	margin: 0 0.5em;
-	top: 0;
-	@media all and (min-width:900px) and (max-width:1280px) {
-    	& {
-			font-size: 1.3em;
-		}
-  	}
-	@media all and (min-width:601px) and (max-width: 899px) {
-    	& {
-			width: 70%;
-			height: 60vh;
-			margin: auto;
-		}
-  	}
-	@media all and (max-width:600px) {
-    	& {
-			display: flex;
-			position: relative;
-			margin: auto;
-			width: 100%;
-			top: 0;
-			font-size: 0.5em;
-    	}
-  	}
+  	font-size: 1.2em;
+	font-family: 'Lexend', sans-serif;
+	margin: 1em;
 `;
 
-const Phrase2 = styled.p`
+const SocialContainer = styled.p`
 	display: inline-block;
-	position: absolute;
-	width: 20em;
-	margin: 0 1em;
-	padding-top: 1em;
+	position: relative;
 	color: white;
-  	font-size: 1em;
-	font-weight: 350;
-	top: 10%;
-	font-style: italic;
-	@media all and (min-width:1151px) and (max-width:1280px) {
-    	& {
-			width: 16.5em;
-			padding-top: 0.2em;
-			font-size: 1.2em;
-		}
-  	}
-	@media all and (min-width:900px) and (max-width:1150px) {
-    	& {
-			width: 13em;
-			padding-top: 0.2em;
-			font-size: 1em;
-		}
-  	}
-	@media all and (max-width:600px) {
-    	& {
-			display: flex;
-			position: relative;
-			margin: auto;
-			width: 100%;
-			top: 0;
-			font-size: 0.5em;
-    	}
-  	}
+	font-family: 'Lexend', sans-serif;
 `;
 
-const Phrase3 = styled.p`
-	display: inline-block;
-	position: absolute;
-	width: 20em;
-	margin: 0 1em;
-	padding-top: 1em;
-	color: white;
-  	font-size: 1em;
-	font-weight: 350;
-	top: 25%;
-	font-style: italic;
-	@media all and (min-width:1151px) and (max-width:1280px) {
-    	& {
-			width: 16.5em;
-			padding-top: 0.2em;
-			font-size: 1.2em;
-		}
-  	}
-	@media all and (min-width:900px) and (max-width:1150px) {
-    	& {
-			width: 13em;
-			padding-top: 0.2em;
-			font-size: 1em;
-		}
-  	}
-	@media all and (max-width:600px) {
-    	& {
-			display: flex;
-			position: relative;
-			margin: auto;
-			width: 100%;
-			top: 0;
-			font-size: 0.5em;
-    	}
-  	}
+const SocialButton = styled.button`
+  display:inline-block;
+  padding:0.35em 1em;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family: 'Lexend', sans-serif;
+  color:#FFFFFF;
+  text-align:center;
+  transition: all 0.2s;
+  background-color: transparent;
+  font-size: 1em;
+  margin: 0 0.5em;
+  cursor: pointer;
+  &:hover {
+    color:#000000;
+    background-color: #fafafa;
+  }
 `;
 
-function LandPageBody() {
-  return (
-	<>
+const Icon = styled.i`
+  vertical-align: middle;
+  font-size: 1em;
+`;
+
+function LandPageBody3() {
+	return (
 		<BodyContainer>
-			<ContentContainer>
-				<Image src={cafe} alt='coffee'/>
-				<Phrase>Nuestro origen</Phrase>
-				  <Phrase2>PIN! Surge como nexo entre el usuario y las distintas actividades que ofrece Montevideo. </Phrase2>
-				  <Phrase3>Debido a la insuficiente difusión de eventos, espacios de entretenimiento y ofertas gastronómicas, decidimos diseñar una aplicación que reúna la mayor información posible, permitiendo así al usuario encontrar en un solo lugar una amplia variedad de opciones.</Phrase3>
-			</ContentContainer>
+			<Divisor>
+				<Title
+					initial={{ opacity: 0 }}
+					whileInView={{ opacity: 1 }}
+					transition={{
+						ease: "easeInOut",
+						duration: 2,
+						delay: 0,
+					}}
+					viewport={{ once: true }}>Nuestro Equipo</Title>
+				<ContentWrapper>
+					<ContentContainer
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						transition={{
+							ease: "easeInOut",
+							duration: 1.25,
+							delay: 0.5,
+						}}
+						viewport={{ once: true }}>
+						<Image src={axel} alt='axel' />
+						<Phrase>Axel Bouvier</Phrase>
+						<SocialContainer>
+							<a href='https://www.linkedin.com/in/axel-bouvier-172b76214/' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+							</a>
+							<a href='https://github.com/AxelBouvierM' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+							</a>
+						</SocialContainer>
+					</ContentContainer>
+					<ContentContainer
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						transition={{
+							ease: "easeInOut",
+							duration: 1.25,
+							delay: 1,
+						}}
+						viewport={{ once: true }}>
+						<Image src={maxi} alt='maximiliano'/>
+						<Phrase>Maximiliano Alonso</Phrase>
+						<SocialContainer>
+							<a href='https://www.linkedin.com/in/maximiliano-alonso-262b05123/' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+							</a>
+							<a href='https://github.com/MaxiHBTN' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+							</a>
+						</SocialContainer>
+					</ContentContainer>
+					<ContentContainer
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						transition={{
+							ease: "easeInOut",
+							duration: 1.25,
+							delay: 1.5,
+						}}
+						viewport={{ once: true }}>
+						<Image src={mati} alt='matias'/>
+						<Phrase>Matías Martínez</Phrase>
+						<SocialContainer>
+							<a href='https://www.linkedin.com/in/matiasmartinezhirsiger/' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+							</a>
+							<a href='https://github.com/MatiasMtz' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+							</a>
+						</SocialContainer>
+					</ContentContainer>
+					<ContentContainer
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						transition={{
+							ease: "easeInOut",
+							duration: 1.25,
+							delay: 2,
+						}}
+						viewport={{ once: true }}><Image src={eze} alt='ezequiel'/>
+						<Phrase>Ezequiel Silva</Phrase>
+						<SocialContainer>
+							<a href='https://www.linkedin.com/in/ezequiel-silva-perez-1262b115b/' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+							</a>
+							<a href='https://github.com/ezesilva95' target="_blank" rel="noreferrer">
+							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+							</a>
+						</SocialContainer>
+					</ContentContainer>
+				</ContentWrapper>
+			</Divisor>
 		</BodyContainer>
-	</>
-  )
+	)
 }
 
-	
-export default LandPageBody
+
+export default LandPageBody3
