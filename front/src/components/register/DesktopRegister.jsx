@@ -20,40 +20,40 @@ const Background = styled.div`
 `;
 
 const LogoContainer = styled.div`
-	display: flex;
-	position: fixed;
+        display: flex;
+        position: fixed;
   bottom: 0;
   opacity: 0.7;
-	margin: 3rem 3rem;
+        margin: 3rem 3rem;
 `;
 
 const Logo = styled.img`
-	max-width: 10em;
-	max-height: 10em;
-	height: fit-content;
-	opacity: 1;
-	transition: 0.6s ease-in-out;
-	&:hover {
-		transform: translateX(1em);
-		transition: 0.6s ease-in-out;
-	}
+        max-width: 10em;
+        max-height: 10em;
+        height: fit-content;
+        opacity: 1;
+        transition: 0.6s ease-in-out;
+        &:hover {
+                transform: translateX(1em);
+                transition: 0.6s ease-in-out;
+        }
 `;
 
 const GoBackContainer = styled.a`
   display: flex;
-	position: absolute;
-	width: 100vw;
+        position: absolute;
+        width: 100vw;
   padding: 3rem;
 `;
 
 const Text = styled.p`
-	display: flex;
-	position: fixed;
+        display: flex;
+        position: fixed;
   width: 40%;
   bottom: 8%;
   color: #fafafa;
   font-size: 2.5em;
-	margin: 3rem 3rem;;
+        margin: 3rem 3rem;;
 `;
 
 const GoBackButton = styled.a`
@@ -128,7 +128,7 @@ const Input = styled.input`
   padding-left: 1.5em;
   &:focus {
     outline: none;
-	transition: all 200ms ease-in-out;
+        transition: all 200ms ease-in-out;
     &::placeholder {
       opacity: 0;
       overflow: auto;
@@ -202,7 +202,7 @@ const LoginText = styled.a`
   font-size: 0.8em;
   transition: 0.3s ease-in-out;
   &:hover {
-	color: white;
+        color: white;
   transition: 0.3s ease-in-out;
   }
 `;
@@ -236,166 +236,171 @@ const ErrorMessage = styled.p`
 `;
 
 function Register() {
-	const [username, setUser] = useState('')
-	const [mail, setMail] = useState('')
-	const [password, setPass] = useState('')
-	const [isLoading, setLoading] = useState(false);
-	const [Error, setError] = useState('');
-	const [passError, setPassError] = useState('');
-	const [redirect, setRedirect] = useState(false);
-	const [nicePassword, setNicePassword] = useState(false);
-	const [correctRegister, setCorrectRegister] = useState(false);
-	const navigate = useNavigate();
+        const [username, setUser] = useState('')
+        const [mail, setMail] = useState('')
+        const [password, setPass] = useState('')
+        const [isLoading, setLoading] = useState(false);
+        const [Error, setError] = useState('');
+        const [passError, setPassError] = useState('');
+        const [redirect, setRedirect] = useState(false);
+        const [nicePassword, setNicePassword] = useState(false);
+        const [correctRegister, setCorrectRegister] = useState(false);
+        const navigate = useNavigate();
 
-	useEffect(() => {
-		axios.get('/login/check')
-		.then((res) => {
-			if (res.data.response.status === 'Ok') navigate('/inicio');
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-	}, [navigate])
-	
-	function checkPassRequirements(string) {
-		const intMatch = string.match(/\d+/g);
-		const upperMatch = string.match(/[A-Z]/);
+        useEffect(() => {
+                axios.get('/login/check')
+                .then((res) => {
+                        if (res.data.response.status === 'Ok') navigate('/inicio');
+                })
+                .catch((err) => {
+                        console.log(err);
+                });
+        }, [navigate])
 
-		setNicePassword(false);
-		if (string.length >= 6 && intMatch != null && upperMatch != null) {
-			setPassError(null);
-			setNicePassword(true);
-		} else if (string.length < 6) {
-			setPassError('La contraseña debe tener al menos 7 caracteres.');
-			setNicePassword(false);
-		} else if (intMatch == null) {
-			setPassError('La contraseña debe tener al menos 1 número.');
-			setNicePassword(false);
-		} else if (upperMatch == null) {
-			setPassError('La contraseña debe tener al menos 1 mayúscula.');
-			setNicePassword(false);
-		} else {
-			setPassError('Ha ocurrido un error, vuelve a intentarlo');
-		}
-	}
+        function checkPassRequirements(string = "") {
+                console.log("STRING", string);
+                const intMatch = string.match(/\d+/g);
+                console.log("resultado:", intMatch);
+                const upperMatch = string.match(/[A-Z]/);
 
-	async function SendFormInput(event) {
-		event.preventDefault()
-		const headers = {
-			'Content-Type': 'application/json',
-			'Content-Encoding': 'gzip, deflate, br',
-		};
+                setNicePassword(false);
+                if (string.length >= 6 && intMatch != null && upperMatch != null) {
+                        setPassError(null);
+                        return (true);
+                        // console.log(string.length);
+                        // console.log(password);
+                } else if (string.length < 6) {
+                        setPassError('La contraseña debe tener al menos 7 caracteres.');
+                        return (false);
+                } else if (intMatch == null) {
+                        setPassError('La contraseña debe tener al menos 1 número.');
+                        return (false);
+                } else if (upperMatch == null) {
+                        setPassError('La contraseña debe tener al menos 1 mayúscula.');
+                        return (false);
+                } else {
+                        setPassError('Ha ocurrido un error, vuelve a intentarlo');
+                        return (false);
+                }
+        }
 
-		const imagePicker = Math.floor(Math.random() * 12);
+        async function SendFormInput(event) {
+                event.preventDefault();
+                if (!checkPassRequirements(password)) return;
+                console.log("qsafas");
+                const headers = {
+                        'Content-Type': 'application/json',
+                        'Content-Encoding': 'gzip, deflate, br',
+                };
 
-		const regData = {
-			'username': username,
-			'mail': mail,
-			'password': password,
-			'avatar': imagePicker
-		};
+                const imagePicker = Math.floor(Math.random() * 12);
 
-		setLoading(true);
+                const regData = {
+                        'username': username,
+                        'mail': mail,
+                        'password': password,
+                        'avatar': imagePicker
+                };
 
-		const res = await axios.post('/register', regData, { headers: headers })
-			.catch((err) => {
-				console.log(err);
-			});
+                setLoading(true);
 
-		if (res.data.response.status === 'Ok') {
-			setCorrectRegister(true);
-			setTimeout(() => setRedirect(true), 1500)
-		} else if (res.data.response.status === 'User already exists') {
-			setError('Este nombre de usuario ya esta en uso');
-		} else if (res.data.response.status === 'Mail already exists') {
-			setError('Ya existe una cuenta asociada con este correo');
-		} else if (res.data.response.status === 'Invalid user') {
-			setError('El nombre de usuario debe tener al menos 7 caracteres');
-		} else if (res.data.response.status === 'Please complete all the data') {
-			setError('Debes completar todos los campos');
-		} else {
-			setError('Ha ocurrido un error, vuelve a intentarlo');
-		}
-		setLoading(false);
-	};
+                const res = await axios.post('/register', regData, { headers: headers })
+                        .catch((err) => {
+                                console.log(err);
+                        });
 
-	if (redirect) navigate('/ingresar');
+                if (res.data.response.status === 'Ok') {
+                        setCorrectRegister(true);
+                        setTimeout(() => setRedirect(true), 1500)
+                } else if (res.data.response.status === 'User already exists') {
+                        setError('Este nombre de usuario ya esta en uso');
+                } else if (res.data.response.status === 'Mail already exists') {
+                        setError('Ya existe una cuenta asociada con este correo');
+                } else if (res.data.response.status === 'Invalid user') {
+                        setError('El nombre de usuario debe tener al menos 7 caracteres');
+                } else if (res.data.response.status === 'Please complete all the data') {
+                        setError('Debes completar todos los campos');
+                } else {
+                        setError('Ha ocurrido un error, vuelve a intentarlo');
+                }
+                setLoading(false);
+        };
 
-	return (
-		<Background>
-			<GoBackContainer>
-				<Link to="/" className='linkStyle'>
-					<GoBackButton type="button" className='button-hover'><Icon><RiArrowLeftLine style={{ verticalAlign: 'middle', marginBottom: '0.2em' }} /></Icon>Volver</GoBackButton>
-				</Link>
-				<Outlet />
-			</GoBackContainer>
-			<LogoContainer><Logo src={logo}></Logo></LogoContainer>
-			<Text>Accede a todo lo que Montevideo tiene para tí</Text>
-			<RegisterContainer>
-				<FormContainer onSubmit={SendFormInput}>
-					<TextSpace>REGÍSTRATE</TextSpace>
-					{Error && (
-						<ErrorWrapper>
-							<ErrorMessage><Icon><RiErrorWarningLine /></Icon>{Error}</ErrorMessage>
-						</ErrorWrapper>
-					)}
-					<InputContainer>
-						<Input
-							type="text"
-							placeholder="Usuario"
-							value={username}
-							onChange={(event) => setUser(event.target.value)}
-							required>
-						</Input>
-					</InputContainer>
-					<InputContainer>
-						<Input
-							type="text"
-							placeholder="Email"
-							value={mail}
-							onChange={(event) => setMail(event.target.value)}
-							required>
-						</Input>
-					</InputContainer>
-					<InputContainer>
-						<Input
-							type="password"
-							placeholder="Contraseña"
-							onChange={(event) => {
-								checkPassRequirements(event.target.value)
-								if (nicePassword) setPass(event.target.value)
-							}}
-							required>
-						</Input>
-					</InputContainer>
-					{passError && !correctRegister && (<PassReq><Icon><RiErrorWarningLine /></Icon>{passError}</PassReq>)}
-					{correctRegister && <Registered><Icon><RiCheckLine /></Icon>Te has registrado correctamente!</Registered>}
-					<DataContainer>
-						<ButtonStyle type="submit">
-							<Icon>
-								<IconContext.Provider value={{
-									style: { verticalAlign: 'middle' },
-									className: 'enter',
-									size: '1.4em'
-								}}>
-									<RiArrowRightLine />
-								</IconContext.Provider>
-							</Icon>
-						</ButtonStyle>
-						<Link to="/ingresar">
-							<LoginText>¿Ya tienes una cuenta?</LoginText>
-						</Link>
-						<Outlet />
-						{isLoading && (
-							<LoadingWrapper>
-								<MoonLoader loading color="white" size={20} />
-							</LoadingWrapper>
-						)}
-					</DataContainer>
-				</FormContainer>
-			</RegisterContainer>
-		</Background>
-	);
+        if (redirect) navigate('/ingresar');
+
+        return (
+                <Background>
+                        <GoBackContainer>
+                                <Link to="/" className='linkStyle'>
+                                        <GoBackButton type="button" className='button-hover'><Icon><RiArrowLeftLine style={{ verticalAlign: 'middle', marginBottom: '0.2em' }} /></Icon>Volver</GoBackButton>
+                                </Link>
+                                <Outlet />
+                        </GoBackContainer>
+                        <LogoContainer><Logo src={logo}></Logo></LogoContainer>
+                        <Text>Accede a todo lo que Montevideo tiene para tí</Text>
+                        <RegisterContainer>
+                                <FormContainer onSubmit={SendFormInput}>
+                                        <TextSpace>REGÍSTRATE</TextSpace>
+                                        {Error && (
+                                                <ErrorWrapper>
+                                                        <ErrorMessage><Icon><RiErrorWarningLine /></Icon>{Error}</ErrorMessage>
+                                                </ErrorWrapper>
+                                        )}
+                                        <InputContainer>
+                                                <Input
+                                                        type="text"
+                                                        placeholder="Usuario"
+                                                        value={username}
+                                                        onChange={(event) => setUser(event.target.value)}
+                                                        required>
+                                                </Input>
+                                        </InputContainer>
+                                        <InputContainer>
+                                                <Input
+                                                        type="text"
+                                                        placeholder="Email"
+                                                        value={mail}
+                                                        onChange={(event) => setMail(event.target.value)}
+                                                        required>
+                                                </Input>
+                                        </InputContainer>
+                                        <InputContainer>
+                                                <Input
+                                                        type="password"
+                                                        placeholder="Contraseña"
+                                                        value={password}
+                                                        onChange={(e) => setPass(e.target.value)}
+                                                        required>
+                                                </Input>
+                                        </InputContainer>
+                                        {passError && !correctRegister && (<PassReq><Icon><RiErrorWarningLine /></Icon>{passError}</PassReq>)}
+                                        {correctRegister && <Registered><Icon><RiCheckLine /></Icon>Te has registrado correctamente!</Registered>}
+                                        <DataContainer>
+                                                <ButtonStyle type="submit">
+                                                        <Icon>
+                                                                <IconContext.Provider value={{
+                                                                        style: { verticalAlign: 'middle' },
+                                                                        className: 'enter',
+                                                                        size: '1.4em'
+                                                                }}>
+                                                                        <RiArrowRightLine />
+                                                                </IconContext.Provider>
+                                                        </Icon>
+                                                </ButtonStyle>
+                                                <Link to="/ingresar">
+                                                        <LoginText>¿Ya tienes una cuenta?</LoginText>
+                                                </Link>
+                                                <Outlet />
+                                                {isLoading && (
+                                                        <LoadingWrapper>
+                                                                <MoonLoader loading color="white" size={20} />
+                                                        </LoadingWrapper>
+                                                )}
+                                        </DataContainer>
+                                </FormContainer>
+                        </RegisterContainer>
+                </Background>
+        );
 }
 
 export default Register;
