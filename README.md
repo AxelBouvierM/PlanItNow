@@ -10,7 +10,7 @@ in order to give the user a unique place where
 to find a wide variety of options.
 
 ## Web Arquitecture
-![img](https://i.postimg.cc/856x0cyH/arquitectura.jpg)
+![img](https://i.postimg.cc/gcTgnYBG/arquitectura1.png)
 
 ## Usage
 New user:
