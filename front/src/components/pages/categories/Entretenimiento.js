@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { NavBar } from '../../components/header/NavBar'
 import { Footer } from '../../components/footer/Footer'
-import categoriesBg from '../../images/montaña2.jpg'
 import { SearchBar } from '../../components/body/searchBar/SearchBar'
 import { Categorias } from '../../components/body/searchBar/SearchCategories'
 import Modal from '../../components/body/modal/Modal'
@@ -19,7 +19,6 @@ const Background = styled.div`
   position: relative;
   flex-wrap: wrap;
   background-color: black;
-  /*background-image: url(${categoriesBg});*/
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -38,32 +37,15 @@ const Content = styled.div`
 const Phrase = styled.p`
   	margin-top: 1em;
   	color: white;
-  	font-size: 2.5em;
+  	font-size: 2.6em;
   	text-transform: uppercase;
 	text-align: center;
 	font-weight: normal;
-	font-family: 'Fira Sans', sans-serif;
-	animation: neon 3s infinite;
-	@keyframes neon {
-	0% {
-		text-shadow: -1px -1px 1px white, -1px 1px 1px white, 1px -1px 1px white, 1px 1px 1px white,
-		0 0 3px white, 0 0 10px white, 0 0 20px white,
-		0 0 30px #FF9E9E, 0 0 40px #FF9E9E, 0 0 50px #FF9E9E, 0 0 70px #FF9E9E, 0 0 100px #FF9E9E, 0 0 200px #FF9E9E;
-	}
-	50% {
-		text-shadow: -1px -1px 1px white, -1px 1px 1px white, 1px -1px 1px white, 1px 1px 1px white,
-		0 0 5px white, 0 0 15px white, 0 0 25px white,
-		0 0 40px #FF9E9E, 0 0 50px #FF9E9E, 0 0 60px #FF9E9E, 0 0 80px #FF9E9E, 0 0 110px #FF9E9E, 0 0 210px #FF9E9E;
-	}
-	100% {
-		text-shadow: -1px -1px 1px white, -1px 1px 1px white, 1px -1px 1px white, 1px 1px 1px white,
-		0 0 3px white, 0 0 10px white, 0 0 20px white,
-		0 0 30px #FF9E9E, 0 0 40px #FF9E9E, 0 0 50px #FF9E9E, 0 0 70px #FF9E9E, 0 0 100px #FF9E9E, 0 0 200px #FF9E9E;
-	}
-	}
+	font-family: 'kanit', sans-serif;
 	@media all and (max-width:400px) {
     	& {
 			font-size: 1.8em;
+
     	}
   	}
 `;
@@ -111,13 +93,24 @@ const FooterStyle = {
 	bottom: '0',
 }
 
-function Music() {
+function Entretenimiento() {
 	const [data, setData] = useState([]);
 	const [openModal, setOpenModal] = useState(false)
 	const [selected, setSelected] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		axios.get('/data/brewery')
+		axios.get('/login/check')
+			.then((res) => {
+				if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [navigate])
+		
+	useEffect(() => {
+		axios.get('/data/entertainment')
 			.then((res) => {
 				const values = Object.values(res.data)
 				setData(values)
@@ -134,7 +127,7 @@ function Music() {
 						<NavBarContainer>
 							<NavBar />
 						</NavBarContainer>
-						<Phrase>Cerveceria</Phrase>
+						<Phrase>Entretenimiento</Phrase>
 						<SearchBarStyles>
 							<SearchBar data={Categorias} />
 						</SearchBarStyles>
@@ -159,4 +152,4 @@ function Music() {
 	)
 }
 
-export default Music
+export default Entretenimiento

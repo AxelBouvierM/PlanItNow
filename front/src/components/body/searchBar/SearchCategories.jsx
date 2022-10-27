@@ -47,5 +47,4 @@ export const Categorias = [
 		"categories": "Museo",
 		"route": "/categorias/museo"
 	}
-
 ]

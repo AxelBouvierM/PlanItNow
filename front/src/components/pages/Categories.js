@@ -1,5 +1,7 @@
-import React from 'react'
+import { React, useEffect } from 'react'
 import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 import { NavBar } from '../components/header/NavBar'
 import Slides from '../components/body/carousel/CatSlides';
@@ -36,14 +38,15 @@ const PhraseContainer = styled.div`
   display: flex;
   position: relative;
   width: 100%;
-  margin-top: 1.5em;
+  margin-top: 8em;
   justify-content: center;
 `;
 
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
-  font-size: 1em;
+  font-size: 1.8em;
+  font-family: 'kanit', sans-serif;
 `;
 
 const navBarStyles = {
@@ -55,9 +58,19 @@ const navBarStyles = {
 
 };
 
-function Inicio() {
-  // metodo get para chequear si el user esta logeado (endpoint /login/check), si no esta logeado redireccionar
-  // a landpage
+function Categories() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('/login/check')
+      .then((res) => {
+        if (res.data.response.status === 'User not logged in') navigate('/ingresar');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [navigate])
+
   return (
     <>
       <TopSectionContainer>
@@ -67,7 +80,7 @@ function Inicio() {
               <NavBar />
             </div>
             <PhraseContainer>
-              <Phrase>- Conoce Montevideo -</Phrase>
+              <Phrase>- Conocé más sobre tu ciudad -</Phrase>
             </PhraseContainer>
             <div>
               <Slides style={{}}/>
@@ -83,23 +96,4 @@ function Inicio() {
   );
 }
 
-export default Inicio;
-
-/* <Parallax strength={500}>
-        <Background className='customBg' bgImageStyle={bgStyles}>
-          <img src={image1} alt='montaña' />
-        </Background>
-        <div className='bgDimensions' style={{ height: '100vh' }}>
-          <div className='content'>
-            <div className='navBar' style={navBarStyles}>
-              <NavBar />
-            </div>
-            <div className='searchBar' style={searchBarStyles}>
-              <SearchBar />
-            </div>
-            <div>
-              <Slides />
-            </div>
-          </div>
-        </div>
-      </Parallax> */
+export default Categories;

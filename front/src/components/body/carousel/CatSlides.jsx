@@ -9,10 +9,13 @@ import "slick-carousel/slick/slick-theme.css";
 import '../../../styles/slides.css'
 
 const Container = styled.div`
+	position: relative;
+	align-items: center;
+	justify-content: center;
   	max-height: 70vh;
   	max-width: 90vw;
+	padding-top: 2em;
   	margin: auto;
-  	padding-top: 5em;
   	color: #fafafa;
   	text-align: center;
   	@media all and (max-width:600px) {
@@ -42,13 +45,6 @@ const Images = styled.img`
 	border-radius: 20px;
     width: 100%;
     height: 100%;
-`;
-
-const CardTitle = styled.h1`
-	margin-top: 0.3em;
-	font-size: 1.4em;
-	font-weight: 300;
-	text-transform: uppercase;
 `;
 
 function Slides() {
@@ -117,7 +113,6 @@ function Slides() {
 								alt={item.title} key={item.image.toString()}
 								onClick={() => { setRedirectTo(item.title); setRedirect(true) }} />
 						</CardTop>
-						<CardTitle key={item.title.toString()}></CardTitle>
 					</>
 				))}
 			</Slider>
@@ -125,3 +120,4 @@ function Slides() {
 	);
 }
 export default Slides
+/*<CardTitle key={item.title.toString()}>{item.title}</CardTitle>*/

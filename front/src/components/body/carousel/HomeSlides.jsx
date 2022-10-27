@@ -12,19 +12,9 @@ const Container = styled.div`
   	max-height: 70vh;
   	max-width: 90vw;
   	margin: auto;
-  	padding-top: 10em;
   	color: #fafafa;
+	margin-top: 3em;
   	text-align: center;
-  	@media all and (max-width:600px) {
-    	& {
-     		padding-top: 5em;
-    	}
-	}
-	@media all and (max-width:300px) {
-    	& {
-     		padding-top: 3em;
-    	}
-  	}
 `;
 
 const CardTop = styled.div`
@@ -45,10 +35,10 @@ const Images = styled.img`
 `;
 
 const CardTitle = styled.h1`
-	margin-top: 0.3em;
-	font-size: 1.4em;
-	font-weight: 300;
+	margin-top: 0.5em;
+	font-size: 1em;
 	text-transform: uppercase;
+	font-family: 'Lexend', sans-serif;
 `;
 
 export function Slides() {
