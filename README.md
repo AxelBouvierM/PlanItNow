@@ -25,6 +25,10 @@ New user:
 ## Related Projects
 - In the local market there is only one project similar to PIN! It was launched a few months ago and its name is VOY. It is an application that like us offers a wide variety of events, with the difference that PIN offers the user a greater and more detailed description of the events.
 
+## PIN!
+www.planitnow.app
+www.instagram.com/planitnow_
+
 ### Authors
 
 - Axel Bouvier
