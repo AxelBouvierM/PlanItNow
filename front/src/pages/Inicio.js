@@ -49,12 +49,11 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   	margin-top: 1em;
   	color: white;
-  	font-size: 1.3em;
+  	font-size: 1.4em;
   	text-transform: uppercase;
     text-align: center;
     font-weight: normal;
-    font-family: 'Lexend', sans-serif;
-    animation: neon 3s infinite;
+    font-family: 'kanit', sans-serif;
     @media all and (max-width:400px) {
         & {
           font-size: 1em;

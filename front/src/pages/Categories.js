@@ -45,9 +45,8 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
-  font-size: 1.4em;
-  font-family: 'Lexend', sans-serif;
-  animation: neon 3s infinite;
+  font-size: 1.8em;
+  font-family: 'kanit', sans-serif;
 `;
 
 const navBarStyles = {
