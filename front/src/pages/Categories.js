@@ -45,8 +45,9 @@ const PhraseContainer = styled.div`
 const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
-  font-size: 1.8em;
+  font-size: 1.4em;
   font-family: 'kanit', sans-serif;
+  text-transform: uppercase;
 `;
 
 const navBarStyles = {
