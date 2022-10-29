@@ -24,8 +24,8 @@ const Divisor = styled.div`
 	left: 0; 
   	right: 0;
 	top: 0;
-  	margin-left: auto; 
-  	margin-right: auto;
+	bottom: 0;
+  	margin: auto;
   	width: 100%;
 `;
 
@@ -81,7 +81,6 @@ const Image = styled.img`
 	margin-left: auto;
   	margin-right: auto;
 	margin-top: 1em;
-	
 `;
 
 const Phrase = styled.p`

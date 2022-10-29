@@ -5,10 +5,10 @@ import MobileLanding from '../components/LandingPage/MobileLanding'
 
 function Landpage() {
   const DesktopOrTablet = useMediaQuery({
-    query: '(min-width: 1000px)'
+    query: '(min-width: 1200px)'
   })
   const Mobile = useMediaQuery({
-    query: '(max-width: 1000px)'
+    query: '(max-width: 1200px)'
   })
   return (
     <>
