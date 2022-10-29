@@ -1,6 +1,6 @@
 export const Categorias = [
 	{
-		"categories": "Musica",
+		"categories": "Música",
 		"route": "/categorias/musica"
 	},
 	{
@@ -28,7 +28,7 @@ export const Categorias = [
 		"route": "/categorias/restaurant"
 	},
 	{
-		"categories": "Cafeteria",
+		"categories": "Cafetería",
 		"route": "/categorias/cafeteria"
 	},
 	{
@@ -36,7 +36,7 @@ export const Categorias = [
 		"route": "/categorias/entretenimiento"
 	},
 	{
-		"categories": "Cerveceria",
+		"categories": "Cervecería",
 		"route": "/categorias/cerveceria"
 	},
 	{

@@ -47,12 +47,13 @@ const GoBackContainer = styled.a`
 `;
 
 const Text = styled.p`
+  font-family:'Lexend',sans-serif;
         display: flex;
         position: fixed;
   width: 40%;
   bottom: 8%;
   color: #fafafa;
-  font-size: 2.5em;
+  font-size: 2.2em;
         margin: 3rem 3rem;;
 `;
 
@@ -63,7 +64,7 @@ const GoBackButton = styled.a`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
+  font-family:'Lexend',sans-serif;
   font-weight:300;
   color:#FFFFFF;
   text-align:center;
@@ -94,6 +95,7 @@ const RegisterContainer = styled.div`
 `;
 
 const TextSpace = styled.h1`
+  font-family: 'kanit', sans-serif;
   margin-bottom: 3em;
   font-size: 2.5vw;
   color: #fafafa;
@@ -178,7 +180,7 @@ const ButtonStyle = styled.button`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
+  font-family:'Lexend',sans-serif;
   font-weight:350;
   color:#FFFFFF;
   background-color: transparent;
@@ -196,6 +198,7 @@ const Icon = styled.i`
 `;
 
 const LoginText = styled.a`
+  font-family:'barlow',sans-serif;
   color: #D8D8D8;
   display: inline-block;
   vertical-align: middle;
@@ -243,7 +246,6 @@ function Register() {
         const [Error, setError] = useState('');
         const [passError, setPassError] = useState('');
         const [redirect, setRedirect] = useState(false);
-        const [nicePassword, setNicePassword] = useState(false);
         const [correctRegister, setCorrectRegister] = useState(false);
         const navigate = useNavigate();
 
@@ -261,7 +263,6 @@ function Register() {
                 const intMatch = string.match(/\d+/g);
                 const upperMatch = string.match(/[A-Z]/);
 
-                setNicePassword(false);
                 if (string.length >= 6 && intMatch != null && upperMatch != null) {
                         setPassError(null);
                         return (true);

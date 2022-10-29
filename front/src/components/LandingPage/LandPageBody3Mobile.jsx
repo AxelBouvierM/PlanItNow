@@ -13,8 +13,6 @@ const BodyContainer = styled.div`
   	display: flex;
   	position: relative;
   	width: 100vw;
-	height: 100vh;
-	padding: 0 5em;
 	z-index: 3;
 	justify-content: center;
 	align-items: center;
@@ -28,52 +26,62 @@ const Divisor = styled.div`
 	top: 0;
   	margin-left: auto; 
   	margin-right: auto;
-	padding: 0 5em;
   	width: 100%;
 `;
 
 const Title = styled(motion.p)`
-	display: inline-block;
+	display: block;
 	position: relative;
 	width: 100%;
 	color: white;
 	font-size: 3em;
 	font-family: 'kanit', sans-serif;
 	margin: 1em 0;
-	text-align: right;
+	text-align: center;
 `;
 
 const ContentWrapper = styled.div`
-	display: inline-block;
+	display: block;
 	position: relative;
 	width: 100%;
 	color: white;
   	font-size: 1em;
 	text-align: center;
-	margin: 0 0.5em;
 `;
+
+const Line = styled.div`
+	display: block;
+	width: 100%;
+	height: 50%;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+`;
+
 const ContentContainer = styled(motion.div)`
 	display: inline-block;
 	position: relative;
-	width: 22.5%;
+	width: 45%;
 	color: white;
   	font-size: 1em;
 	text-align: center;
-	margin: 0 0.5em;
+	@media all and (max-width: 400px) {
+		margin: 0 0.2em;
+	}
 `;
 
 const Image = styled.img`
 	display: block;
 	position: relative;
 	max-width: 100%;
-	max-height: 50vh;
+	max-height: 30vh;
 	color: white;
 	border: none;
 	text-align: center;
 	margin-left: auto;
   	margin-right: auto;
 	margin-top: 1em;
-
+	
 `;
 
 const Phrase = styled.p`
@@ -83,8 +91,11 @@ const Phrase = styled.p`
   	font-size: 1.2em;
 	font-family: 'Lexend', sans-serif;
 	margin: 1em;
-	@media all and (max-width: 1100px) {
+	@media all and (max-width: 1100px) and (min-width: 401px){
 		font-size: 1.0em;
+	}
+	@media all and (max-width: 400px) {
+		font-size: 0.8em;
 	}
 `;
 
@@ -135,6 +146,7 @@ function LandPageBody3() {
 					}}
 					viewport={{ once: true }}>Nuestro Equipo</Title>
 				<ContentWrapper>
+				<Line>
 					<ContentContainer
 						initial={{ opacity: 0 }}
 						whileInView={{ opacity: 1 }}
@@ -148,10 +160,10 @@ function LandPageBody3() {
 						<Phrase>Axel Bouvier</Phrase>
 						<SocialContainer>
 							<a href='https://www.linkedin.com/in/axel-bouvier-172b76214/' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
 							</a>
 							<a href='https://github.com/AxelBouvierM' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
 							</a>
 						</SocialContainer>
 					</ContentContainer>
@@ -164,17 +176,19 @@ function LandPageBody3() {
 							delay: 1,
 						}}
 						viewport={{ once: true }}>
-						<Image src={maxi} alt='maximiliano'/>
+						<Image src={maxi} alt='maximiliano' />
 						<Phrase>Maximiliano Alonso</Phrase>
 						<SocialContainer>
 							<a href='https://www.linkedin.com/in/maximiliano-alonso-262b05123/' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
 							</a>
 							<a href='https://github.com/MaxiHBTN' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
 							</a>
 						</SocialContainer>
 					</ContentContainer>
+					</Line>
+					<Line>
 					<ContentContainer
 						initial={{ opacity: 0 }}
 						whileInView={{ opacity: 1 }}
@@ -184,14 +198,14 @@ function LandPageBody3() {
 							delay: 1.5,
 						}}
 						viewport={{ once: true }}>
-						<Image src={mati} alt='matias'/>
+						<Image src={mati} alt='matias' />
 						<Phrase>Matías Martínez</Phrase>
 						<SocialContainer>
 							<a href='https://www.linkedin.com/in/matiasmartinezhirsiger/' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
 							</a>
 							<a href='https://github.com/MatiasMtz' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
 							</a>
 						</SocialContainer>
 					</ContentContainer>
@@ -203,17 +217,18 @@ function LandPageBody3() {
 							duration: 1.25,
 							delay: 2,
 						}}
-						viewport={{ once: true }}><Image src={eze} alt='ezequiel'/>
+						viewport={{ once: true }}><Image src={eze} alt='ezequiel' />
 						<Phrase>Ezequiel Silva</Phrase>
 						<SocialContainer>
 							<a href='https://www.linkedin.com/in/ezequiel-silva-perez-1262b115b/' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiLinkedinFill /></Icon></SocialButton>
 							</a>
 							<a href='https://github.com/ezesilva95' target="_blank" rel="noreferrer">
-							<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
+								<SocialButton><Icon><RiGithubFill /></Icon></SocialButton>
 							</a>
 						</SocialContainer>
 					</ContentContainer>
+					</Line>
 				</ContentWrapper>
 			</Divisor>
 		</BodyContainer>

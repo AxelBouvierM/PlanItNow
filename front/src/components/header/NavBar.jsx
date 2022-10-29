@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Fade as Hamburger } from 'hamburger-react'
 
 import icon from '../../images/pinLogoEstirado.png'
-import { RiHome2Line, RiAccountCircleLine, RiCalendar2Line, RiLogoutBoxRLine, RiLayout2Line } from 'react-icons/ri';
+import { RiHome2Line, RiAccountCircleLine, RiLogoutBoxRLine, RiLayout2Line } from 'react-icons/ri';
 
 import '../../styles/navigation.css';
 

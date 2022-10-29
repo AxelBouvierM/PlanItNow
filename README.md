@@ -31,8 +31,4 @@ www.planitnow.app
 www.instagram.com/planitnow_/
 
 ### Authors
-
-- Axel Bouvier
-- Maximiliano Alonso
-- Matias Martinez 
-- Ezequiel Silva
+![img](https://i.postimg.cc/tTWknP1P/nuestroequipo.png)

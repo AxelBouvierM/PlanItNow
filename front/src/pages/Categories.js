@@ -46,8 +46,8 @@ const Phrase = styled.p`
   margin-top: 1em;
 	color: white;
   font-size: 1.4em;
-  font-family: 'Lexend', sans-serif;
-  animation: neon 3s infinite;
+  font-family: 'kanit', sans-serif;
+  text-transform: uppercase;
 `;
 
 const navBarStyles = {
