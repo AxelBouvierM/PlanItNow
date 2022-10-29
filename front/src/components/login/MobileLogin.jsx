@@ -50,7 +50,7 @@ const GoBackButton = styled.a`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
+  font-family:'Lexend',sans-serif;
   font-weight:300;
   color:#FFFFFF;
   text-align:center;
@@ -81,6 +81,7 @@ const MobileLoginContainer = styled.div`
 `;
 
 const Title = styled.p`
+  font-family: 'kanit', sans-serif;
   color: #fafafa;
   display: flex;
   position: relative;
@@ -154,7 +155,7 @@ const ButtonStyle = styled.button`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
+  font-family:'Lexend',sans-serif;
   font-weight:350;
   color:#FFFFFF;
   background-color: transparent;
@@ -172,6 +173,7 @@ const Icon = styled.i`
 `;
 
 const LoginText = styled.a`
+  font-family: 'barlow', sans-serif;
   color: #D8D8D8;
   display: inline-block;
   vertical-align: middle;

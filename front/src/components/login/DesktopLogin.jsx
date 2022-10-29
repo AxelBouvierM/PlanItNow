@@ -40,6 +40,7 @@ const Logo = styled.img`
 `;
 
 const Text = styled.p`
+  font-family: 'Lexend', sans-serif;
 	display: flex;
 	position: fixed;
   width: 45%;
@@ -63,7 +64,7 @@ const GoBackButton = styled.a`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
+  font-family:'Lexend',sans-serif;
   font-weight:300;
   color:#FFFFFF;
   text-align:center;
@@ -85,7 +86,7 @@ const ButtonStyle = styled.button`
   border-radius:0.12em;
   box-sizing: border-box;
   text-decoration:none;
-  font-family:'Roboto',sans-serif;
+  font-family:'Lexend',sans-serif;
   font-weight:350;
   color:#FFFFFF;
   background-color: transparent;
@@ -169,6 +170,7 @@ const Icon = styled.i`
 `;
 
 const LoginText = styled.a`
+font-family: 'barlow', sans-serif;
   color: #D8D8D8;
   display: inline-block;
   vertical-align: middle;
@@ -181,6 +183,7 @@ const LoginText = styled.a`
 `;
 
 const Title = styled.a`
+  font-family: 'kanit', sans-serif;
   color: #fafafa;
   display: block;
   font-size: 2em;
